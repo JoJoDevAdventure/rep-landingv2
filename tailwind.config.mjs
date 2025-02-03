@@ -8,7 +8,7 @@ export default {
   ],  theme: {
     extend: {
       colors: {
-        p1: '#FF5F1F',
+        p1: '#F8931F',
         p2: '#D63A0A',
         p3: '#FFF500',
         p4: '#FFF6F3',

@@ -28,7 +28,7 @@ const Hero = () => {
   });
 
   return (
-    <section className="relative w-full h-screen flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-24 md:pt-12">
+    <section className="relative w-full h-screen flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-16 md:pt-12">
       <div className="w-full flex flex-col md:flex-row justify-between align-top px-6 md:px-16 lg:px-40">
         <motion.div
           initial={{ opacity: 0, x: -50, y: -50 }}
@@ -81,7 +81,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.2 }}
-              className="bg-orange-500 text-white px-2 md:px-6 py-3 rounded-lg w-full md:w-auto text-[12px] md:text-[18px]"
+              className="bg-p1 text-white border-p1 border hover:bg-orange-500 transition-all duration-300 px-2 md:px-6 py-3 rounded-lg w-full md:w-auto text-[12px] md:text-[18px]"
             >
               Schedule Demo
             </motion.button>
@@ -89,7 +89,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.4 }}
-              className="bg-orange-500 text-white px-2 md:px-6 py-3 rounded-lg w-full md:w-auto text-[12px] md:text-[18px]"
+              className="bg-transparent text-s1 px-2 md:px-6 py-3 rounded-lg w-full border hover:bg-p1/20 border-p1 transition-all duration-300 md:w-auto text-[12px] md:text-[18px]"
             >
               Learn more
             </motion.button>

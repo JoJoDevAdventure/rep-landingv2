@@ -34,6 +34,7 @@ export default {
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
+        klik: ['Klik', 'sans-serif'],
       },
       transitionProperty: {
         borderColor: 'border-color',

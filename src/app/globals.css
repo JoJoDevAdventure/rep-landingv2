@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Klik';
+  src: url('/src/fonts/Klik-Light.otf') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer base {
 
   /* Change text selection color */
@@ -36,6 +43,10 @@
   html {
     background-color: var(--primary-bg);
     color: var(--primary-text);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Klik', sans-serif;
   }
 
   body {

@@ -125,11 +125,11 @@
 
   /* START of Typography */
   .h-num {
-    @apply font-inter text-[72px] font-bold leading-[84px];
+    @apply font-klik text-[72px] font-bold leading-[84px];
   }
 
   .h1 {
-    @apply text-[78px] font-black leading-[84px] tracking-[-0.03em];
+    @apply text-[78px] leading-[84px] tracking-[-0.03em];
   }
 
   .h2 {

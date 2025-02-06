@@ -39,7 +39,7 @@ const Hero = () => {
           <h1 className="md:h1 font-bold text-left text-3xl md:text-5xl lg:text-6xl">
             Connecting Humanity <br /> Through Meaningful <br />
             <motion.span
-              className="text-orange-500 text-light"
+              className="text-p1 text-light"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1 }}
@@ -73,7 +73,7 @@ const Hero = () => {
           >
             Fewer human hours spent on sales tasks. <br />
             Same
-            <span className="text-orange-500"> humanity</span> in the sales
+            <span className="text-p1"> humanity</span> in the sales
             process.
           </motion.p>
           <div className="flex flex-row gap-4 w-full m-0">
@@ -100,16 +100,15 @@ const Hero = () => {
       {/* Scrolling Images */}
       <motion.div
         className="relative mt-4 md:mt-20 w-full overflow-hidden"
-        ref={scrollRef}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 1.6 }}
       >
         <motion.div
           className="flex space-x-4 align-center h-auto flex-row items-center"
-          animate={controls}
-          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-        >
+          animate={{ x: ['-20%', '30%'] }}
+          transition={{ repeat: Infinity, duration: 30, ease: 'linear' }}>
+
           {images.concat(images).map((img, index) => (
             <Image
               key={index}

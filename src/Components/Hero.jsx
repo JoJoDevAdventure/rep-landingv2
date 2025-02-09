@@ -28,7 +28,7 @@ const Hero = () => {
   });
 
   return (
-    <section className="relative w-full h-screen flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-16 md:pt-12">
+    <section className="relative w-full h-[95vh] flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-22 md:pt-12">
       <div className="w-full flex flex-col md:flex-row justify-between align-top px-6 md:px-16 lg:px-40">
         <motion.div
           initial={{ opacity: 0, x: -50, y: -50 }}
@@ -36,8 +36,8 @@ const Hero = () => {
           transition={{ duration: 1, ease: "easeOut" }}
           className="w-full md:w-[65%]"
         >
-          <h1 className="md:h1 font-bold text-left text-3xl md:text-5xl lg:text-6xl">
-            Connecting Humanity <br /> Through Meaningful <br />
+          <h1 className="md:h1 font-klik font-regular text-left text-3xl md:text-5xl lg:text-6xl leading-normal">
+            Connecting Humanity <br /> <span className="mt-4"> Through Meaningful</span> <br />
             <motion.span
               className="text-p1 text-light"
               initial={{ opacity: 0 }}
@@ -105,8 +105,24 @@ const Hero = () => {
         transition={{ duration: 1, delay: 1.6 }}
       >
         <motion.div
-          className="flex space-x-4 align-center h-auto flex-row items-center"
+          className="hidden space-x-4 align-center h-auto flex-row items-center justify-center md:flex"
           animate={{ x: ['-20%', '30%'] }}
+          transition={{ repeat: Infinity, duration: 30, ease: 'linear' }}>
+
+          {images.concat(images).map((img, index) => (
+            <Image
+              key={index}
+              src={img.src}
+              alt="AI Conversation"
+              width={img.width}
+              height={img.height}
+              className="rounded-lg h-auto w-auto max-w-full md:max-w-none"
+            />
+          ))}
+        </motion.div>
+        <motion.div
+          className="flex space-x-4 align-center h-auto flex-row items-center justify-end md:hidden"
+          animate={{ x: ['20%', '400%'] }}
           transition={{ repeat: Infinity, duration: 30, ease: 'linear' }}>
 
           {images.concat(images).map((img, index) => (

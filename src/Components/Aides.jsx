@@ -78,7 +78,7 @@ const AidesSection = () => {
               onClick={() => setSelectedAide(aide)}
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.3 }}
-              className={`px-8 py-2 rounded-lg flex items-center cursor-pointer w-auto transition-all duration-300 justify-between relatives z-50 ${
+              className={`px-8 py-2 rounded-lg flex items-center cursor-pointer w-auto transition-all duration-300 justify-between relative ${
                 selectedAide.name === aide.name
                   ? "bg-white shadow-xl hover:bg-white"
                   : "bg-transparent"
@@ -126,7 +126,7 @@ const AidesSection = () => {
             initial={{ opacity: 0.8, x: -60, scale: 1 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0.8, x: 40, scale: 1 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.7 }}
           >
             <Image
               src={selectedAide.image}

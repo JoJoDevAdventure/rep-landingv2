@@ -10,7 +10,7 @@ const NavBar = () => {
 
   return (
     <header className="w-full bg-white shadow-md px-6 py-4 md:py-6 fixed top-0 left-0 right-0 z-50">
-      <div className={`md:hidden absolute bg-black/50 top-0 h-screen w-screen left-0 transition-all duration-500 ${isOpen ? "opacity-100": "opacity-0"} z-0`}/>
+      <div className={`md:hidden absolute bg-black/50 top-0 h-screen w-screen left-0 transition-all duration-500 ${isOpen ? "opacity-100": "opacity-0"} ${!isOpen && "hidden"} z-0`}/>
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center text-xl font-bold">

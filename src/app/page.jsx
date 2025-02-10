@@ -1,5 +1,3 @@
-"use client";
-
 import Aides from "@/Components/Aides";
 import AIFuture from "@/Components/AIFuture";
 import Hero from "@/Components/Hero";

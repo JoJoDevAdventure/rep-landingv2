@@ -23,13 +23,13 @@ const AIFuture = () => {
     >
       {/* Background Rectangles */}
       <motion.div
-        className="absolute top-0 md:top-16 left-2 md:-left-12 right-12 md:right-32 h-[90%] md:h-[341px] bg-p1/10 rounded-xl scale-95 opacity-50"
+        className="absolute top-0 md:top-22 left-2 md:-left-12 right-12 md:right-32 h-[90%] md:h-[341px] bg-[#FEEFE1] rounded-2xl scale-95 bg-opacity-60"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 1 } : {}}
         transition={{ duration: 1 }}
       />
       <motion.div
-        className="absolute top-12 md:top-28 left-12 md:left-14 right-2 md:-right-12 h-[90%] md:h-[341px] bg-p1/10 rounded-xl scale-95 opacity-50"
+        className="absolute top-12 md:top-40 left-12 md:left-14 right-2 md:-right-12 h-[90%] md:h-[340px] bg-[#FEEFE1] rounded-2xl scale-95 bg-opacity-50"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 1 } : {}}
         transition={{ duration: 1.2, delay: 0.3 }}
@@ -54,10 +54,10 @@ const AIFuture = () => {
 
         {/* Buttons */}
         <div className="mt-6 flex gap-4">
-          <button className="bg-orange-500 text-white px-6 py-3 rounded-lg px-3 md:px-6 py-2 md:py-3 text-[14px] md:text-[18px]">
+          <button className="bg-p1 text-white rounded-lg px-3 md:px-6 py-2 md:py-3 text-[14px] md:text-[18px]">
             Get a demo
           </button>
-          <button className="border border-orange-500 text-orange-500 px-3 md:px-6 py-2 md:py-3 text-[14px] md:text-[18px] rounded-lg">
+          <button className="border border-p1 text-p1 px-3 md:px-6 py-2 md:py-3 text-[14px] md:text-[18px] rounded-lg">
             Contact
           </button>
         </div>

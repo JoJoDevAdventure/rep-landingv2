@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { fadeUpVariants } from "./Animations";
 
 const industries = [
   {
@@ -130,13 +131,25 @@ const IndustriesSectionMobile = () => {
 
   return (
     <section className="w-full py-8 flex flex-col items-center px-6 md:px-16 overflow-hidden">
-      <h1 className="text-3xl font-light text-black text-center">
+      <motion.h1
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+        variants={fadeUpVariants} // Apply fade from left to right for title
+        className="text-3xl font-light text-black text-center"
+      >
         Your Industry, Our Expertise
-      </h1>
+      </motion.h1>
 
-      <div className="flex flex-row justify-start gap-4 mt-8 w-screen overflow-x-scroll snap-x snap-mandatory py-2 scrollbar-hide">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeUpVariants} // Apply fade from left to right for title
+        className="flex flex-row justify-start gap-4 mt-4 w-screen overflow-x-scroll overflow-y-hidden py-2 scrollbar-hide"
+      >
         {industries.map((industry) => (
-          <button
+          <motion.button
             key={industry.name}
             onClick={() => setSelectedIndustry(industry)}
             className={`first:ml-4 last:mr-4 px-6 py-3 rounded-full transition-all duration-300 text-[12px] snap-start ${
@@ -148,9 +161,9 @@ const IndustriesSectionMobile = () => {
             }`}
           >
             {industry.name}
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
       <div className="flex flex-col-reverse md:flex-row w-full max-w-5xl mt-12 items-center gap-8">
         {/* Text Content */}

@@ -40,7 +40,7 @@ const NavBar = () => {
 
       {/* Mobile Sidebar */}
 
-        <div className={`md:hidden fixed top-0 right-0 w-3/4 h-full bg-white shadow-lg p-6 transition-all duration-500 ${isOpen ? "right-0" : "-right-[1000px] -z-10"}`}>
+        <div className={`md:hidden fixed top-0 w-3/4 h-full bg-white shadow-lg p-6 transition-all duration-500 ${isOpen ? "right-0" : "-right-[1000px] -z-10"}`}>
           <button className="mb-4" onClick={() => setIsOpen(false)}>
             <X size={30} />
           </button>

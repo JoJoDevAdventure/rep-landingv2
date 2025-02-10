@@ -1,6 +1,7 @@
 "use client";
 
 import Aides from "@/Components/Aides";
+import AIFuture from "@/Components/AIFuture";
 import Hero from "@/Components/Hero";
 import IndustriesSection from "@/Components/Industries";
 import IndustriesSectionMobile from "@/Components/IndustriesMobile";
@@ -23,6 +24,7 @@ const Home = () => {
           <IndustriesSection/>
         </div>
       </div>
+      <AIFuture/>
     </section>
   );
 };

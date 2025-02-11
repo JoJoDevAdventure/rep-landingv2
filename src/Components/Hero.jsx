@@ -37,14 +37,14 @@ const Hero = () => {
           className="w-full md:w-[65%]"
         >
           <h1 className="md:h1 font-klik font-regular text-left text-3xl md:text-5xl lg:text-6xl leading-normal">
-            Connecting Humanity <br /> <span className="mt-4"> Through Meaningful</span> <br />
+            Connecting humanity <br /> <span className="mt-4"> through meaningful</span> <br />
             <motion.span
               className="text-p1 text-light"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1 }}
             >
-              {["A", "I", " ", "C", "o", "n", "v", "e", "r", "s", "a", "t", "i", "o", "n", "s"].map((letter, index) => (
+              {["A", "I", " ", "c", "o", "n", "v", "e", "r", "s", "a", "t", "i", "o", "n", "s"].map((letter, index) => (
                 <motion.span
                   key={index}
                   initial={{ opacity: 0 }}
@@ -71,9 +71,9 @@ const Hero = () => {
             transition={{ duration: 1, delay: 1 }}
             className="mt-4 text-sm md:text-xl text-gray-700"
           >
-            Fewer human hours spent on sales tasks. <br />
+            Fewer hours spent tedious tasks, <br />
             Same
-            <span className="text-p1"> humanity</span> in the sales
+            <span className="text-p1"> humanity</span> in the
             process.
           </motion.p>
           <div className="flex flex-row gap-4 w-full m-0">

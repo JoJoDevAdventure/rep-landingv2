@@ -34,7 +34,7 @@ const industries = [
     description:
       "Optimize real estate transactions with AI, providing smarter insights for buyers and sellers.",
     link: "Learn more about Real-Estate ->",
-    image: "/auto.jpg",
+    image: "/Property-UI.png",
     bgColor: "bg-yellow-500",
     textColor: "text-yellow-700",
     secondaryBgColor: "bg-yellow-700",

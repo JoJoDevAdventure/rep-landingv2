@@ -1,5 +1,8 @@
 "use client";
 
+import Footer from "@/Components/Footer";
+import PerfectFit from "@/Components/PerfectFit";
+import UnityAide from "@/Components/UnityAide";
 import dynamic from "next/dynamic";
 
 // Dynamically import components with `ssr: false` to disable server-side rendering
@@ -13,7 +16,7 @@ const IndustriesSectionMobile = dynamic(() => import("@/Components/IndustriesMob
 
 const Home = () => {
   return (
-    <section className="overflow-hidden">
+    <main className="overflow-hidden">
       <NavBar />
       <Hero />
       <Partners />
@@ -27,7 +30,10 @@ const Home = () => {
         </div>
       </div>
       <AIFuture />
-    </section>
+      <UnityAide/>
+      <PerfectFit/>
+      <Footer/>
+    </main>
   );
 };
 

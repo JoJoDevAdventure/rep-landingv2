@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { fadeUpVariants } from "./Animations";
 
 const industries = [
   {
+    index: 1,
     name: "Automotive",
     title: "AI-Powered Smart Listings for Faster Sales",
     description:
@@ -20,19 +22,20 @@ const industries = [
     translateX2: "-translate-x-3",
     translateY2: "translate-y-8",
 
-    scaleX1:"scale-x-125",
-    scaleY1:"scale-y-100",
+    scaleX1: "scale-x-125",
+    scaleY1: "scale-y-100",
 
-    scaleX2:"scale-x-100",
-    scaleY2:"scale-y-75",
+    scaleX2: "scale-x-100",
+    scaleY2: "scale-y-75",
   },
   {
+    index: 2,
     name: "Real-Estate",
     title: "AI-Driven Real Estate Solutions",
     description:
       "Optimize real estate transactions with AI, providing smarter insights for buyers and sellers.",
     link: "Learn more about Real-Estate ->",
-    image: "/auto.jpg",
+    image: "/Property-UI.png",
     bgColor: "bg-yellow-500",
     secondaryBgColor: "bg-yellow-700",
 
@@ -42,13 +45,14 @@ const industries = [
     translateX2: "-translate-x-3",
     translateY2: "-translate-y-16",
 
-    scaleX1:"scale-x-25",
-    scaleY1:"scale-y-100",
+    scaleX1: "scale-x-25",
+    scaleY1: "scale-y-100",
 
-    scaleX2:"scale-x-100",
-    scaleY2:"scale-y-100",
+    scaleX2: "scale-x-100",
+    scaleY2: "scale-y-100",
   },
   {
+    index: 3,
     name: "Ecommerce",
     title: "AI-Powered Product Recommendations",
     description:
@@ -64,13 +68,14 @@ const industries = [
     translateX2: "translate-x-2",
     translateY2: "-translate-y-40",
 
-    scaleX1:"scale-x-150",
-    scaleY1:"scale-y-100",
+    scaleX1: "scale-x-150",
+    scaleY1: "scale-y-100",
 
-    scaleX2:"scale-x-100",
-    scaleY2:"scale-y-50",
+    scaleX2: "scale-x-100",
+    scaleY2: "scale-y-50",
   },
   {
+    index: 4,
     name: "Utility",
     title: "Optimized Utility Management with AI",
     description:
@@ -86,13 +91,14 @@ const industries = [
     translateX2: "-translate-x-56",
     translateY2: "-translate-y-22",
 
-    scaleX1:"scale-x-25",
-    scaleY1:"scale-y-100",
+    scaleX1: "scale-x-25",
+    scaleY1: "scale-y-100",
 
-    scaleX2:"scale-x-50",
-    scaleY2:"scale-y-25",
+    scaleX2: "scale-x-50",
+    scaleY2: "scale-y-25",
   },
   {
+    index: 5,
     name: "Funding",
     title: "AI-Enhanced Financial Solutions",
     description:
@@ -105,10 +111,10 @@ const industries = [
     translateY1: "-translate-y-5",
     translateX2: "translate-x-2",
     translateY2: "translate-y-2",
-    scaleX1:"scale-x-2",
-    scaleX2:"scale-x-2",
-    scaleY1:"scale-y-2",
-    scaleY2:"scale-y-2",
+    scaleX1: "scale-x-2",
+    scaleX2: "scale-x-2",
+    scaleY1: "scale-y-2",
+    scaleY2: "scale-y-2",
   },
 ];
 
@@ -117,13 +123,19 @@ const IndustriesSection = () => {
 
   return (
     <section className="w-full py-20 flex flex-col items-center px-6 md:px-16 overflow-hidden">
-      <h1 className="text-4xl font-bold text-black text-center">
+      <motion.h1
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+        variants={fadeUpVariants} // Apply fade from left to right for title
+        className="text-4xl font-bold text-black text-center"
+      >
         Your Industry, Our Expertise
-      </h1>
+      </motion.h1>
 
       <div className="flex flex-wrap justify-center gap-4 mt-8">
         {industries.map((industry) => (
-          <button
+          <motion.button
             key={industry.name}
             onClick={() => setSelectedIndustry(industry)}
             className={`px-6 py-2 rounded-full transition-all duration-300 ${
@@ -131,13 +143,24 @@ const IndustriesSection = () => {
                 ? "border border-orange-500 text-orange-500"
                 : "bg-gray-200 text-gray-600"
             }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            variants={fadeUpVariants} // Apply fade from left to right for title
+            transition={{ delay: industry.index * 0.2 }}
           >
             {industry.name}
-          </button>
+          </motion.button>
         ))}
       </div>
 
-      <div className="flex flex-col-reverse md:flex-row w-full max-w-5xl mt-12 items-center gap-8">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+        variants={fadeUpVariants} // Apply fade from left to right for title
+        className="flex flex-col-reverse md:flex-row w-full max-w-5xl mt-12 items-center gap-8"
+      >
         {/* Text Content */}
         <motion.div
           key={selectedIndustry.name}
@@ -175,7 +198,7 @@ const IndustriesSection = () => {
             transition={{ duration: 0.5 }}
           />
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

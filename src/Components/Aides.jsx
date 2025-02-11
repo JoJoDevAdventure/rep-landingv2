@@ -19,7 +19,7 @@ const aides = [
     description:
       "Helping you find and manage properties effortlessly with AI-driven real estate solutions.",
     buttonColor: "bg-[#EBBF2B]",
-    image: "/auto.jpg",
+    image: "/Property-UI.png",
     svg: "/yellow.svg",
     rotation: "rotate-[0deg]",
   },
@@ -46,7 +46,7 @@ const aides = [
       "Optimizing investments and funding processes with AI-driven smart solutions.",
     buttonColor: "bg-[#40A4D8]",
     image: "/auto.jpg",
-    svg: "/violet.svg",
+    svg: "/blue.svg",
     rotation: "rotate-[120deg]",
   },
   {
@@ -59,7 +59,7 @@ const aides = [
       "Enhancing visibility and engagement for your listings with AI-powered optimization.",
     buttonColor: "bg-[#07B446]",
     image: "/auto.jpg",
-    svg: "/violet.svg",
+    svg: "/green.svg",
     rotation: "rotate-[180deg]",
   },
 ];
@@ -129,10 +129,6 @@ const AidesSection = () => {
             {/* Background SVG */}
             <motion.div
               className={`absolute inset-0 flex items-center justify-center z-0 w-[60%] transition-all duration-1000 ${selectedAide.rotation}`}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false, amount: 0.3 }}
-              variants={fadeUpVariants} // Apply fade from left to right for title
             >
               <Image
                 src={selectedAide.svg}

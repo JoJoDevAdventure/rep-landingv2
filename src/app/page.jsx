@@ -1,8 +1,5 @@
 "use client";
 
-import Footer from "@/Components/Footer";
-import PerfectFit from "@/Components/PerfectFit";
-import UnityAide from "@/Components/UnityAide";
 import dynamic from "next/dynamic";
 
 // Dynamically import components with `ssr: false` to disable server-side rendering
@@ -13,6 +10,9 @@ const Aides = dynamic(() => import("@/Components/Aides"), { ssr: false });
 const AIFuture = dynamic(() => import("@/Components/AIFuture"), { ssr: false });
 const IndustriesSection = dynamic(() => import("@/Components/Industries"), { ssr: false });
 const IndustriesSectionMobile = dynamic(() => import("@/Components/IndustriesMobile"), { ssr: false });
+const UnityAide = dynamic(() => import("@/Components/UnityAide"), { ssr: false });
+const PerfectFit = dynamic(() => import("@/Components/PerfectFit"), { ssr: false });
+const Footer = dynamic(() => import("@/Components/Footer"), { ssr: false });
 
 const Home = () => {
   return (

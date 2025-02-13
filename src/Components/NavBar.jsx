@@ -22,7 +22,7 @@ const NavBar = () => {
           <Dropdown title="Products" />
           <Dropdown title="Solutions" />
           <Dropdown title="Why Replicaide?" />
-          <Dropdown title="Resources" />
+          <Link href="/features" className="hover:text-p1">Features</Link>
           <Link href="/enterprise" className="hover:text-p1">Enterprise</Link>
         </nav>
 
@@ -46,9 +46,9 @@ const NavBar = () => {
           </button>
           <nav className="flex flex-col space-y-4">
             <Dropdown title="Products" mobile />
-            <Dropdown title="Solutions" mobile />
+            <Dropdown title="Solutions" mobile /> 
             <Dropdown title="Why Replicaide?" mobile />
-            <Dropdown title="Resources" mobile />
+            <Link href="/enterprise" className="hover:text-p1">Features</Link>
             <Link href="/enterprise" className="hover:text-p1">Enterprise</Link>
           </nav>
           <div className="mt-6 flex flex-col space-y-3">

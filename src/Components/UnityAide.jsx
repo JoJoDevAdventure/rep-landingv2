@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import Image from "next/image";
 import { useRef } from "react";
 // import arrow1 from "../../public/arrows/arrow1.json";
 // import arrow2 from "../../public/arrows/arrow2.json";
@@ -21,7 +20,7 @@ const UnityAide = () => {
       ref={sectionRef}
       className="mt-8 relative w-full py-4 md:py-8 flex flex-col items-center overflow-hidden bg-white px-6 md:px-16 min-h-screen"
     >
-      <Image src="/Unity.svg" alt="ReplicaIDE" width={220} height={60} className="z-10 w-32 md:w-96 "/>
+      
       {/* Title */}
       <motion.h1
         className="text-2xl md:text-4xl font-light text-black text-center z-10"
@@ -33,7 +32,7 @@ const UnityAide = () => {
       </motion.h1>
 
       {/* Iframe & Arrows */}
-      <div className="relative h-full w-full max-w-[100%] md:max-w-[85%] mt-4 md:mt-12 z-10">
+      <div className="relative h-full w-full max-w-[100%] md:max-w-[90%] mt-4 md:mt-12 z-10">
         {/* Background */}
         <motion.div
           className="absolute inset-0 bg-orange-100 rounded-lg opacity-50"

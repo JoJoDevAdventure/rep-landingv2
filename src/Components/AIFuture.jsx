@@ -37,15 +37,15 @@ const AIFuture = () => {
 
       {/* Left Content */}
       <motion.div
-        className="relative z-10 w-full md:w-[40%] text-left"
+        className="relative z-10 w-full md:w-[60%] text-left"
         initial={{ opacity: 0, x: -50 }}
         animate={isInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 1 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-black">
+        <h2 className="text-2xl md:text-4xl font-bold text-light mt-8 md:mt-0">
           The Future is AI Driven
         </h2>
-        <p className="mt-4 text-gray-700 leading-relaxed">
+        <p className="mt-4 text-gray-700 leading-relaxed md:text-xl">
           By <strong>2028</strong>, AI is expected to{" "}
           <strong>handle 60% of sales</strong> tasks. In 2023, it handled 45%.
           We mixed a smart computer brain with an empathetic conversationalist,

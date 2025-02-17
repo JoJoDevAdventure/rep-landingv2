@@ -128,7 +128,7 @@ const IndustriesSection = () => {
         whileInView="visible"
         viewport={{ once: false, amount: 0.2 }}
         variants={fadeUpVariants} // Apply fade from left to right for title
-        className="text-4xl font-bold text-black text-center"
+        className="text-4xl font-light text-black text-center"
       >
         Your Industry, Our Expertise
       </motion.h1>

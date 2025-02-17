@@ -1,6 +1,8 @@
 "use client";
 
+import ContactPopup from "@/Components/ContactPopup";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 
 // Dynamically import components with `ssr: false` to disable server-side rendering
 const NavBar = dynamic(() => import("@/Components/NavBar"), { ssr: false });
@@ -15,8 +17,11 @@ const PerfectFit = dynamic(() => import("@/Components/PerfectFit"), { ssr: false
 const Footer = dynamic(() => import("@/Components/Footer"), { ssr: false });
 
 const Home = () => {
+  const [isPopupOpen, setPopupOpen] = useState(true);
+
   return (
     <main className="overflow-hidden">
+      <ContactPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
       <NavBar />
       <Hero />
       <Partners />

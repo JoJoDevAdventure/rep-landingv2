@@ -37,19 +37,6 @@ const aides = [
     rotation: "rotate-[70deg]",
   },
   {
-    name: "Fundaide",
-    logo: "/fundaide.svg",
-    color: "bg-[#40A4D8]",
-    textColor: "text-[#40A4D8]",
-    title: "The best automotive experience",
-    description:
-      "Optimizing investments and funding processes with AI-driven smart solutions.",
-    buttonColor: "bg-[#40A4D8]",
-    image: "/auto.jpg",
-    svg: "/blue.svg",
-    rotation: "rotate-[120deg]",
-  },
-  {
     name: "Listaide",
     logo: "/listaide.svg",
     color: "bg-[#07B446]",
@@ -61,6 +48,19 @@ const aides = [
     image: "/auto.jpg",
     svg: "/green.svg",
     rotation: "rotate-[180deg]",
+  },
+  {
+    name: "UnityAide",
+    logo: "/Unity.svg",
+    color: "bg-[#40A4D8]",
+    textColor: "text-[#40A4D8]",
+    title: "The best automotive experience",
+    description:
+      "Optimizing investments and funding processes with AI-driven smart solutions.",
+    buttonColor: "bg-[#40A4D8]",
+    image: "/auto.jpg",
+    svg: "/blue.svg",
+    rotation: "rotate-[120deg]",
   },
 ];
 

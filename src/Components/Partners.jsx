@@ -8,8 +8,9 @@ const logos = [
   { src: "/att.png", alt: "AT&T" },
   { src: "/verizon.png", alt: "Verizon" },
   { src: "/comcast.png", alt: "Comcast" },
-  { src: "/att.png", alt: "AT&T" },
-  { src: "/verizon.png", alt: "Verizon" },
+  { src: "/highlevel.svg", alt: "highlevel" },
+  { src: "/mariott.svg", alt: "Mariott" },
+  { src: "/microsoft.svg", alt: "Microsoft" },
 ];
 
 const Partners = () => {

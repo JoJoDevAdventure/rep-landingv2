@@ -46,10 +46,17 @@ const AIFuture = () => {
           The Future is AI Driven
         </h2>
         <p className="mt-4 text-gray-700 leading-relaxed md:text-xl">
-          By <strong>2028</strong>, AI is expected to{" "}
-          <strong>handle 60% of sales</strong> tasks. In 2023, it handled 45%.
-          We mixed a smart computer brain with an empathetic conversationalist,
-          so you can be at the forefront of sales efficiency and effectiveness.
+          By <strong>2025</strong>, AI is projected to handle a significant
+          portion of sales tasks, with autonomous agents performing actions like
+          <strong> making purchases </strong> and{" "}
+          <strong> scheduling meetings </strong>
+          on behalf of users.
+          <br />
+          <br />
+          This rapid integration of AI into daily operations is expected to
+          <strong> enhance sales efficiency</strong> and{" "}
+          <strong> effectiveness</strong>, positioning businesses at the
+          forefront of the evolving sales landscape.
         </p>
 
         {/* Buttons */}

@@ -6,11 +6,13 @@ import { fadeUpVariants } from "./Animations";
 
 const industries = [
   {
+    index: 1,
     name: "Automotive",
-    title: "AI-Powered Smart Listings for Faster Sales",
+    title: "Sell Smarter, Buy Faster with AI",
     description:
-      "AI-powered auto listing made effortless—helping sellers list cars instantly and buyers find the perfect ride with smart recommendations.",
+      "Revolutionizing vehicle sales with AI-driven smart listings, automated recommendations, and seamless transactions for both buyers and sellers.",
     link: "Learn more about Automotive ->",
+    href: "https://auto.replicaide.com",
     image: "/auto.jpg",
     bgColor: "bg-purple-500",
     textColor: "text-purple-700",
@@ -29,11 +31,13 @@ const industries = [
     scaleY2: "scale-y-75",
   },
   {
-    name: "Real-Estate",
-    title: "AI-Driven Real Estate Solutions",
+    index: 2,
+    name: "Real Estate",
+    title: "AI-Powered Property Management",
     description:
-      "Optimize real estate transactions with AI, providing smarter insights for buyers and sellers.",
-    link: "Learn more about Real-Estate ->",
+      "From smart property listings to intelligent market insights—AI simplifies real estate transactions, helping buyers and sellers make better decisions.",
+    link: "Learn more about Real Estate ->",
+    href: "https://property.replicaide.com",
     image: "/Property-UI.png",
     bgColor: "bg-yellow-500",
     textColor: "text-yellow-700",
@@ -52,15 +56,18 @@ const industries = [
     scaleY2: "scale-y-100",
   },
   {
-    name: "Ecommerce",
-    title: "AI-Powered Product Recommendations",
+    index: 3,
+    name: "E-Commerce",
+    title: "Smarter Shopping, Personalized for You",
     description:
-      "Boost sales with AI-powered product recommendations and personalized shopping experiences.",
-    link: "Learn more about Ecommerce ->",
-    image: "/auto.jpg",
-    bgColor: "bg-blue-500",
-    textColor: "text-blue-700",
-    secondaryBgColor: "bg-blue-700",
+      "Enhancing online shopping with AI-driven recommendations, dynamic pricing, and optimized product listings—boosting engagement and sales.",
+    link: "Learn more about E-Commerce ->",
+    href: "https://list.replicaide.com",
+    image: "/shopaideUI.jpg",
+
+    bgColor: "bg-green-500",
+    textColor: "text-green-700",
+    secondaryBgColor: "bg-green-700",
 
     translateX1: "translate-x-28",
     translateY1: "translate-y-12",
@@ -75,15 +82,19 @@ const industries = [
     scaleY2: "scale-y-50",
   },
   {
-    name: "Utility",
-    title: "Optimized Utility Management with AI",
+    index: 4,
+    name: "Hospitality & Travel",
+    title: "AI-Driven Experiences for Travelers & Hosts",
     description:
-      "Improve efficiency in utility management using AI-driven automation and analytics.",
-    link: "Learn more about Utility ->",
-    image: "/auto.jpg",
-    bgColor: "bg-green-500",
-    textColor: "text-green-700",
-    secondaryBgColor: "bg-green-700",
+      "From hotels to restaurants and travel bookings—AI optimizes operations, enhances guest experiences, and simplifies management.",
+    link: "Learn more about Hospitality & Travel ->",
+    href: "https://unity.replicaide.com",
+    image: "/shopaideUI.jpg",
+
+    bgColor: "bg-red-500",
+
+    textColor: "text-red-700",
+    secondaryBgColor: "bg-red-700",
 
     translateX1: "translate-x-44",
     translateY1: "translate-y-12",
@@ -98,15 +109,19 @@ const industries = [
     scaleY2: "scale-y-25",
   },
   {
-    name: "Funding",
-    title: "AI-Enhanced Financial Solutions",
+    index: 5,
+    name: "Finance & Funding",
+    title: "AI-Powered Financial Intelligence",
     description:
-      "Streamline funding and investment processes with AI-powered financial insights.",
-    link: "Learn more about Funding ->",
-    image: "/auto.jpg",
-    bgColor: "bg-red-500",
-    textColor: "text-red-700",
-    secondaryBgColor: "bg-red-700",
+      "Optimizing investments, funding, and financial planning with AI-driven analytics, risk assessment, and smart automation.",
+    link: "Learn more about Finance & Funding ->",
+    href: "https://fund.replicaide.com",
+    image: "/shopaideUI.jpg",
+
+    bgColor: "bg-blue-500",
+    textColor: "text-blue-700",
+    secondaryBgColor: "bg-blue-700",
+
     translateX1: "-translate-x-2",
     translateY1: "-translate-y-5",
     translateX2: "translate-x-2",
@@ -152,8 +167,8 @@ const IndustriesSectionMobile = () => {
           <motion.button
             key={industry.name}
             onClick={() => setSelectedIndustry(industry)}
-            className={`first:ml-4 last:mr-4 px-6 py-3 rounded-full transition-all duration-300 text-[12px] snap-start ${
-              industry.name == "Real-Estate" ? "min-w-32" : ""
+            className={`first:ml-4 last:mr-4 px-6 py-3 rounded-full transition-all duration-300 text-[12px] snap-start h-12 min-w-44 ${
+              industry.name == "Real-Estate" ? "min-w-24" : ""
             } ${
               selectedIndustry.name === industry.name
                 ? "border border-orange-500 text-orange-500"

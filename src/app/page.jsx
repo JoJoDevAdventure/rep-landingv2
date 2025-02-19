@@ -17,7 +17,7 @@ const PerfectFit = dynamic(() => import("@/Components/PerfectFit"), { ssr: false
 const Footer = dynamic(() => import("@/Components/Footer"), { ssr: false });
 
 const Home = () => {
-  const [isPopupOpen, setPopupOpen] = useState(true);
+  const [isPopupOpen, setPopupOpen] = useState(false);
 
   return (
     <main className="overflow-hidden">

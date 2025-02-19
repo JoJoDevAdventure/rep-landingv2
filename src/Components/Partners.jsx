@@ -11,6 +11,12 @@ const logos = [
   { src: "/highlevel.svg", alt: "highlevel" },
   { src: "/mariott.svg", alt: "Mariott" },
   { src: "/microsoft.svg", alt: "Microsoft" },
+  { src: "/att.png", alt: "AT&T" },
+  { src: "/verizon.png", alt: "Verizon" },
+  { src: "/comcast.png", alt: "Comcast" },
+  { src: "/highlevel.svg", alt: "highlevel" },
+  { src: "/mariott.svg", alt: "Mariott" },
+  { src: "/microsoft.svg", alt: "Microsoft" },
 ];
 
 const Partners = () => {
@@ -33,7 +39,7 @@ const Partners = () => {
         className="relative w-full overflow-hidden"
       >
         <motion.div
-          className="md:flex space-x-20 justify-end align-middle items-center hidden"
+          className="hidden md:flex space-x-20 justify-end align-middle items-center"
           animate={{ x: ["20%", "0%"] }}
           transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
         >

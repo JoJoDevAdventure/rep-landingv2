@@ -6,9 +6,9 @@ import { useEffect, useRef } from "react";
 
 const images = [
   { src: "/image1.png", width: 1400, height: 800 },
-  { src: "/image2.png", width: 1000, height: 500 },
+  { src: "/image2.gif", width: 400, height: 400 },
   { src: "/image3.png", width: 1000, height: 350 },
-  { src: "/image4.png", width: 1200, height: 280 },
+  { src: "/image4.gif", width: 800, height: 664 },
 ];
 
 const Hero = () => {
@@ -28,7 +28,7 @@ const Hero = () => {
   });
 
   return (
-    <section className="relative w-full h-[95vh] flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-22 md:pt-12">
+    <section className="relative w-full md:h-[95vh] flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-22 md:pt-12">
       <div className="w-full flex flex-col md:flex-row justify-between align-top px-6 md:px-16 lg:px-40">
         <motion.div
           initial={{ opacity: 0, x: -50, y: -50 }}
@@ -132,7 +132,7 @@ const Hero = () => {
               alt="AI Conversation"
               width={img.width}
               height={img.height}
-              className="rounded-lg h-auto w-auto max-w-full md:max-w-none"
+              className={`rounded-lg w-full h-full `}
             />
           ))}
         </motion.div>

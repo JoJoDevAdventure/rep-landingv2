@@ -6,7 +6,7 @@ import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   return (
     <motion.footer
-      className="w-full bg-orange-100 py-12 px-6 md:px-16"
+      className="w-full bg-orange-100 py-12 px-6 md:px-32"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -61,6 +61,7 @@ const Footer = () => {
 
       {/* Bottom Row */}
       <div className="flex flex-col md:flex-row justify-between items-center text-gray-700 text-sm">
+        <img src="rep-logo.svg" />
         <p>© ReplicAIDE. All rights reserved</p>
         <div className="flex gap-4 mt-4 md:mt-0">
           <a href="#" className="hover:text-black">

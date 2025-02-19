@@ -8,63 +8,62 @@ import {
   fadeRightVariants,
   fadeUpVariants,
 } from "./Animations";
-
 const aides = [
   {
-    name: "Propertyaide",
+    name: "PropertyAide",
     logo: "/propertyaide.svg",
     color: "bg-[#EBBF2B]",
     textColor: "text-[#EBBF2B]",
-    title: "The best automotive experience",
+    title: "Smarter Real Estate, Powered by AI",
     description:
-      "Helping you find and manage properties effortlessly with AI-driven real estate solutions.",
+      "Effortlessly list, manage, and discover properties with AI-driven insights. PropertyAide streamlines the buying, selling, and renting experience with intelligent automation and market analytics.",
     buttonColor: "bg-[#EBBF2B]",
     image: "/Property-UI.png",
     svg: "/yellow.svg",
     rotation: "rotate-[0deg]",
   },
   {
-    name: "Autoaide",
+    name: "AutoAide",
     logo: "/autoaide.svg",
     color: "bg-[#612EA7]",
     textColor: "text-[#612EA7]",
-    title: "The best automotive experience",
+    title: "Sell Faster, Buy Smarter with AI",
     description:
-      "Sellers can list vehicles effortlessly, while buyers receive smart recommendations tailored to their needs. Our intelligent system optimizes listings, enhances visibility, and ensures a seamless experience for both parties—making car transactions faster, smarter, and hassle-free.",
+      "AutoAide revolutionizes car transactions by optimizing listings, matching buyers with the perfect vehicles, and automating the entire process—making selling and buying seamless, efficient, and hassle-free.",
     buttonColor: "bg-[#612EA7]",
     image: "/auto.jpg",
     svg: "/violet.svg",
     rotation: "rotate-[70deg]",
   },
   {
-    name: "Listaide",
+    name: "ShopAide",
     logo: "/listaide.svg",
     color: "bg-[#07B446]",
     textColor: "text-[#07B446]",
-    title: "The best automotive experience",
+    title: "AI-Powered Retail Optimization",
     description:
-      "Enhancing visibility and engagement for your listings with AI-powered optimization.",
+      "Boost your store’s performance with AI-enhanced product listings, automated pricing strategies, and smart recommendations. ShopAide helps sellers maximize sales and visibility effortlessly.",
     buttonColor: "bg-[#07B446]",
-    image: "/auto.jpg",
+    image: "/shopaideUI.jpg",
     svg: "/green.svg",
     rotation: "rotate-[180deg]",
   },
   {
     name: "UnityAide",
     logo: "/Unity.svg",
-    color: "bg-[#40A4D8]",
-    textColor: "text-[#40A4D8]",
-    title: "The best automotive experience",
+    color: "bg-[#FA4276]",
+    textColor: "text-[#FA4276]",
+    title: "AI Solutions for Every Industry",
     description:
-      "Optimizing investments and funding processes with AI-driven smart solutions.",
-    buttonColor: "bg-[#40A4D8]",
-    image: "/auto.jpg",
+      "A unified AI assistant across hospitality, dining, travel, and more. UnityAide powers HostAide for hotels, Prepaide for restaurants, TravelAide for trips, and beyond—streamlining operations with intelligent automation.",
+    buttonColor: "bg-[#FA4276]",
+    image: "/Property-UI.png",
     svg: "/blue.svg",
     rotation: "rotate-[120deg]",
   },
 ];
 
-const AidesSection = () => {
+const AidesSection = ({onClickDemo}) => {
   const [selectedAide, setSelectedAide] = useState(aides[1]);
 
   return (
@@ -72,15 +71,24 @@ const AidesSection = () => {
       <section
         className={`hidden relative w-full md:flex flex-col items-center justify-center transition-colors duration-500 md:px-28 px-4 py-24 bg-p1/10 overflow-hidden`}
       >
-        <motion.h1
+        <motion.p
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.7 }}
           variants={fadeUpVariants} // Apply fade from left to right for title
-          className="text-5xl font-light text-black"
         >
-          Find your aide
-        </motion.h1>
+          Ditch your CRM
+        </motion.p>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.7 }}
+          variants={fadeUpVariants} // Apply fade from left to right for title
+          className="flex justify-center items-bottom align-bottom w-128 gap-3"
+        >
+          <h1 className="text-5xl font-light text-black mt-9">Find your</h1>
+          <img src="/aide.svg" alt="" className="w-28 h-auto"/>
+        </motion.div>
 
         <div className="relative flex w-full gap-14 mt-12 items-center flex-col md:flex-row z-40">
           {/* Left Side: Aide Selection */}
@@ -179,6 +187,7 @@ const AidesSection = () => {
                 className={`mt-6 px-6 py-3 rounded-lg transition-all duration-500 text-white ${selectedAide.buttonColor}`}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
+                onClick={onClickDemo}
               >
                 Schedule Demo
               </motion.button>
@@ -189,15 +198,16 @@ const AidesSection = () => {
 
       {/* MOBILE */}
       <section className="md:hidden relative w-full flex flex-col items-center justify-center transition-colors duration-500 px-4 md:px-28 py-8 bg-p1/10 overflow-hidden">
-        <motion.h1
+      <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.7 }}
           variants={fadeUpVariants} // Apply fade from left to right for title
-          className="text-3xl font-light text-black"
+          className="flex justify-center items-bottom align-bottom h-24 w-128 gap-3"
         >
-          Find your aide
-        </motion.h1>
+          <h1 className="text-3xl font-light text-black mt-10">Find your</h1>
+          <img src="/aide.svg" alt="" className="w-[68px] h-auto"/>
+        </motion.div>
 
         {/* Aides List - Horizontal Layout */}
         <motion.div
@@ -205,7 +215,7 @@ const AidesSection = () => {
           whileInView="visible"
           viewport={{ once: false, amount: 0.7 }}
           variants={fadeUpVariants} // Apply fade from left to right for title
-          className="relative flex w-full overflow-x-auto mt-4 space-x-4 md:justify-center md:pb-0 z-50"
+          className="relative flex w-full overflow-x-auto mt-4 space-x-4 md:justify-center md:pb-0 z-40"
         >
           {aides.map((aide, index) => (
             <motion.button
@@ -272,20 +282,22 @@ const AidesSection = () => {
             transition={{ duration: 0.5 }}
             className="w-full md:w-3/4 text-center mt-4"
           >
-            <motion.h2 
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: false, amount: 0.2 }}
-                      variants={fadeUpVariants} // Apply fade from left to right for title
-                      className={`text-2xl font-bold ${selectedAide.textColor}`}>
+            <motion.h2
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              variants={fadeUpVariants} // Apply fade from left to right for title
+              className={`text-2xl font-bold ${selectedAide.textColor}`}
+            >
               {selectedAide.title}
             </motion.h2>
-            <motion.p 
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: false, amount: 0.2 }}
-                      variants={fadeUpVariants} // Apply fade from left to right for title
-            className="text-m text-gray-700 mt-2">
+            <motion.p
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              variants={fadeUpVariants} // Apply fade from left to right for title
+              className="text-m text-gray-700 mt-2"
+            >
               {selectedAide.description}
             </motion.p>
             <motion.button

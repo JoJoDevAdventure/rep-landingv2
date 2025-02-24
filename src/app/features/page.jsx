@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 
 // Dynamically import components with `ssr: false` to disable server-side rendering

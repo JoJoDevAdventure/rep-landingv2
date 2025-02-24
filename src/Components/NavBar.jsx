@@ -20,10 +20,8 @@ const NavBar = () => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-6">
           <Dropdown title="Products" />
-          <Dropdown title="Solutions" />
-          <Dropdown title="Why Replicaide?" />
           <Link href="/features" className="hover:text-p1">Features</Link>
-          <Link href="/enterprise" className="hover:text-p1">Enterprise</Link>
+          <Link href="/enterprise" className="hover:text-p1">About us</Link>
         </nav>
 
         {/* CTA Buttons */}
@@ -46,10 +44,8 @@ const NavBar = () => {
           </button>
           <nav className="flex flex-col space-y-4">
             <Dropdown title="Products" mobile />
-            <Dropdown title="Solutions" mobile /> 
-            <Dropdown title="Why Replicaide?" mobile />
-            <Link href="/enterprise" className="hover:text-p1">Features</Link>
-            <Link href="/enterprise" className="hover:text-p1">Enterprise</Link>
+            <Link href="/features" className="hover:text-p1">Features</Link>
+            <Link href="/enterprise" className="hover:text-p1">About us</Link>
           </nav>
           <div className="mt-6 flex flex-col space-y-3">
             <button className="bg-p1 text-white px-4 py-2 rounded-lg">Get a demo</button>

@@ -48,7 +48,7 @@ const perfectFitData = [
 
 const PerfectFit = () => {
   return (
-    <section className="w-full py-16 flex flex-col items-center px-6 md:px-16 overflow-hidden">
+    <section className="w-full py-4 md:py-16 flex flex-col items-center px-6 md:px-16 overflow-hidden">
       {/* Header */}
       <motion.h2
         className="text-3xl md:text-4xl font-bold text-center"

@@ -23,7 +23,7 @@ const Home = () => {
     <main className="overflow-hidden">
       <ContactPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
       <NavBar />
-      <Hero />
+      <Hero onClickDemo={() => setPopupOpen(true)} />
       <Partners />
       <Aides />
       <div>

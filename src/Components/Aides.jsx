@@ -198,6 +198,14 @@ const AidesSection = ({onClickDemo}) => {
 
       {/* MOBILE */}
       <section className="md:hidden relative w-full flex flex-col items-center justify-center transition-colors duration-500 px-4 md:px-28 py-8 bg-p1/10 overflow-hidden">
+      <motion.p
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.7 }}
+          variants={fadeUpVariants} // Apply fade from left to right for title
+        >
+          Ditch your CRM
+        </motion.p>
       <motion.div
           initial="hidden"
           whileInView="visible"

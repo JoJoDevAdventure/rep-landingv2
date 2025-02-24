@@ -189,13 +189,13 @@ const IndustriesSectionMobile = () => {
           transition={{ duration: 0.5 }}
           className="w-full md:w-1/2 text-center md:text-left"
         >
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="relative text-2xl font-bold text-gray-900 z-40">
             {selectedIndustry.title}
           </h2>
           <p className="text-gray-700 mt-4">{selectedIndustry.description}</p>
           <a
-            href="#"
-            className={`${selectedIndustry.textColor} text-purple-500 mt-4 inline-block`}
+            href={selectedIndustry.href}
+            className={`${selectedIndustry.textColor} mt-4 inline-block`}
           >
             {selectedIndustry.link}
           </a>

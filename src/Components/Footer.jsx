@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -61,17 +61,14 @@ const Footer = () => {
 
       {/* Bottom Row */}
       <div className="flex flex-col md:flex-row justify-between items-center text-gray-700 text-sm">
-        <img src="rep-logo.svg" />
+        <img className="w-24 md:w-32" src="rep-logo.svg" />
         <p>© ReplicAIDE. All rights reserved</p>
         <div className="flex gap-4 mt-4 md:mt-0">
           <a href="#" className="hover:text-black">
             <FaLinkedin size={20} />
           </a>
-          <a href="#" className="hover:text-black">
-            <FaFacebook size={20} />
-          </a>
-          <a href="#" className="hover:text-black">
-            <FaInstagram size={20} />
+          <a href="">
+            <FaTwitter size={20} />
           </a>
         </div>
       </div>

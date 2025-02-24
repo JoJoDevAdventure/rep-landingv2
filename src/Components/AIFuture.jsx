@@ -46,18 +46,12 @@ const AIFuture = () => {
           The Future is AI Driven
         </h2>
         <p className="mt-4 text-gray-700 leading-relaxed md:text-xl">
-          By <strong>2025</strong>, AI is projected to handle a significant
-          portion of sales tasks, with autonomous agents performing actions like
-          <strong> making purchases </strong> and{" "}
-          <strong> scheduling meetings </strong>
-          on behalf of users.
-          <br />
-          <br />
-          This rapid integration of AI into daily operations is expected to
-          <strong> enhance sales efficiency</strong> and{" "}
-          <strong> effectiveness</strong>, positioning businesses at the
-          forefront of the evolving sales landscape.
+          AI technologies can automate tasks that occupy <strong>60–70%</strong>{" "}
+          of workers' current workload. Yet, <strong>86%</strong> of CFOs find
+          effective AI and automation implementation to be a struggle.
         </p>
+        <br />
+        <p className="mt-4 italic text-gray-600">McKinsey & Co + PwC, 2024</p>
 
         {/* Buttons */}
         <div className="mt-6 flex gap-4">

@@ -11,7 +11,7 @@ const images = [
   { src: "/image4.gif", width: 800, height: 664 },
 ];
 
-const Hero = () => {
+const Hero = ({onClickDemo}) => {
   const controls = useAnimation();
   const scrollRef = useRef(null);
 
@@ -30,14 +30,14 @@ const Hero = () => {
   return (
     <section className="relative w-full md:h-[95vh] flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-22 md:pt-12">
       <div className="w-full flex flex-col md:flex-row justify-between align-top px-6 md:px-16 lg:px-40">
-        <motion.div
+        <motion.div 
           initial={{ opacity: 0, x: -50, y: -50 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
           className="w-full md:w-[65%]"
         >
           <h1 className="md:h1 font-klik font-regular text-left text-3xl md:text-5xl lg:text-6xl leading-normal">
-            Connecting humanity <br /> <span className="mt-4"> through meaningful</span> <br />
+          Captivating relationships<br /> <span className="mt-4"> through meaningful</span> <br />
             <motion.span
               className="text-p1 text-light"
               initial={{ opacity: 0 }}
@@ -81,6 +81,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.2 }}
+              onClick={onClickDemo}
               className="bg-p1 text-white border-p1 border hover:bg-orange-500 transition-all duration-300 px-2 md:px-6 py-3 rounded-lg w-full md:w-auto text-[12px] md:text-[18px]"
             >
               Schedule Demo
@@ -89,6 +90,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.4 }}
+              onClick={onClickDemo}
               className="bg-transparent text-s1 px-2 md:px-6 py-3 rounded-lg w-full border hover:bg-p1/20 border-p1 transition-all duration-300 md:w-auto text-[12px] md:text-[18px]"
             >
               Learn more

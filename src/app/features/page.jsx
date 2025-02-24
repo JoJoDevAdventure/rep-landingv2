@@ -1,4 +1,5 @@
 import NavBar from "@/Components/NavBar"
+import ComparisonChart from "./Comparison"
 import LiveTranscription from "./LiveTranscription"
 
 const page = () => {
@@ -6,6 +7,7 @@ const page = () => {
     <main>
         <NavBar/>
         <LiveTranscription/>
+        <ComparisonChart/>
     </main>
   )
 }

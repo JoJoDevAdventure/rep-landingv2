@@ -24,7 +24,7 @@ const ComparisonChart = () => {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-8 p-6 container">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-8 p-6 py-8 md:py-24 container">
       {/* Left Section */}
       <div className="md:w-1/2 text-center md:text-left">
         <span className="px-3 py-1 text-sm font-semibold bg-yellow-200 text-yellow-800 rounded-md">

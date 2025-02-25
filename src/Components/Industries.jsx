@@ -9,11 +9,13 @@ const industries = [
     index: 1,
     name: "Automotive",
     title: "Sell Smarter, Buy Faster with AI",
+
     description:
       "Revolutionizing vehicle sales with AI-driven smart listings, automated recommendations, and seamless transactions for both buyers and sellers.",
     link: "Learn more about Automotive ->",
     href: "https://auto.replicaide.com",
     image: "/auto.jpg",
+
     bgColor: "bg-purple-500",
     secondaryBgColor: "bg-purple-700",
 

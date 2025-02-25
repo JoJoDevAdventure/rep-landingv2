@@ -51,7 +51,8 @@ const AIFuture = () => {
           effective AI and automation implementation to be a struggle.
         </p>
         <br />
-        <p className="mt-4 italic text-gray-600">McKinsey & Co + PwC, 2024</p>
+        <p className="-mt-2 italic text-gray-600">McKinsey & Co + PwC, 2024</p>
+        <p className="mt-4 text-gray-700 leading-relaxed md:text-xl">This is why we mixed a smart computer brain with an empathetic conversationalist, so you can be at the forefront of efficiency & effectiveness.</p>
 
         {/* Buttons */}
         <div className="mt-6 flex gap-4">

@@ -61,7 +61,7 @@ const Footer = () => {
 
       {/* Bottom Row */}
       <div className="flex flex-col md:flex-row justify-between items-center text-gray-700 text-sm">
-        <img className="w-24 md:w-32" src="rep-logo.svg" />
+        <img className="w-32 mb-4 md:w-32" src="rep-logo.svg" />
         <p>© ReplicAIDE. All rights reserved</p>
         <div className="flex gap-4 mt-4 md:mt-0">
           <a href="#" className="hover:text-black">

@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import aiGrowthAnimation from "../../public/ai-growth.json"; // Ensure correct path
 
-const AIFuture = () => {
+const AIFuture = ({onClickDemo}) => {
   const sectionRef = useRef(null);
   const lottieRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -56,10 +56,10 @@ const AIFuture = () => {
 
         {/* Buttons */}
         <div className="mt-6 flex gap-4">
-          <button className="bg-p1 text-white rounded-lg px-3 md:px-6 py-2 md:py-3 text-[14px] md:text-[18px]">
+          <button onClick={onClickDemo} className="bg-p1 text-white rounded-lg px-3 md:px-6 py-2 md:py-3 text-[14px] md:text-[18px]">
             Get a demo
           </button>
-          <button className="border border-p1 text-p1 px-3 md:px-6 py-2 md:py-3 text-[14px] md:text-[18px] rounded-lg">
+          <button onClick={onClickDemo} className="border border-p1 text-p1 px-3 md:px-6 py-2 md:py-3 text-[14px] md:text-[18px] rounded-lg">
             Contact
           </button>
         </div>

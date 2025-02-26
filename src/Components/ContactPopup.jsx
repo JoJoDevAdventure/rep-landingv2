@@ -16,7 +16,7 @@ export default function ContactPopup({ isOpen, onClose }) {
 
   // Configure Mailchimp SDK
   mailchimp.setConfig({
-    apiKey: "928632585111ef7e11d5b2cf570bdd23-us11", // Your API key
+    apiKey: process.env.NEXT_PUBLIC_MAILCHIMP_API_KEY,
     server: "us11", // Server prefix (data center from API key: -us11)
   });
 

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-const NavBar = () => {
+const NavBar = ({onClickDemo}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -27,8 +27,8 @@ const NavBar = () => {
 
         {/* CTA Buttons */}
         <div className="hidden md:flex space-x-4">
-          <button className="bg-p1 text-white px-4 py-2 rounded-lg">Get a demo</button>
-          <button className="border border-p1 text-p1 px-4 py-2 rounded-lg">Contact</button>
+          <button onClick={onClickDemo} className="bg-p1 text-white px-4 py-2 rounded-lg">Get a demo</button>
+          <button onClick={onClickDemo} className="border border-p1 text-p1 px-4 py-2 rounded-lg">Contact</button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -49,8 +49,8 @@ const NavBar = () => {
           <Link href="/enterprise" className="hover:text-p1">About us</Link>
         </nav>
         <div className="mt-6 flex flex-col space-y-3">
-          <button className="bg-p1 text-white px-4 py-2 rounded-lg">Get a demo</button>
-          <button className="border border-p1 text-p1 px-4 py-2 rounded-lg">Contact</button>
+          <button onClick={onClickDemo} className="bg-p1 text-white px-4 py-2 rounded-lg">Get a demo</button>
+          <button onClick={onClickDemo} className="border border-p1 text-p1 px-4 py-2 rounded-lg">Contact</button>
         </div>
       </div>
     </header>

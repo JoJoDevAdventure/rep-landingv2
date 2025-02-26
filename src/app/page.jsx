@@ -22,21 +22,21 @@ const Home = () => {
   return (
     <main className="overflow-hidden">
       <ContactPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
-      <NavBar />
+      <NavBar onClickDemo={() => setPopupOpen(true)}/>
       <Hero onClickDemo={() => setPopupOpen(true)} />
-      <Partners />
-      <Aides />
+      <Partners onClickDemo={() => setPopupOpen(true)}/>
+      <Aides onClickDemo={() => setPopupOpen(true)}/>
       <div>
         <div className="md:hidden">
-          <IndustriesSectionMobile />
+          <IndustriesSectionMobile onClickDemo={() => setPopupOpen(true)}/>
         </div>
         <div className="hidden md:block">
-          <IndustriesSection />
+          <IndustriesSection onClickDemo={() => setPopupOpen(true)}/>
         </div>
       </div>
-      <AIFuture />
-      <UnityAide/>
-      <PerfectFit/>
+      <AIFuture onClickDemo={() => setPopupOpen(true)}/>
+      <UnityAide onClickDemo={() => setPopupOpen(true)}/>
+      <PerfectFit onClickDemo={() => setPopupOpen(true)}/>
       <Footer/>
     </main>
   );

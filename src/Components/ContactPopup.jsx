@@ -1,6 +1,5 @@
-import axios from "axios";
+import mailchimp from "@mailchimp/mailchimp_marketing"; // Import the Mailchimp SDK
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useState } from "react";
 
 const industries = ["Technology", "Finance", "Healthcare", "Retail", "Education", "Other"];
@@ -15,6 +14,12 @@ export default function ContactPopup({ isOpen, onClose }) {
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Configure Mailchimp SDK
+  mailchimp.setConfig({
+    apiKey: "928632585111ef7e11d5b2cf570bdd23-us11", // Your API key
+    server: "us11", // Server prefix (data center from API key: -us11)
+  });
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -24,33 +29,45 @@ export default function ContactPopup({ isOpen, onClose }) {
     setLoading(true);
     setStatus(null);
 
-    const API_KEY = "YOUR_API_KEY";
-    const AUDIENCE_ID = "YOUR_AUDIENCE_ID";
-    const DATA_CENTER = "usX"; // Replace with your Mailchimp data center
-    const url = `https://${DATA_CENTER}.api.mailchimp.com/3.0/lists/${AUDIENCE_ID}/members`;
-
-    const data = {
-      email_address: formData.email,
-      status: "subscribed",
-      merge_fields: {
-        FNAME: formData.name,
-        PHONE: formData.phone,
-        INDUSTRY: formData.industry,
-      },
-    };
+    console.log("Form Data:", formData);
 
     try {
-      await axios.post(url, data, {
-        auth: {
-          username: "anystring",
-          password: API_KEY,
+      const response = await mailchimp.lists.addListMember("7edae1fc6c", { // Audience ID
+        email_address: formData.email,
+        status: "subscribed", // Use "pending" for double opt-in if needed
+        merge_fields: {
+          FNAME: formData.name,
+          PHONE: formData.phone,
+          INDUSTRY: formData.industry,
         },
       });
-      setStatus("success");
+
+      console.log("Mailchimp Response:", response);
+
+      if (response.status === 200 || response.status === 201) {
+        setStatus("success");
+        setFormData({ name: "", email: "", phone: "", industry: "Technology" });
+        setTimeout(() => {
+          onClose();
+        }, 2000); // Close popup after 2 seconds
+      } else {
+        setStatus(`Error! Unexpected response from Mailchimp (Status: ${response.status}).`);
+      }
     } catch (error) {
-      setStatus("error");
+      if (error.response && error.response.body) {
+        const mailchimpError = error.response.body;
+        if (mailchimpError.title === "Member Exists") {
+          setStatus("You are already subscribed.");
+        } else {
+          setStatus(`Error: ${mailchimpError.title} - ${mailchimpError.detail || error.message}`);
+        }
+      } else {
+        setStatus("Error: Network error or invalid request. Please check your connection and try again.");
+      }
+      console.error("Mailchimp SDK Error:", error.response?.body || error.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -60,10 +77,10 @@ export default function ContactPopup({ isOpen, onClose }) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
-          className="bg-white p-8 py-12 rounded-lg shadow-xl max-w-3xl w-full flex flex-col md:flex-row items-center md:items-center gap-8 relative"
+          className="bg-white p-8 py-12 rounded-lg shadow-xl max-w-xl w-full flex flex-col md:flex-row items-center md:items-center gap-8 relative"
         >
           {/* Form Section */}
-          <div className="w-full md:w-2/3">
+          <div className="w-full">
             <h2 className="text-2xl font-semibold font-klik text-gray-900 mb-6">Join Our Network</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
@@ -73,6 +90,7 @@ export default function ContactPopup({ isOpen, onClose }) {
                 required
                 className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
                 onChange={handleChange}
+                value={formData.name}
               />
               <input
                 type="email"
@@ -81,6 +99,7 @@ export default function ContactPopup({ isOpen, onClose }) {
                 required
                 className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
                 onChange={handleChange}
+                value={formData.email}
               />
               <input
                 type="tel"
@@ -88,11 +107,13 @@ export default function ContactPopup({ isOpen, onClose }) {
                 placeholder="Phone Number"
                 className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
                 onChange={handleChange}
+                value={formData.phone}
               />
               <select
                 name="industry"
                 className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
                 onChange={handleChange}
+                value={formData.industry}
               >
                 {industries.map((ind) => (
                   <option key={ind} value={ind}>
@@ -103,6 +124,7 @@ export default function ContactPopup({ isOpen, onClose }) {
               <button
                 type="submit"
                 className="w-full p-3 bg-p1 text-white rounded-lg font-semibold hover:bg-p1/70 transition duration-200"
+                disabled={loading}
               >
                 {loading ? "Submitting..." : "Submit"}
               </button>
@@ -111,14 +133,9 @@ export default function ContactPopup({ isOpen, onClose }) {
             {status === "success" && (
               <p className="text-green-600 mt-3 text-center">Success! You've been added.</p>
             )}
-            {status === "error" && (
-              <p className="text-red-600 mt-3 text-center">Error! Please try again.</p>
+            {status && status !== "success" && (
+              <p className="text-red-600 mt-3 text-center">{status}</p>
             )}
-          </div>
-
-          {/* Image Section (Only visible on mobile) */}
-          <div className="hidden md:flex md:w-1/2">
-            <Image src={'/listaide.svg'} width={340} height={400} alt="Contact" className="w-full h-auto object-cover rounded-lg" />
           </div>
 
           {/* Close Button */}

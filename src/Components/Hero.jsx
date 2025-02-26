@@ -135,6 +135,8 @@ const Hero = ({onClickDemo}) => {
               width={img.width}
               height={img.height}
               className={`rounded-lg w-full h-full `}
+              priority
+              unoptimized
             />
           ))}
         </motion.div>

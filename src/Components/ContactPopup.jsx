@@ -1,4 +1,3 @@
-import mailchimp from "@mailchimp/mailchimp_marketing"; // Import the Mailchimp SDK
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -14,12 +13,6 @@ export default function ContactPopup({ isOpen, onClose }) {
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Configure Mailchimp SDK
-  mailchimp.setConfig({
-    apiKey: process.env.NEXT_PUBLIC_MAILCHIMP_API_KEY,
-    server: "us11", // Server prefix (data center from API key: -us11)
-  });
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,43 +21,37 @@ export default function ContactPopup({ isOpen, onClose }) {
     e.preventDefault();
     setLoading(true);
     setStatus(null);
-
+  
     console.log("Form Data:", formData);
-
+  
     try {
-      const response = await mailchimp.lists.addListMember("7edae1fc6c", { // Audience ID
-        email_address: formData.email,
-        status: "subscribed", // Use "pending" for double opt-in if needed
-        merge_fields: {
-          FNAME: formData.name,
-          PHONE: formData.phone,
-          INDUSTRY: formData.industry,
-        },
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email_address: formData.email,
+          name: formData.name,
+          phone: formData.phone,
+          company: formData.industry,
+        }),
       });
-
-      console.log("Mailchimp Response:", response);
-
-      if (response.status === 200 || response.status === 201) {
+  
+      const data = await response.json();
+  
+      console.log("Mailchimp Response:", data);
+  
+      if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", phone: "", industry: "Technology" });
+        setFormData({ name: "", email: "", phone: "", company: "Technology" });
         setTimeout(() => {
           onClose();
-        }, 2000); // Close popup after 2 seconds
+        }, 2000);
       } else {
-        setStatus(`Error! Unexpected response from Mailchimp (Status: ${response.status}).`);
+        setStatus(`Error: ${data.title || "Unexpected error."}`);
       }
     } catch (error) {
-      if (error.response && error.response.body) {
-        const mailchimpError = error.response.body;
-        if (mailchimpError.title === "Member Exists") {
-          setStatus("You are already subscribed.");
-        } else {
-          setStatus(`Error: ${mailchimpError.title} - ${mailchimpError.detail || error.message}`);
-        }
-      } else {
-        setStatus("Error: Network error or invalid request. Please check your connection and try again.");
-      }
-      console.error("Mailchimp SDK Error:", error.response?.body || error.message);
+      setStatus("Error: Network error or invalid request. Please check your connection and try again.");
+      console.error("Fetch Error:", error);
     } finally {
       setLoading(false);
     }

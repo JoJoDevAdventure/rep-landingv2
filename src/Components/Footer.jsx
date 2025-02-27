@@ -18,8 +18,6 @@ const Footer = () => {
           <ul className="mt-3 space-y-2 text-gray-700">
             <li><a href="#">About us</a></li>
             <li><a href="#">Contact us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Press</a></li>
           </ul>
         </div>
 
@@ -27,11 +25,7 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold">Product</h3>
           <ul className="mt-3 space-y-2 text-gray-700">
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">News</a></li>
-            <li><a href="#">Help desk</a></li>
-            <li><a href="#">Support</a></li>
+            <li><a href="/features">Features</a></li>
           </ul>
         </div>
 
@@ -39,10 +33,10 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold">Services</h3>
           <ul className="mt-3 space-y-2 text-gray-700">
-            <li><a href="#">Generate</a></li>
-            <li><a href="#">Editor</a></li>
-            <li><a href="#">Filter</a></li>
-            <li><a href="#">Research</a></li>
+            <li><a href="https://auto.replicaide.com">autoaide</a></li>
+            <li><a href="https://property.replicaide.com">propaide</a></li>
+            <li><a href="https://list.replicaide.com">shopaide</a></li>
+            <li><a href="https://unity.replicaide.com">unityaide</a></li>
           </ul>
         </div>
 
@@ -51,7 +45,6 @@ const Footer = () => {
           <h3 className="text-lg font-semibold">Legal</h3>
           <ul className="mt-3 space-y-2 text-gray-700">
             <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms & Conditions</a></li>
           </ul>
         </div>
       </div>

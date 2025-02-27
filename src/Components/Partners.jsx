@@ -12,14 +12,16 @@ const logos = [
   { src: "/highlevel.svg", alt: "HighLevel" },
   { src: "/mariott.svg", alt: "Marriott" },
   { src: "/microsoft.svg", alt: "Microsoft" },
-  { src: "/shopify.svg", alt: "Microsoft" },
+  { src: "/shopify.svg", alt: "shopify" },
+  { src: "/meta.svg", alt: "meta" },
   { src: "/att.png", alt: "AT&T" },
   { src: "/verizon.png", alt: "Verizon" },
   { src: "/comcast.png", alt: "Comcast" },
   { src: "/highlevel.svg", alt: "HighLevel" },
   { src: "/mariott.svg", alt: "Marriott" },
   { src: "/microsoft.svg", alt: "Microsoft" },
-  { src: "/shopify.svg", alt: "Microsoft" },
+  { src: "/shopify.svg", alt: "shopify" },
+  { src: "/meta.svg", alt: "meta" },
 ];
 
 const Partners = () => {

@@ -22,7 +22,7 @@ const NavBar = ({onClickDemo}) => {
         <Link href="/" className="hover:text-p1">Home</Link>
           <Dropdown title="Products" />
           <Link href="/features" className="hover:text-p1">Features</Link>
-          <Link href="/enterprise" className="hover:text-p1">About us</Link>
+          <Link href="/about" className="hover:text-p1">About us</Link>
         </nav>
 
         {/* CTA Buttons */}

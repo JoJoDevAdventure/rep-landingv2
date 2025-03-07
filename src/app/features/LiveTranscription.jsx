@@ -95,7 +95,7 @@ const LiveTranscription = () => {
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.7 }}
+        viewport={{ once: false, amount: 0.2 }}
         variants={fadeUpVariants}
         className="mt-10 w-full max-w-5xl bg-p1/10 rounded-md p-6"
       >

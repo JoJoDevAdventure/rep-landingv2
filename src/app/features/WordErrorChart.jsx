@@ -91,7 +91,7 @@ const renderCustomLegend = () => {
 
 const WordErrorRateChart = () => {
   return (
-    <div className="w-full h-[700px] bg-white p-4 rounded-lg shadow-md container py-12">
+    <div className="w-full h-[700px] bg-white p-4 rounded-lg container py-12">
       <motion.p
         initial="hidden"
         whileInView="visible"

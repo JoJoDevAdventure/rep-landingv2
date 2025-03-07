@@ -178,7 +178,7 @@ const Values = () => {
           {[...coreValues, ...coreValues].map((value, index) => (
             <motion.div
               key={index}
-              className="relative min-w-[300px] md:min-w-[350px] py-10 border-2 border-p3 rounded-3xl g1 flex flex-col align-center justify-center group"
+              className="relative min-w-[300px] md:min-w-[350px] py-10 border-2 border-p1 rounded-3xl bg-p1/20 flex flex-col align-center justify-center group"
             >
               {/* Title and Description */}
               <h2 className="h4 mb-2 text-center relative z-10">

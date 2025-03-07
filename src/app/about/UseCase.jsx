@@ -67,7 +67,7 @@ const UseCase = () => {
         {useCases.map((caseItem, index) => (
           <motion.div
             key={index}
-            className="flex flex-col items-center p-6 border-2 border-p1 rounded-3xl bg-p1/20 shadow-lg transition-all duration-500 hover:g1 cursor-pointer"
+            className="flex flex-col items-center p-6 border-2 border-p1 rounded-3xl bg-p1/20 shadow-lg transition-all duration-500 hover:bg-p1/50 cursor-pointer"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}

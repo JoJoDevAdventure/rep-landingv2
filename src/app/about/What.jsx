@@ -45,7 +45,7 @@ const What = () => {
           <motion.img
             src="/brain.png"
             alt="Money illustration"
-            className="absolute inset-0 max-md:w-[100%] w-full h-auto object-cover opacity-40 z-0 max-md:mt-32 max-sm:mt-72"
+            className="absolute inset-0 max-md:w-[100%] w-full h-auto object-cover opacity-80 z-0 max-md:mt-32 max-sm:mt-72"
             style={{ y: background1Y }}
           />
           <motion.h2
@@ -72,7 +72,7 @@ const What = () => {
           <motion.img
             src="/money.png"
             alt="Cost illustration"
-            className="absolute inset-0 max-md:w-[100%] w-full h-auto object-cover opacity-40 z-0 max-md:mt-32 max-sm:mt-80"
+            className="absolute inset-0 max-md:w-[100%] w-full h-auto object-cover opacity-80 z-0 max-md:mt-32 max-sm:mt-80"
             style={{ y: background2Y }}
           />
           <motion.h2

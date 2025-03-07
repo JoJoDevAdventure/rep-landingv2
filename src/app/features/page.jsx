@@ -2,6 +2,7 @@
 import Footer from "@/Components/Footer";
 import dynamic from "next/dynamic";
 import Script from "next/script";
+import AsrData from "./AsrData";
 import MarketComparison from "./MarketComparaison";
 import WordErrorRateChart from "./WordErrorChart";
 
@@ -38,6 +39,8 @@ const page = () => {
       <ComparisonChart />
       <MarketComparison />
       <WordErrorRateChart />
+      <AsrData/>
+      
       <Footer />
     </main>
   );

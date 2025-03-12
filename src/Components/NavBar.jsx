@@ -56,6 +56,7 @@ const NavBar = ({onClickDemo}) => {
     </header>
   );
 };
+
 const Dropdown = ({ title, mobile }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -73,6 +74,7 @@ const Dropdown = ({ title, mobile }) => {
 
   return (
     <div className={`relative ${mobile ? 'w-full' : ''}`}>
+
       <button 
         className="hover:text-p1 flex items-center justify-between w-full"
         onClick={handleClick}
@@ -114,6 +116,7 @@ const Dropdown = ({ title, mobile }) => {
           </Link>
         ))}
       </div>
+
     </div>
   );
 };

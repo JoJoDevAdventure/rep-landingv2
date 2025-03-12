@@ -16,32 +16,32 @@ const perfectFitData = [
     title: "Growing Businesses",
     description:
       "Boost scalability by optimizing workflows and driving expansion through smart automation.",
-      image: "/r2.png",
-      bgColor: "bg-rose-300",
+    image: "/r2.png",
+    bgColor: "bg-rose-300",
     borderColor: "border-rose-500",
   },
   {
     title: "Startups",
     description:
       "Accelerate innovation with agile AI solutions that streamline operations and fuel rapid growth.",
-      image: "/r3.png",
-      bgColor: "bg-yellow-200",
+    image: "/r3.png",
+    bgColor: "bg-yellow-200",
     borderColor: "border-yellow-400",
   },
   {
     title: "Self-Employed",
     description:
       "Simplify daily tasks with tailored AI tools designed to enhance productivity and ease task management.",
-      image: "/r4.png",
-      bgColor: "bg-amber-300",
+    image: "/r4.png",
+    bgColor: "bg-amber-300",
     borderColor: "border-amber-500",
   },
   {
     title: "Consumers",
     description:
       "Enhance your experience with AI-driven interactions that make services more accessible.",
-      image: "/r5.png",
-      bgColor: "bg-indigo-200",
+    image: "/r5.png",
+    bgColor: "bg-indigo-200",
     borderColor: "border-indigo-400",
   },
 ];

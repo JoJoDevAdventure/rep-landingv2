@@ -60,9 +60,6 @@ const UnityAide = () => {
         </motion.div>
         {/* <Player src={arrow} autoplay={isInView} loop={false} className="w-24 h-24" /> */}
       </div>
-      <button className="mt-4 md:mt-12 mb-8 py-2 md:py-3 px-6 md:px-8 border-black border-2 text-black text-md md:text-lg rounded-lg transition-all duration-500 hover:bg-gray-300">
-        Explore UnityAide
-      </button>
       <div className="absolute flex top-0 left-0 md:left-24 right-0 md:right-24 bottom-44 bg-[url('/unity-bg.png')] bg-cover bg-center z-0 " />
     </section>
   );

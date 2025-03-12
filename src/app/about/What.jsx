@@ -16,7 +16,7 @@ const What = () => {
    const isInView = useInView(sectionRef, { once: false });
 
   return (
-    <div ref={sectionRef} className="flex flex-col gap-12 items-center">
+    <div ref={sectionRef} className="flex flex-col gap-12 items-center relative">
       {/* Heading with fade-up effect */}
       <motion.h1
         className="h3 mb-0 text-s1 text-center max-md:h5"
@@ -27,7 +27,7 @@ const What = () => {
         What's an AIDE? 🤖💼
       </motion.h1>
       <motion.p
-        className="mb-11 body-1 max-md:mb-8 max-md:body-3 text-center max-w-[800px]"
+        className="mb-11 body-1 max-md:mb-8 max-md:body-3 text-center max-w-[800px] relative z-40"
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}

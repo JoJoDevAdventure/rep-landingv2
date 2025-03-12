@@ -5,9 +5,9 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 
 const images = [
-  { src: "/image1.png", width: 1400, height: 800 },
+  { src: "/stat1.gif", width: 1400, height: 800 },
   { src: "/image2.gif", width: 400, height: 400 },
-  { src: "/image3.png", width: 1000, height: 350 },
+  { src: "/stat2.gif", width: 1000, height: 350 },
   { src: "/image4.gif", width: 800, height: 664 },
 ];
 

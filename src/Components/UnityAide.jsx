@@ -20,7 +20,6 @@ const UnityAide = () => {
       ref={sectionRef}
       className="mt-8 relative w-full py-4 md:py-8 flex flex-col items-center overflow-hidden bg-white px-6 md:px-16 min-h-screen"
     >
-      
       {/* Title */}
       <motion.h1
         className="text-2xl md:text-4xl font-light text-black text-center z-10"
@@ -49,9 +48,14 @@ const UnityAide = () => {
           transition={{ duration: 1, delay: 0.3 }}
         >
           <iframe
-            src="https://aides.replicaide.com"
-            className="w-full h-[500px] md:h-[700px] rounded-lg border-p1 border-2 md:border-none"
-            loading="lazy"
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/W-Nnobg1npc?si=xnFgwgoOmPKxbmtx"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+                        className="w-full h-[500px] md:h-[700px] rounded-lg border-p1 border-2 md:border-none shadow-lg"
           />
         </motion.div>
         {/* <Player src={arrow} autoplay={isInView} loop={false} className="w-24 h-24" /> */}

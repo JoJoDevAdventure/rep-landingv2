@@ -48,7 +48,7 @@ const perfectFitData = [
 
 const PerfectFit = () => {
   return (
-    <section className="w-full py-4 md:py-16 flex flex-col items-center px-6 md:px-16 overflow-hidden">
+    <section className="w-full py-4 md:py-22 flex flex-col items-center px-6 md:px-16 overflow-hidden">
       {/* Header */}
       <motion.h2
         className="text-3xl md:text-4xl font-bold text-center"
@@ -66,15 +66,6 @@ const PerfectFit = () => {
       >
         Support every stage of your journey with Replicaide
       </motion.p>
-      <motion.a
-        href="#"
-        className="text-orange-500 text-center mt-2 font-medium hover:underline"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3 }}
-      >
-        Find Your Perfect Fit →
-      </motion.a>
 
       {/* Cards */}
       <div className="flex flex-wrap justify-center gap-6 mt-12">

@@ -46,7 +46,7 @@ const NavBar = ({onClickDemo}) => {
         <Link href="/" className="hover:text-p1">Home</Link>
           <Dropdown title="Products" mobile />
           <Link href="/features" className="hover:text-p1">Features</Link>
-          <Link href="/enterprise" className="hover:text-p1">About us</Link>
+          <Link href="/about" className="hover:text-p1">About us</Link>
         </nav>
         <div className="mt-6 flex flex-col space-y-3">
           <button onClick={onClickDemo} className="bg-p1 text-white px-4 py-2 rounded-lg">Get a demo</button>
@@ -107,12 +107,12 @@ const Dropdown = ({ title, mobile }) => {
         {sublinks.map((link) => (
           <Link 
             key={link.name}
-            href={link.href}
-            className={`block px-4 py-2 text-sm hover:bg-gray-100 hover:text-p1 ${
+            href={""}
+            className={`block px-4 py-2 text-sm hover:bg-gray-100 hover:text-p1 flex gap-2 ${
               mobile ? 'w-full' : ''
             }`}
           >
-            {link.name}
+            {link.name} <p className='text-[10px] text-gray-500'>(Coming soon)</p>
           </Link>
         ))}
       </div>

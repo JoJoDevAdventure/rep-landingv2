@@ -57,8 +57,8 @@ const aides = [
     description:
       "A unified AI assistant across hospitality, dining, travel, and more. UnityAide powers HostAide for hotels, Prepaide for restaurants, TravelAide for trips, and beyond—streamlining operations with intelligent automation.",
     buttonColor: "bg-[#FA4276]",
-    image: "/Property-UI.png",
-    svg: "/blue.svg",
+    image: "/Unity-UI.jpg",
+    svg: "/pink .svg",
     rotation: "rotate-[120deg]",
   },
 ];

@@ -20,7 +20,7 @@ const membersData = [
     description:
       "Inventor, entrepreneur, and licensed realtor, specializing in CRP, AI solutions, branding, and social impact through tech-driven innovation.",
     photo:
-      "https://media.licdn.com/dms/image/v2/D5603AQFvezkaK5Verw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1729792280427?e=1741219200&v=beta&t=KP13IkNJFdL6WuqPB0xI8F0RezeCm5vdhNRJ1qditYM",
+      "https://media.licdn.com/dms/image/v2/D5603AQFvezkaK5Verw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1729792280427?e=1747267200&v=beta&t=5S0M7UPB5PilWn49W5jRQtxB-Xm_hz3lzn1iVm5W_os",
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const membersData = [
     description:
       "15+ years in B2B sales, growth strategies, AI solutions, and entrepreneurial leadership, driving innovation and partnerships.",
     photo:
-      "https://media.licdn.com/dms/image/v2/D5603AQGZXDOLhNDvLg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730205484195?e=1741219200&v=beta&t=EUA5p5NgU4Y0RDpczz4RCxnHBJrGF1MH_5SzG2WCxKk",
+      "https://media.licdn.com/dms/image/v2/D5603AQGZXDOLhNDvLg/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1730205484195?e=1747267200&v=beta&t=fOvPUBC15rX_fP6iHoBqKqhVWcArWA-Vh1ddIFEGdJg",
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ const membersData = [
     description:
       "Founder and innovator in AI, alternative data, FinTech, and smart cities, partnering with IBM Watson and LSE.",
     photo:
-      "https://media.licdn.com/dms/image/v2/C4D03AQF0pwMPnh-MGw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1635711063617?e=1741219200&v=beta&t=mHa_LbV6J0nLaBAQv42IQ7c8E34hzgvpgHA-PeTKklE",
+      "https://media.licdn.com/dms/image/v2/C4D03AQF0pwMPnh-MGw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1635711063617?e=1747267200&v=beta&t=au-Q9yI4bMkgWqNel6NzBlzXhScPnDObP186hktp9IU",
   },
 ];
 

@@ -7,19 +7,19 @@ const coreSections = [
   {
     title: "Our Mission",
     description:
-      "Empowering meaningful interactions across all communication channels using our personalized & contextually coherent Agentic AIDE to enhance Human²AI experiences for win-win-WIN engagements.",
+      "Mission to aide & connect communities worldwide through meaningful AI conversations!",
     imgSrc: "/mission.png",
   },
   {
     title: "Our Vision",
     description:
-      "To be the leader in personalized Human²AI interactions, enabling mass collaboration for spiritual engagements that transforms communication for all.",
+      "Vision to create an engagement platform where technology & human connections can thrive together empowering every community to reach its fullest potential!",
     imgSrc: "/vision.png",
   },
   {
     title: "Our Purpose",
     description:
-      "Empowering meaningful interactions across all communication channels using our personalized & contextually coherent Agentic AIDE to enhance Human²AI experiences.",
+      "Providing the #1 Top Conversational AI Agents Builder that AIDE humanity with a Voice to have a tailored Agentic Contextual Relationship Platform (CRP)",
     imgSrc: "/purpose.png",
   },
   {

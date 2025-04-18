@@ -14,15 +14,6 @@ const membersData = [
       "https://media.licdn.com/dms/image/v2/D4E03AQF7nlPDlL-m1A/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1723642550263?e=2147483647&v=beta&t=FSr1zEZ67b0V_XrdJixadd5bx2SXOfry_nhU6r774ZY",
   },
   {
-    id: 2,
-    name: "Tony Benton",
-    role: "CIO & Co-Founder",
-    description:
-      "Inventor, entrepreneur, and licensed realtor, specializing in CRP, AI solutions, branding, and social impact through tech-driven innovation.",
-    photo:
-      "https://media.licdn.com/dms/image/v2/D5603AQFvezkaK5Verw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1729792280427?e=1747267200&v=beta&t=5S0M7UPB5PilWn49W5jRQtxB-Xm_hz3lzn1iVm5W_os",
-  },
-  {
     id: 3,
     name: "Hidenori Araki",
     role: "Investor & Business Dev",
@@ -58,7 +49,7 @@ const Members = () => {
       >
         Our Team
       </motion.h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         {membersData.map((member) => (
           <div
             key={member.id}

@@ -7,7 +7,7 @@ const membersData = [
   {
     id: 1,
     name: "Amin Abdi",
-    role: "CEO & Co-Founder",
+    role: "CEO",
     description:
       "Cybersecurity expert with 10+ years in financial services, specializing in SaaS, AI, and technology-driven global impact solutions.",
     photo:

@@ -1,3 +1,4 @@
+import Footer from "@/Components/Footer";
 import NavBar from "@/Components/NavBar";
 import Members from "./Members";
 import UseCase from "./UseCase";
@@ -16,6 +17,7 @@ const About = () => {
         <Values/>
         <UseCase/>
       </section>
+      <Footer/>
     </div>
   );
 };

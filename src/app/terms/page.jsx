@@ -1,6 +1,5 @@
-
-import Footer from '@/components/Footer';
-import NavBar from '@/components/NavBar';
+import Footer from "@/Components/Footer";
+import NavBar from "@/Components/NavBar";
 
 export default function TermsPage() {
   return (

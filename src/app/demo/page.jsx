@@ -1,11 +1,12 @@
+import { Suspense } from 'react'
 import Content from './Content'
 
-const page = () => {
+const Page = () => {
   return (
-    <div>
-        <Content/>
-    </div>
+    <Suspense fallback={<div className="w-full h-screen grid place-items-center text-gray-500">Loading…</div>}>
+      <Content />
+    </Suspense>
   )
 }
 
-export default page
+export default Page

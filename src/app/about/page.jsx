@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer";
-import NavBar from "@/components/NavBar";
+import Footer from "../../components/Footer";
+import NavBar from "../../components/NavBar";
 import Members from "./Members";
 import UseCase from "./UseCase";
 import Values from "./Values";

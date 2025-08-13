@@ -30,9 +30,11 @@ export default function CalculatorPage() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
+    name: "",
     email: "",
     phone: "",
     industry: "",
+    company: "",
     website: "",
   });
 
@@ -43,15 +45,31 @@ export default function CalculatorPage() {
 
   const onFormChange = (key) => (e) =>
     setForm((s) => ({ ...s, [key]: e.target.value }));
-  const onSubmitTrial = (e) => {
+  const onSubmitTrial = async (e) => {
     e.preventDefault();
-    // basic website normalization
     let site = (form.website || "").trim();
     if (!site) return;
-    // remove whitespace
     site = site.replace(/\s+/g, "");
-    // strip protocol if present; we only pass domain/path to `w`
     site = site.replace(/^https?:\/\//i, "");
+    // fire-and-forget contact creation
+    try {
+      await fetch("/api/contact/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name || "",
+          email: form.email || "",
+          phone: form.phone || "",
+          industry: form.industry || "",
+          company: form.company || "",
+          website: site,
+          from: "calculator",
+        }),
+      });
+    } catch (err) {
+      // ignore network errors for UX; still navigate
+      console.error("contact/add failed", err);
+    }
     router.push(`/demo?w=${encodeURIComponent(site)}`);
   };
 
@@ -265,6 +283,17 @@ export default function CalculatorPage() {
             </div>
             <form onSubmit={onSubmitTrial} className="space-y-4">
               <label className="block">
+                <span className="text-sm font-medium text-gray-700">Name</span>
+                <input
+                  type="text"
+                  required
+                  value={form.name}
+                  onChange={onFormChange("name")}
+                  className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                  placeholder="Full name"
+                />
+              </label>
+              <label className="block">
                 <span className="text-sm font-medium text-gray-700">Email</span>
                 <input
                   type="email"
@@ -299,6 +328,17 @@ export default function CalculatorPage() {
                   onChange={onFormChange("industry")}
                   className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
                   placeholder="e.g., Dental, HVAC, Real Estate"
+                />
+              </label>
+              <label className="block">
+                <span className="text-sm font-medium text-gray-700">Company</span>
+                <input
+                  type="text"
+                  required
+                  value={form.company}
+                  onChange={onFormChange("company")}
+                  className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+                  placeholder="Your company name"
                 />
               </label>
               <label className="block">

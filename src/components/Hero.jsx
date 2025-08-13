@@ -13,16 +13,31 @@ const images = [
 
 const Hero = ({onClickDemo}) => {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ email: "", phone: "", industry: "", website: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", industry: "", company: "", website: "" });
   const onFormChange = (field) => (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
-  const onSubmitTrial = (e) => {
+  const onSubmitTrial = async (e) => {
     e.preventDefault();
     setOpen(false);
-    if (form.website) {
-      window.location.href = `/demo?w=${encodeURIComponent(form.website)}`;
-    } else {
-      window.location.href = `/demo`;
+    // normalize website: trim, remove spaces, strip protocol
+    let site = (form.website || "").trim().replace(/\s+/g, "").replace(/^https?:\/\//i, "");
+    try {
+      await fetch("/api/contact/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name || "",
+          email: form.email || "",
+          phone: form.phone || "",
+          industry: form.industry || "",
+          company: form.company || "",
+          website: site,
+          from: "landing page",
+        }),
+      });
+    } catch (err) {
+      console.error("contact/add failed", err);
     }
+    window.location.href = site ? `/demo?w=${encodeURIComponent(site)}` : "/demo";
   };
   const goToBooking = () => {
     window.location.href = "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0";
@@ -177,6 +192,17 @@ const Hero = ({onClickDemo}) => {
         </div>
         <form onSubmit={onSubmitTrial} className="space-y-4">
           <label className="flex flex-col items-start">
+            <span className="text-sm font-medium text-gray-700">Name</span>
+            <input
+              type="text"
+              required
+              value={form.name}
+              onChange={onFormChange("name")}
+              className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+              placeholder="Full name"
+            />
+          </label>
+          <label className="flex flex-col items-start">
             <span className="text-sm font-medium text-gray-700">Email</span>
             <input
               type="email"
@@ -211,6 +237,17 @@ const Hero = ({onClickDemo}) => {
               onChange={onFormChange("industry")}
               className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
               placeholder="e.g., Dental, HVAC, Real Estate"
+            />
+          </label>
+          <label className="flex flex-col items-start">
+            <span className="text-sm font-medium text-gray-700">Company</span>
+            <input
+              type="text"
+              required
+              value={form.company}
+              onChange={onFormChange("company")}
+              className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+              placeholder="Your company name"
             />
           </label>
           <label className="flex flex-col items-start">

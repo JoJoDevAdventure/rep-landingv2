@@ -1,76 +1,83 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import NavBar from "@/components/NavBar";
+import { useRouter } from "next/navigation";
+import { useMemo, useState } from "react";
 
 const number = (v) => {
-  const n = parseFloat(String(v).replace(/[^0-9.\-]/g, ''))
-  return isNaN(n) ? 0 : n
-}
+  const n = parseFloat(String(v).replace(/[^0-9.\-]/g, ""));
+  return isNaN(n) ? 0 : n;
+};
 
-const clamp = (v, min, max) => Math.min(Math.max(v, min), max)
+const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 
-const currency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
   maximumFractionDigits: 0,
-})
+});
 
 export default function CalculatorPage() {
   const [inputs, setInputs] = useState({
     inboundCallsPerMonth: 400, // total calls
-    missedRatePct: 25,        // % of calls missed
-    closeRatePct: 20,         // % of leads that become paying customers
-    recoveredPct: 35,         // % of missed calls recovered by textback/agent
-    avgOrderValue: 120,       // $ initial sale value
-    repeatPurchasesPerYear: 2,// how many times that customer buys again per year (optional LTV proxy)
-  })
+    missedRatePct: 25, // % of calls missed
+    closeRatePct: 20, // % of leads that become paying customers
+    recoveredPct: 35, // % of missed calls recovered by textback/agent
+    avgOrderValue: 120, // $ initial sale value
+    repeatPurchasesPerYear: 2, // how many times that customer buys again per year (optional LTV proxy)
+  });
 
-  const router = useRouter()
-  const [open, setOpen] = useState(false)
-  const [form, setForm] = useState({ email: '', phone: '', industry: '', website: '' })
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({
+    email: "",
+    phone: "",
+    industry: "",
+    website: "",
+  });
 
   const onChange = (key) => (e) => {
-    const val = e.target.value
-    setInputs((s) => ({ ...s, [key]: val }))
-  }
+    const val = e.target.value;
+    setInputs((s) => ({ ...s, [key]: val }));
+  };
 
-  const onFormChange = (key) => (e) => setForm((s) => ({ ...s, [key]: e.target.value }))
+  const onFormChange = (key) => (e) =>
+    setForm((s) => ({ ...s, [key]: e.target.value }));
   const onSubmitTrial = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // basic website normalization
-    let site = (form.website || '').trim()
-    if (!site) return
+    let site = (form.website || "").trim();
+    if (!site) return;
     // remove whitespace
-    site = site.replace(/\s+/g, '')
+    site = site.replace(/\s+/g, "");
     // strip protocol if present; we only pass domain/path to `w`
-    site = site.replace(/^https?:\/\//i, '')
-    router.push(`/demo?w=${encodeURIComponent(site)}`)
-  }
+    site = site.replace(/^https?:\/\//i, "");
+    router.push(`/demo?w=${encodeURIComponent(site)}`);
+  };
 
   const derived = useMemo(() => {
-    const inbound = number(inputs.inboundCallsPerMonth)
-    const missRate = clamp(number(inputs.missedRatePct), 0, 100) / 100
-    const closeRate = clamp(number(inputs.closeRatePct), 0, 100) / 100
-    const recovered = clamp(number(inputs.recoveredPct), 0, 100) / 100
-    const aov = Math.max(0, number(inputs.avgOrderValue))
-    const repeats = Math.max(0, number(inputs.repeatPurchasesPerYear))
+    const inbound = number(inputs.inboundCallsPerMonth);
+    const missRate = clamp(number(inputs.missedRatePct), 0, 100) / 100;
+    const closeRate = clamp(number(inputs.closeRatePct), 0, 100) / 100;
+    const recovered = clamp(number(inputs.recoveredPct), 0, 100) / 100;
+    const aov = Math.max(0, number(inputs.avgOrderValue));
+    const repeats = Math.max(0, number(inputs.repeatPurchasesPerYear));
 
-    const missedCalls = Math.round(inbound * missRate)
-    const missedLeads = Math.round(missedCalls * closeRate)
+    const missedCalls = Math.round(inbound * missRate);
+    const missedLeads = Math.round(missedCalls * closeRate);
 
     // Simple LTV proxy = initial order + repeat purchases per year * AOV
-    const ltv = aov * (1 + repeats)
+    const ltv = aov * (1 + repeats);
 
-    const lostRevenue = missedLeads * ltv
+    const lostRevenue = missedLeads * ltv;
 
-    const recoveredCalls = Math.round(missedCalls * recovered)
-    const recoveredLeads = Math.round(recoveredCalls * closeRate)
-    const recoveredRevenue = recoveredLeads * ltv
+    const recoveredCalls = Math.round(missedCalls * recovered);
+    const recoveredLeads = Math.round(recoveredCalls * closeRate);
+    const recoveredRevenue = recoveredLeads * ltv;
 
     // very rough ROI vs $/month plan, assume $500 default (can be adjusted)
-    const planCost = 500
-    const netROI = recoveredRevenue - planCost
+    const planCost = 500;
+    const netROI = recoveredRevenue - planCost;
 
     return {
       inbound,
@@ -88,15 +95,21 @@ export default function CalculatorPage() {
       recoveredRevenue,
       planCost,
       netROI,
-    }
-  }, [inputs])
+    };
+  }, [inputs]);
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-6xl px-4 py-10">
+      <NavBar />
+      <div className="mx-auto max-w-6xl px-4 py-10 pt-32">
         <header className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Missed Call → Lost Business Calculator</h1>
-          <p className="text-gray-600 mt-2">Quickly estimate how many sales you lose to missed calls—and how much a textback/AI agent can recover.</p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Missed Call → Lost Business Calculator
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Quickly estimate how many sales you lose to missed calls—and how
+            much a textback/AI agent can recover.
+          </p>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -108,7 +121,7 @@ export default function CalculatorPage() {
               label="Inbound calls per month"
               suffix="calls"
               value={inputs.inboundCallsPerMonth}
-              onChange={onChange('inboundCallsPerMonth')}
+              onChange={onChange("inboundCallsPerMonth")}
               min={0}
             />
 
@@ -116,7 +129,7 @@ export default function CalculatorPage() {
               label="Missed call rate"
               suffix="%"
               value={inputs.missedRatePct}
-              onChange={onChange('missedRatePct')}
+              onChange={onChange("missedRatePct")}
               min={0}
               max={100}
             />
@@ -125,7 +138,7 @@ export default function CalculatorPage() {
               label="Lead → Sale close rate"
               suffix="%"
               value={inputs.closeRatePct}
-              onChange={onChange('closeRatePct')}
+              onChange={onChange("closeRatePct")}
               min={0}
               max={100}
             />
@@ -134,7 +147,7 @@ export default function CalculatorPage() {
               label="Textback/Agent recovery rate"
               suffix="%"
               value={inputs.recoveredPct}
-              onChange={onChange('recoveredPct')}
+              onChange={onChange("recoveredPct")}
               min={0}
               max={100}
               hint="Share of missed callers you win back via SMS + AI follow-up"
@@ -144,45 +157,76 @@ export default function CalculatorPage() {
               label="Average order value (AOV)"
               prefix="$"
               value={inputs.avgOrderValue}
-              onChange={onChange('avgOrderValue')}
+              onChange={onChange("avgOrderValue")}
               min={0}
             />
 
             <Field
               label="Repeat purchases per year (optional LTV)"
               value={inputs.repeatPurchasesPerYear}
-              onChange={onChange('repeatPurchasesPerYear')}
+              onChange={onChange("repeatPurchasesPerYear")}
               min={0}
             />
-
-            <div className="pt-2">
-              <button
-                type="button"
-                onClick={() => setOpen(true)}
-                className="inline-flex items-center justify-center rounded-lg bg-p1 text-white px-5 py-3 font-semibold hover:opacity-90 transition"
-              >
-                Get Free Trial
-              </button>
-            </div>
           </section>
 
           {/* Results */}
           <section className="bg-white rounded-xl shadow-sm border p-6 space-y-4">
             <h2 className="font-semibold text-lg">Estimated Impact</h2>
 
-            <Stat label="Missed calls / mo" value={derived.missedCalls.toLocaleString()} />
-            <Stat label="Missed sales / mo (after close rate)" value={derived.missedLeads.toLocaleString()} />
+            <Stat
+              label="Missed calls / mo"
+              value={derived.missedCalls.toLocaleString()}
+            />
+            <Stat
+              label="Missed sales / mo (after close rate)"
+              value={derived.missedLeads.toLocaleString()}
+            />
             <Divider />
-            <Stat label="Estimated revenue lost / mo" value={currency.format(derived.lostRevenue)} emphasis />
+            <Stat
+              label="Estimated revenue lost / mo"
+              value={currency.format(derived.lostRevenue)}
+              emphasis
+            />
             <Divider />
-            <Stat label="Recovered calls / mo" value={derived.recoveredCalls.toLocaleString()} />
-            <Stat label="Recovered sales / mo" value={derived.recoveredLeads.toLocaleString()} />
-            <Stat label="Recovered revenue / mo" value={currency.format(derived.recoveredRevenue)} emphasis />
+            <Stat
+              label="Recovered calls / mo"
+              value={derived.recoveredCalls.toLocaleString()}
+            />
+            <Stat
+              label="Recovered sales / mo"
+              value={derived.recoveredLeads.toLocaleString()}
+            />
+            <Stat
+              label="Recovered revenue / mo"
+              value={currency.format(derived.recoveredRevenue)}
+              emphasis
+            />
             <Divider />
-            <Stat label="Plan cost (example)" value={currency.format(derived.planCost)} />
-            <Stat label="Net ROI / mo" value={currency.format(derived.netROI)} emphasis />
+            <Stat
+              label="Plan cost (example)"
+              value={currency.format(derived.planCost)}
+            />
+            <Stat
+              label="Net ROI / mo"
+              value={currency.format(derived.netROI)}
+              emphasis
+            />
 
-            <p className="text-xs text-gray-500 pt-2">This is an estimate. Actual results vary by industry, lead quality, and response time.</p>
+            <p className="text-xs text-gray-500 pt-2">
+              This is an estimate. Actual results vary by industry, lead
+              quality, and response time.
+            </p>
+
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className="inline-flex items-center justify-center rounded-lg bg-p1 text-white px-5 py-3 font-semibold hover:opacity-90 transition w-full animate-pulse"
+              >
+                Get Free Trial
+              </button>
+                No Credit Card required.
+            </div>
           </section>
         </div>
 
@@ -203,7 +247,10 @@ export default function CalculatorPage() {
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setOpen(false)}
+          />
           <div className="relative z-10 w-full max-w-lg rounded-2xl bg-white shadow-xl border p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold">Start your free trial</h3>
@@ -223,40 +270,46 @@ export default function CalculatorPage() {
                   type="email"
                   required
                   value={form.email}
-                  onChange={onFormChange('email')}
+                  onChange={onFormChange("email")}
                   className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
                   placeholder="you@example.com"
                 />
               </label>
               <label className="block">
-                <span className="text-sm font-medium text-gray-700">Phone number</span>
+                <span className="text-sm font-medium text-gray-700">
+                  Phone number
+                </span>
                 <input
                   type="tel"
                   required
                   value={form.phone}
-                  onChange={onFormChange('phone')}
+                  onChange={onFormChange("phone")}
                   className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
                   placeholder="+1 555 000 0000"
                 />
               </label>
               <label className="block">
-                <span className="text-sm font-medium text-gray-700">Industry</span>
+                <span className="text-sm font-medium text-gray-700">
+                  Industry
+                </span>
                 <input
                   type="text"
                   required
                   value={form.industry}
-                  onChange={onFormChange('industry')}
+                  onChange={onFormChange("industry")}
                   className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
                   placeholder="e.g., Dental, HVAC, Real Estate"
                 />
               </label>
               <label className="block">
-                <span className="text-sm font-medium text-gray-700">Website</span>
+                <span className="text-sm font-medium text-gray-700">
+                  Website
+                </span>
                 <input
                   type="text"
                   required
                   value={form.website}
-                  onChange={onFormChange('website')}
+                  onChange={onFormChange("website")}
                   className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
                   placeholder="yourdomain.com"
                 />
@@ -282,7 +335,7 @@ export default function CalculatorPage() {
         </div>
       )}
     </main>
-  )
+  );
 }
 
 function Field({ label, hint, prefix, suffix, value, onChange, min, max }) {
@@ -305,18 +358,22 @@ function Field({ label, hint, prefix, suffix, value, onChange, min, max }) {
         {suffix && <span className="px-3 text-gray-500">{suffix}</span>}
       </div>
     </label>
-  )
+  );
 }
 
 function Stat({ label, value, emphasis = false }) {
   return (
     <div className="flex items-center justify-between">
       <span className="text-sm text-gray-600">{label}</span>
-      <span className={emphasis ? 'text-lg font-semibold' : 'text-base font-medium'}>{value}</span>
+      <span
+        className={emphasis ? "text-lg font-semibold" : "text-base font-medium"}
+      >
+        {value}
+      </span>
     </div>
-  )
+  );
 }
 
 function Divider() {
-  return <div className="h-px bg-gray-200 my-1" />
+  return <div className="h-px bg-gray-200 my-1" />;
 }

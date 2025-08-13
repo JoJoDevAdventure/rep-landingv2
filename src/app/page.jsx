@@ -1,30 +1,30 @@
 "use client";
 
-import ContactPopup from "@/Components/ContactPopup";
+import ContactPopup from "@/components/ContactPopup";
 import dynamic from "next/dynamic";
 import Script from "next/script";
 import { useState } from "react";
 
 // Dynamically import components with `ssr: false` to disable server-side rendering
-const NavBar = dynamic(() => import("@/Components/NavBar"), { ssr: false });
-const Hero = dynamic(() => import("@/Components/Hero"), { ssr: false });
-const Partners = dynamic(() => import("@/Components/Partners"), { ssr: false });
-const Aides = dynamic(() => import("@/Components/Aides"), { ssr: false });
-const AIFuture = dynamic(() => import("@/Components/AIFuture"), { ssr: false });
-const IndustriesSection = dynamic(() => import("@/Components/Industries"), {
+const NavBar = dynamic(() => import("@/components/NavBar"), { ssr: false });
+const Hero = dynamic(() => import("@/components/Hero"), { ssr: false });
+const Partners = dynamic(() => import("@/components/Partners"), { ssr: false });
+const Aides = dynamic(() => import("@/components/Aides"), { ssr: false });
+const AIFuture = dynamic(() => import("@/components/AIFuture"), { ssr: false });
+const IndustriesSection = dynamic(() => import("@/components/Industries"), {
   ssr: false,
 });
 const IndustriesSectionMobile = dynamic(
-  () => import("@/Components/IndustriesMobile"),
+  () => import("@/components/IndustriesMobile"),
   { ssr: false }
 );
-const UnityAide = dynamic(() => import("@/Components/UnityAide"), {
+const UnityAide = dynamic(() => import("@/components/UnityAide"), {
   ssr: false,
 });
-const PerfectFit = dynamic(() => import("@/Components/PerfectFit"), {
+const PerfectFit = dynamic(() => import("@/components/PerfectFit"), {
   ssr: false,
 });
-const Footer = dynamic(() => import("@/Components/Footer"), { ssr: false });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
 
 const Home = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);

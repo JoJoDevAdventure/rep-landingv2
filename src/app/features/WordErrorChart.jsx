@@ -11,7 +11,7 @@ import {
 
 import { motion } from "framer-motion";
 
-import { fadeUpVariants } from "@/Components/Animations";
+import { fadeUpVariants } from "@/components/Animations";
 // Sample data
 const originalData = [
   {

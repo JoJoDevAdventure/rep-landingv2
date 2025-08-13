@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 
-const Footer = dynamic(() => import("@/Components/Footer"), { ssr: false });
-const NavBar = dynamic(() => import("@/Components/NavBar"), { ssr: false });
+const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
+const NavBar = dynamic(() => import("@/components/NavBar"), { ssr: false });
 
 export default function TermsPage() {
   return (

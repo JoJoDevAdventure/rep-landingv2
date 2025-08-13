@@ -1,7 +1,7 @@
 "use client";
-import Footer from "@/components/Footer";
 import dynamic from "next/dynamic";
 import Script from "next/script";
+import Footer from "../../components/Footer";
 import AsrData from "./AsrData";
 import MarketComparison from "./MarketComparaison";
 import WordErrorRateChart from "./WordErrorChart";
@@ -11,7 +11,7 @@ const LiveTranscription = dynamic(() => import("./LiveTranscription"), {
   ssr: false,
 });
 const ComparisonChart = dynamic(() => import("./Comparison"), { ssr: false });
-const NavBar = dynamic(() => import("@/components/NavBar"), { ssr: false });
+const NavBar = dynamic(() => import("../../components/NavBar"), { ssr: false });
 
 const page = () => {
   return (

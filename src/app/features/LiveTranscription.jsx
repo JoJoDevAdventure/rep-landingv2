@@ -1,9 +1,9 @@
 "use client";
 
-import { fadeUpVariants } from "@/components/Animations";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FaPause, FaPlay, FaVolumeUp } from "react-icons/fa";
+import { fadeUpVariants } from "../../components/Animations";
 
 // Sample data structure for sentences with timestamps
 const sampleSentences = [

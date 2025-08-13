@@ -2,7 +2,7 @@
 
 import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const images = [
   { src: "/stat1.gif", width: 1400, height: 800 },
@@ -12,6 +12,22 @@ const images = [
 ];
 
 const Hero = ({onClickDemo}) => {
+  const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({ email: "", phone: "", industry: "", website: "" });
+  const onFormChange = (field) => (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  const onSubmitTrial = (e) => {
+    e.preventDefault();
+    setOpen(false);
+    if (form.website) {
+      window.location.href = `/demo?w=${encodeURIComponent(form.website)}`;
+    } else {
+      window.location.href = `/demo`;
+    }
+  };
+  const goToBooking = () => {
+    window.location.href = "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0";
+  };
+
   const controls = useAnimation();
   const scrollRef = useRef(null);
 
@@ -81,7 +97,7 @@ const Hero = ({onClickDemo}) => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.2 }}
-              onClick={onClickDemo}
+              onClick={goToBooking}
               className="bg-p1 text-white border-p1 border hover:bg-orange-500 transition-all duration-300 px-2 md:px-6 py-3 rounded-lg w-full md:w-auto text-[12px] md:text-[18px]"
             >
               Schedule Demo
@@ -90,7 +106,7 @@ const Hero = ({onClickDemo}) => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.4 }}
-              onClick={onClickDemo}
+              onClick={() => setOpen(true)}
               className="bg-transparent text-s1 px-2 md:px-6 py-3 rounded-lg w-full border hover:bg-p1/20 border-p1 transition-all duration-300 md:w-auto text-[12px] md:text-[18px]"
             >
               Learn more
@@ -141,6 +157,95 @@ const Hero = ({onClickDemo}) => {
           ))}
         </motion.div>
       </motion.div>
+      {open && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div
+        className="absolute inset-0 bg-black/50"
+        onClick={() => setOpen(false)}
+      />
+      <div className="relative z-10 w-full max-w-lg rounded-2xl bg-white shadow-xl border p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold">Start your free trial</h3>
+          <button
+            type="button"
+            className="rounded-full p-2 hover:bg-gray-100"
+            onClick={() => setOpen(false)}
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+        <form onSubmit={onSubmitTrial} className="space-y-4">
+          <label className="flex flex-col items-start">
+            <span className="text-sm font-medium text-gray-700">Email</span>
+            <input
+              type="email"
+              required
+              value={form.email}
+              onChange={onFormChange("email")}
+              className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+              placeholder="you@example.com"
+            />
+          </label>
+          <label className="flex flex-col items-start">
+            <span className="text-sm font-medium text-gray-700 text-start w-full self-start place-self-start">
+              Phone number
+            </span>
+            <input
+              type="tel"
+              required
+              value={form.phone}
+              onChange={onFormChange("phone")}
+              className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+              placeholder="+1 555 000 0000"
+            />
+          </label>
+          <label className="flex flex-col items-start">
+            <span className="text-sm font-medium text-gray-700">
+              Industry
+            </span>
+            <input
+              type="text"
+              required
+              value={form.industry}
+              onChange={onFormChange("industry")}
+              className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+              placeholder="e.g., Dental, HVAC, Real Estate"
+            />
+          </label>
+          <label className="flex flex-col items-start">
+            <span className="text-sm font-medium text-gray-700">
+              Website
+            </span>
+            <input
+              type="text"
+              required
+              value={form.website}
+              onChange={onFormChange("website")}
+              className="mt-1 w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
+              placeholder="yourdomain.com"
+            />
+          </label>
+
+          <div className="flex items-center justify-end gap-3 pt-2">
+            <button
+              type="button"
+              className="px-4 py-2 rounded-lg border hover:bg-gray-50"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 rounded-lg bg-p1 text-white font-semibold hover:opacity-90"
+            >
+              Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )}
     </section>
   );
 };

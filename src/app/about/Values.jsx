@@ -141,7 +141,7 @@ const Values = () => {
   const isInView = useInView(sectionRef, { once: false });
 
   return (
-    <section ref={sectionRef} className="relative py-0 -mt-48 overflow-visible">
+    <section ref={sectionRef} className="relative py-0 overflow-visible">
       {/* Caption and Heading */}
       <div className="text-center mb-8">
         <motion.p

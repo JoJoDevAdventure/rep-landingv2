@@ -20,15 +20,32 @@ const NavBar = ({onClickDemo}) => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-6 items-center">
         <Link href="/" className="hover:text-p1">Home</Link>
-          <Dropdown title="Products" />
           <Link href="/features" className="hover:text-p1">Features</Link>
           <Link href="/about" className="hover:text-p1">About us</Link>
+                    <Link href="/calculator" className="hover:text-p1">ROI Calculator</Link>
+
         </nav>
 
         {/* CTA Buttons */}
         <div className="hidden md:flex space-x-4">
-          <button onClick={onClickDemo} className="bg-p1 text-white px-4 py-2 rounded-lg">Get a demo</button>
-          <button onClick={onClickDemo} className="border border-p1 text-p1 px-4 py-2 rounded-lg">Contact</button>
+          <button
+            onClick={() =>
+              (window.location.href =
+                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0")
+            }
+            className="bg-p1 text-white px-4 py-2 rounded-lg"
+          >
+            Get a demo
+          </button>
+          <button
+            onClick={() =>
+              (window.location.href =
+                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0")
+            }
+            className="border border-p1 text-p1 px-4 py-2 rounded-lg"
+          >
+            Contact
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -44,13 +61,30 @@ const NavBar = ({onClickDemo}) => {
         </button>
         <nav className="flex flex-col space-y-4">
         <Link href="/" className="hover:text-p1">Home</Link>
-          <Dropdown title="Products" mobile />
           <Link href="/features" className="hover:text-p1">Features</Link>
           <Link href="/about" className="hover:text-p1">About us</Link>
+                  <Link href="/calculator" className="hover:text-p1">ROI Calculator</Link>
+
         </nav>
         <div className="mt-6 flex flex-col space-y-3">
-          <button onClick={onClickDemo} className="bg-p1 text-white px-4 py-2 rounded-lg">Get a demo</button>
-          <button onClick={onClickDemo} className="border border-p1 text-p1 px-4 py-2 rounded-lg">Contact</button>
+          <button
+            onClick={() =>
+              (window.location.href =
+                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0")
+            }
+            className="bg-p1 text-white px-4 py-2 rounded-lg"
+          >
+            Get a demo
+          </button>
+          <button
+            onClick={() =>
+              (window.location.href =
+                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0")
+            }
+            className="border border-p1 text-p1 px-4 py-2 rounded-lg"
+          >
+            Contact
+          </button>
         </div>
       </div>
     </header>

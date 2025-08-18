@@ -29,10 +29,7 @@ const NavBar = ({onClickDemo}) => {
         {/* CTA Buttons */}
         <div className="hidden md:flex space-x-4">
           <button
-            onClick={() =>
-              (window.location.href =
-                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0")
-            }
+            onClick={onClickDemo}
             className="bg-p1 text-white px-4 py-2 rounded-lg"
           >
             Get a demo
@@ -68,10 +65,7 @@ const NavBar = ({onClickDemo}) => {
         </nav>
         <div className="mt-6 flex flex-col space-y-3">
           <button
-            onClick={() =>
-              (window.location.href =
-                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0")
-            }
+            onClick={onClickDemo}
             className="bg-p1 text-white px-4 py-2 rounded-lg"
           >
             Get a demo

@@ -9,6 +9,8 @@ export default function ContactPopup({ isOpen, onClose }) {
     email: "",
     phone: "",
     industry: "Technology",
+    company: "",
+    website: "",
   });
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,14 +27,17 @@ export default function ContactPopup({ isOpen, onClose }) {
     console.log("Form Data:", formData);
   
     try {
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/contact/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email_address: formData.email,
           name: formData.name,
+          email: formData.email,
           phone: formData.phone,
-          company: formData.industry,
+          industry: formData.industry,
+          company: formData.company,
+          website: formData.website,
+          from: "landing page",
         }),
       });
   
@@ -42,7 +47,7 @@ export default function ContactPopup({ isOpen, onClose }) {
   
       if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", phone: "", company: "Technology" });
+        setFormData({ name: "", email: "", phone: "", industry: "Technology", company: "", website: "" });
         setTimeout(() => {
           onClose();
         }, 2000);
@@ -96,18 +101,33 @@ export default function ContactPopup({ isOpen, onClose }) {
                 onChange={handleChange}
                 value={formData.phone}
               />
-              <select
+              <input
+                type="text"
                 name="industry"
+                placeholder="Industry"
+                required
                 className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
                 onChange={handleChange}
                 value={formData.industry}
-              >
-                {industries.map((ind) => (
-                  <option key={ind} value={ind}>
-                    {ind}
-                  </option>
-                ))}
-              </select>
+              />
+              <input
+                type="text"
+                name="company"
+                placeholder="Company"
+                required
+                className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
+                onChange={handleChange}
+                value={formData.company}
+              />
+              <input
+                type="text"
+                name="website"
+                placeholder="Website"
+                required
+                className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
+                onChange={handleChange}
+                value={formData.website}
+              />
               <button
                 type="submit"
                 className="w-full p-3 bg-p1 text-white rounded-lg font-semibold hover:bg-p1/70 transition duration-200"

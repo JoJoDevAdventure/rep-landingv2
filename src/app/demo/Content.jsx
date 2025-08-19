@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
 import AgentButton from './AgentButton'
+import DemoPopUp from './DemoPopUp'
 
 const Content = () => {
   const searchParams = useSearchParams()
@@ -42,18 +43,36 @@ const Content = () => {
     )
   }
 
+  const blockedHosts = ['google.com', 'facebook.com', 'linkedin.com']
+  const isBlocked = blockedHosts.some(host => url.includes(host))
+
   return (
     <>
-    <iframe
-      src={url}
-      style={{ width: '100vw', height: '100vh', border: '0' }}
-      allow="autoplay; clipboard-write; microphone; camera; fullscreen; display-capture"
-      referrerPolicy="no-referrer"
-      allowFullScreen
-      loading="eager"
-      title="Website Preview"
-    />
-    <AgentButton/>
+      {isBlocked ? (
+        <div className="w-full h-screen flex flex-col items-center justify-center bg-gray-100 text-center px-6">
+          <p className="text-xl font-medium mb-4">This site doesn't allow being embedded in a frame.</p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline text-lg"
+          >
+            Click here to open it in a new tab
+          </a>
+        </div>
+      ) : (
+        <iframe
+          src={url}
+          style={{ width: '100vw', height: '100vh', border: '0' }}
+          allow="autoplay; clipboard-write; microphone; camera; fullscreen; display-capture"
+          referrerPolicy="no-referrer"
+          allowFullScreen
+          loading="eager"
+          title="Website Preview"
+        />
+      )}
+      <DemoPopUp/>
+      <AgentButton/>
     </>
   )
 }

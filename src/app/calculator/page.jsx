@@ -14,17 +14,21 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 const currency = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
-  maximumFractionDigits: 0,
+  maximumFractionDigits: 2,
+  minimumFractionDigits: 2,
 });
 
 export default function CalculatorPage() {
-  const [inputs, setInputs] = useState({
-    inboundCallsPerMonth: 400, // total calls
-    missedRatePct: 25, // % of calls missed
-    closeRatePct: 20, // % of leads that become paying customers
-    recoveredPct: 35, // % of missed calls recovered by textback/agent
-    avgOrderValue: 120, // $ initial sale value
-    repeatPurchasesPerYear: 2, // how many times that customer buys again per year (optional LTV proxy)
+  const [missedInputs, setMissedInputs] = useState({
+    inboundPerDay: 50,
+    missedPerDay: 10,
+    aov: 120,
+  });
+
+  const [employeeInputs, setEmployeeInputs] = useState({
+    employees: 10,
+    dollarsPerHour: 20,
+    hoursPerWeek: 40,
   });
 
   const router = useRouter();
@@ -38,9 +42,14 @@ export default function CalculatorPage() {
     website: "",
   });
 
-  const onChange = (key) => (e) => {
-    const val = e.target.value;
-    setInputs((s) => ({ ...s, [key]: val }));
+  const onMissedSlide = (key) => (e) => {
+    const val = Number(e.target.value);
+    setMissedInputs((s) => ({ ...s, [key]: val }));
+  };
+
+  const onEmployeeSlide = (key) => (e) => {
+    const val = Number(e.target.value);
+    setEmployeeInputs((s) => ({ ...s, [key]: val }));
   };
 
   const onFormChange = (key) => (e) =>
@@ -73,48 +82,38 @@ export default function CalculatorPage() {
     router.push(`/demo?w=${encodeURIComponent(site)}`);
   };
 
-  const derived = useMemo(() => {
-    const inbound = number(inputs.inboundCallsPerMonth);
-    const missRate = clamp(number(inputs.missedRatePct), 0, 100) / 100;
-    const closeRate = clamp(number(inputs.closeRatePct), 0, 100) / 100;
-    const recovered = clamp(number(inputs.recoveredPct), 0, 100) / 100;
-    const aov = Math.max(0, number(inputs.avgOrderValue));
-    const repeats = Math.max(0, number(inputs.repeatPurchasesPerYear));
+  // Missed calls calculator
+  const missed = useMemo(() => {
+    const inbound = Math.max(0, number(missedInputs.inboundPerDay));
+    const missedCalls = Math.min(Math.max(0, number(missedInputs.missedPerDay)), inbound);
+    const aov = Math.max(0, number(missedInputs.aov));
 
-    const missedCalls = Math.round(inbound * missRate);
-    const missedLeads = Math.round(missedCalls * closeRate);
+    // Assumed recovery rate from missed calls (35%)
+    const RECOVERY = 0.35;
 
-    // Simple LTV proxy = initial order + repeat purchases per year * AOV
-    const ltv = aov * (1 + repeats);
+    const dailySaved = missedCalls * aov * RECOVERY;
+    const weekly = dailySaved * 7;
+    const monthly = dailySaved * 30; // simple approx
+    const yearly = dailySaved * 365;
 
-    const lostRevenue = missedLeads * ltv;
+    return { inbound, missedCalls, aov, recovery: RECOVERY, weekly, monthly, yearly };
+  }, [missedInputs]);
 
-    const recoveredCalls = Math.round(missedCalls * recovered);
-    const recoveredLeads = Math.round(recoveredCalls * closeRate);
-    const recoveredRevenue = recoveredLeads * ltv;
+  // Employees calculator
+  const employee = useMemo(() => {
+    const employees = Math.max(0, number(employeeInputs.employees));
+    const rate = Math.max(0, number(employeeInputs.dollarsPerHour));
+    const hours = Math.max(0, number(employeeInputs.hoursPerWeek));
 
-    // very rough ROI vs $/month plan, assume $500 default (can be adjusted)
-    const planCost = 500;
-    const netROI = recoveredRevenue - planCost;
+    // Assumed efficiency improvement factor (15%).
+    const EFFICIENCY = 0.15;
 
-    return {
-      inbound,
-      missRate,
-      closeRate,
-      recovered,
-      aov,
-      repeats,
-      ltv,
-      missedCalls,
-      missedLeads,
-      lostRevenue,
-      recoveredCalls,
-      recoveredLeads,
-      recoveredRevenue,
-      planCost,
-      netROI,
-    };
-  }, [inputs]);
+    const weekly = employees * rate * hours * EFFICIENCY;
+    const monthly = weekly * 4; // approx
+    const yearly = weekly * 52;
+
+    return { employees, rate, hours, efficiency: EFFICIENCY, weekly, monthly, yearly };
+  }, [employeeInputs]);
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -131,135 +130,114 @@ export default function CalculatorPage() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Inputs */}
-          <section className="bg-white rounded-xl shadow-sm border p-6 space-y-5">
-            <h2 className="font-semibold text-lg">Your Numbers</h2>
+          {/* Missed Calls Calculator */}
+          <section className="bg-white rounded-xl shadow-sm border p-6 space-y-8">
+            <header>
+              <h2 className="font-semibold text-lg">Missed Calls Calculator</h2>
+              <p className="text-xs text-gray-500">We assume ~{Math.round(missed.recovery * 100)}% of missed calls can be recovered by AIDE.</p>
+            </header>
 
-            <Field
-              label="Inbound calls per month"
-              suffix="calls"
-              value={inputs.inboundCallsPerMonth}
-              onChange={onChange("inboundCallsPerMonth")}
+            <SliderRow
+              label="Inbound calls per day"
               min={0}
+              max={500}
+              step={1}
+              value={missedInputs.inboundPerDay}
+              onChange={onMissedSlide("inboundPerDay")}
+              formatValue={(v) => `${v} / day`}
             />
 
-            <Field
-              label="Missed call rate"
-              suffix="%"
-              value={inputs.missedRatePct}
-              onChange={onChange("missedRatePct")}
+            <SliderRow
+              label="Missed calls per day"
               min={0}
-              max={100}
+              max={500}
+              step={1}
+              value={missedInputs.missedPerDay}
+              onChange={onMissedSlide("missedPerDay")}
+              formatValue={(v) => `${v} missed`}
             />
 
-            <Field
-              label="Lead → Sale close rate"
-              suffix="%"
-              value={inputs.closeRatePct}
-              onChange={onChange("closeRatePct")}
+            <SliderRow
+              label="Average Order Value (AOV)"
               min={0}
-              max={100}
-            />
-
-            <Field
-              label="Textback/Agent recovery rate"
-              suffix="%"
-              value={inputs.recoveredPct}
-              onChange={onChange("recoveredPct")}
-              min={0}
-              max={100}
-              hint="Share of missed callers you win back via SMS + AI follow-up"
-            />
-
-            <Field
-              label="Average order value (AOV)"
-              prefix="$"
-              value={inputs.avgOrderValue}
-              onChange={onChange("avgOrderValue")}
-              min={0}
-            />
-
-            <Field
-              label="Repeat purchases per year (optional LTV)"
-              value={inputs.repeatPurchasesPerYear}
-              onChange={onChange("repeatPurchasesPerYear")}
-              min={0}
+              max={2000}
+              step={5}
+              value={missedInputs.aov}
+              onChange={onMissedSlide("aov")}
+              formatValue={(v) => currency.format(v).replace(".00", "")}
             />
           </section>
 
-          {/* Results */}
-          <section className="bg-white rounded-xl shadow-sm border p-6 space-y-4">
-            <h2 className="font-semibold text-lg">Estimated Impact</h2>
-
-            <Stat
-              label="Missed calls / mo"
-              value={derived.missedCalls.toLocaleString()}
-            />
-            <Stat
-              label="Missed sales / mo (after close rate)"
-              value={derived.missedLeads.toLocaleString()}
-            />
-            <Divider />
-            <Stat
-              label="Estimated revenue lost / mo"
-              value={currency.format(derived.lostRevenue)}
-              emphasis
-            />
-            <Divider />
-            <Stat
-              label="Recovered calls / mo"
-              value={derived.recoveredCalls.toLocaleString()}
-            />
-            <Stat
-              label="Recovered sales / mo"
-              value={derived.recoveredLeads.toLocaleString()}
-            />
-            <Stat
-              label="Recovered revenue / mo"
-              value={currency.format(derived.recoveredRevenue)}
-              emphasis
-            />
-            <Divider />
-            <Stat
-              label="Plan cost (example)"
-              value={currency.format(derived.planCost)}
-            />
-            <Stat
-              label="Net ROI / mo"
-              value={currency.format(derived.netROI)}
-              emphasis
-            />
-
-            <p className="text-xs text-gray-500 pt-2">
-              This is an estimate. Actual results vary by industry, lead
-              quality, and response time.
-            </p>
+          <section className="bg-white rounded-xl shadow-sm border p-6 space-y-8">
+            <h2 className="font-semibold text-lg">Estimated Savings</h2>
+            <BigStat label="Saved per Week" value={currency.format(missed.weekly)} />
+            <BigStat label="Saved per Month" value={currency.format(missed.monthly)} />
+            <BigStat label="Saved per Year" value={currency.format(missed.yearly)} />
 
             <div className="pt-2">
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="inline-flex items-center justify-center rounded-lg bg-p1 text-white px-5 py-3 font-semibold hover:opacity-90 transition w-full animate-pulse"
+                className="inline-flex items-center justify-center rounded-lg bg-p1 text-white px-5 py-3 font-semibold hover:opacity-90 transition w-full"
               >
                 Get Free Trial
               </button>
-                No Credit Card required.
+              <p className="text-center text-xs text-gray-500 mt-1">No Credit Card required.</p>
             </div>
+          </section>
+        </div>
+
+        {/* Employees Calculator (like the image) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
+          <section className="bg-white rounded-xl shadow-sm border p-6 space-y-8">
+            <header>
+              <h2 className="font-semibold text-lg">Employees Calculator</h2>
+              <p className="text-xs text-gray-500">Assumes ~{Math.round(employee.efficiency * 100)}% efficiency improvement with AIDE.</p>
+            </header>
+
+            <SliderRow
+              label="Number of Employees"
+              min={1}
+              max={200}
+              step={1}
+              value={employeeInputs.employees}
+              onChange={onEmployeeSlide("employees")}
+              formatValue={(v) => `${v} ${v === 1 ? "Employee" : "Employees"}`}
+            />
+
+            <SliderRow
+              label="Dollars per Hour"
+              min={5}
+              max={200}
+              step={1}
+              value={employeeInputs.dollarsPerHour}
+              onChange={onEmployeeSlide("dollarsPerHour")}
+              formatValue={(v) => `${currency.format(v).replace(".00", "")} / hr`}
+            />
+
+            <SliderRow
+              label="Hours per Week per Employee"
+              min={1}
+              max={60}
+              step={1}
+              value={employeeInputs.hoursPerWeek}
+              onChange={onEmployeeSlide("hoursPerWeek")}
+              formatValue={(v) => `${v} hrs / wk`}
+            />
+          </section>
+
+          <section className="bg-white rounded-xl shadow-sm border p-6 space-y-8">
+            <h2 className="font-semibold text-lg">Estimated Savings</h2>
+            <BigStat label="Saved per Week" value={currency.format(employee.weekly)} />
+            <BigStat label="Saved per Month" value={currency.format(employee.monthly)} />
+            <BigStat label="Saved per Year" value={currency.format(employee.yearly)} />
           </section>
         </div>
 
         {/* How it works */}
         <section className="mt-10 bg-white rounded-xl shadow-sm border p-6">
           <h3 className="font-semibold mb-2">How we calculate</h3>
-          <ol className="list-decimal text-sm text-gray-700 space-y-1 pl-5">
-            <li>Missed calls = Inbound calls × Missed call rate</li>
-            <li>Missed sales = Missed calls × Close rate</li>
-            <li>Approx. LTV = AOV × (1 + Repeat purchases per year)</li>
-            <li>Lost revenue = Missed sales × Approx. LTV</li>
-            <li>Recovered calls = Missed calls × Recovery rate</li>
-            <li>Recovered sales = Recovered calls × Close rate</li>
-            <li>Recovered revenue = Recovered sales × Approx. LTV</li>
-          </ol>
+          <p className="text-sm text-gray-700">Missed Calls: Missed/day × AOV × recovery (≈35%) × time window. Employees: Employees × $/hr × hrs/wk × efficiency (≈15%).</p>
         </section>
       </div>
 
@@ -378,42 +356,31 @@ export default function CalculatorPage() {
   );
 }
 
-function Field({ label, hint, prefix, suffix, value, onChange, min, max }) {
+function SliderRow({ label, value, onChange, min=0, max=100, step=1, formatValue }) {
   return (
     <label className="block">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-gray-900">{label}</span>
-        {hint && <span className="text-xs text-gray-500">({hint})</span>}
+        <span className="text-sm text-gray-500">{formatValue ? formatValue(value) : value}</span>
       </div>
-      <div className="mt-1 flex items-center rounded-lg border bg-white focus-within:ring-2 focus-within:ring-black/10">
-        {prefix && <span className="px-3 text-gray-500">{prefix}</span>}
-        <input
-          type="number"
-          className="w-full px-3 py-2 rounded-lg outline-none appearance-none"
-          value={value}
-          onChange={onChange}
-          min={min}
-          max={max}
-        />
-        {suffix && <span className="px-3 text-gray-500">{suffix}</span>}
-      </div>
+      <input
+        type="range"
+        className="mt-3 w-full"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={onChange}
+      />
     </label>
   );
 }
 
-function Stat({ label, value, emphasis = false }) {
+function BigStat({ label, value }) {
   return (
-    <div className="flex items-center justify-between">
-      <span className="text-sm text-gray-600">{label}</span>
-      <span
-        className={emphasis ? "text-lg font-semibold" : "text-base font-medium"}
-      >
-        {value}
-      </span>
+    <div className="text-center border rounded-xl p-6 bg-gray-50">
+      <div className="text-3xl font-extrabold tracking-tight">{value}</div>
+      <div className="mt-1 text-sm text-gray-600">{label}</div>
     </div>
   );
-}
-
-function Divider() {
-  return <div className="h-px bg-gray-200 my-1" />;
 }

@@ -68,7 +68,7 @@ export default function CalculatorPage() {
     const closedBase = apptsBase * S;
     const revenueBase = closedBase * AOV;
 
-    // With RepliAIDE (0% missed)
+    // With ReplicAIDE (0% missed)
     const missedWith = 0;
     const answeredWith = callReq;
     const apptsWith = answeredWith * AS;
@@ -93,7 +93,7 @@ export default function CalculatorPage() {
       <NavBar />
       <div className="mx-auto max-w-6xl px-4 py-10 pt-28">
         <header className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">RepliAIDE — Zero Missed Calls ROI Calculator</h1>
+          <h1 className="text-3xl font-bold tracking-tight">ReplicAIDE — Zero Missed Calls ROI Calculator</h1>
         </header>
 
         {/* Top split: sliders (left) and big numbers (right) */}
@@ -145,19 +145,19 @@ export default function CalculatorPage() {
 
           {/* RIGHT: Big Numbers */}
           <section className="bg-white rounded-xl shadow-sm border p-6">
-            <h2 className="font-semibold text-lg mb-4">With vs Without RepliAIDE</h2>
+            <h2 className="font-semibold text-lg mb-4">With vs Without ReplicAIDE</h2>
             <div className="grid grid-cols-2 gap-6">
               <BigNumberCard
                 title="Missed Calls"
                 leftLabel="Baseline"
-                rightLabel="RepliAIDE"
+                rightLabel="ReplicAIDE"
                 leftValue={fmtInt.format(Math.round(calc.baseline.missed))}
                 rightValue={fmtInt.format(Math.round(calc.withRep.missed))}
               />
               <BigNumberCard
                 title="Booked Appointments"
                 leftLabel="Baseline"
-                rightLabel="RepliAIDE"
+                rightLabel="ReplicAIDE"
                 leftValue={fmtInt.format(Math.round(calc.baseline.appts))}
                 rightValue={fmtInt.format(Math.round(calc.withRep.appts))}
               />
@@ -165,7 +165,7 @@ export default function CalculatorPage() {
                 title="Monthly Revenue"
                 full
                 leftLabel="Baseline"
-                rightLabel="RepliAIDE"
+                rightLabel="ReplicAIDE"
                 leftValue={fmtCurrency0.format(calc.baseline.revenue)}
                 rightValue={fmtCurrency0.format(calc.withRep.revenue)}
               />
@@ -213,9 +213,9 @@ export default function CalculatorPage() {
         <section className="mt-8 bg-white rounded-xl shadow-sm border p-6">
           <h4 className="font-semibold mb-2">NOTES</h4>
           <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
-            <li>Paradigm: Website → Engage → Call Requests → (Zero Missed Calls with RepliAIDE) → Booked Appointments → Closed Deals → Revenue.</li>
+            <li>Paradigm: Website → Engage → Call Requests → (Zero Missed Calls with ReplicAIDE) → Booked Appointments → Closed Deals → Revenue.</li>
             <li>Edit only yellow cells. Percent inputs can be decimals (e.g., 10% = 0.10) or suffixed with %.</li>
-            <li>Baseline uses the provided missed-call percentage. RepliAIDE assumes 0% missed calls via AI routing.</li>
+            <li>Baseline uses the provided missed-call percentage. ReplicAIDE assumes 0% missed calls via AI routing.</li>
             <li>ROI is calculated from closed deals using Appointment-to-Sale Conversion.</li>
           </ul>
         </section>
@@ -249,7 +249,7 @@ function SliderRow({ label, value, onChange, min = 0, max = 100, step = 1, value
 
 function BigNumberCard({ title, leftLabel, rightLabel, leftValue, rightValue, full = false }) {
   return (
-    <div className={`border rounded-lg p-5 ${full ? "col-span-2" : ""}`}>
+    <div className={`border rounded-lg p-5 flex flex-col justify-between ${full ? "col-span-2" : ""}`}>
       <div className="text-sm text-gray-600 mb-2">{title}</div>
       <div className="grid grid-cols-2 gap-4 items-end">
         <div>

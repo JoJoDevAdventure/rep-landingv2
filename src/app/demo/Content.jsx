@@ -1,11 +1,14 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
-import { useMemo } from 'react'
-import AgentButton from './AgentButton'
-import DemoPopUp from './DemoPopUp'
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import AgentButton from './AgentButton';
+import DemoPopUp from './DemoPopUp';
 
 const Content = () => {
+  const [trialEnded, setTrialEnded] = useState(false)
+  const [screenshotUrl, setScreenshotUrl] = useState('');
+  const [frameLoaded, setFrameLoaded] = useState(false);
   const searchParams = useSearchParams()
   const raw = searchParams.get('w') || ''
 
@@ -35,6 +38,35 @@ const Content = () => {
     }
   }, [decoded])
 
+  const resetTrial = () => {
+    document.cookie = 'trial_expired=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+    setTrialEnded(false)
+  }
+
+  const fetchScreenshot = async (u) => {
+    // Point the <img> directly at the API so the browser streams/decodes it natively.
+    // Add a cache buster to avoid stale images.
+    const apiSrc = `/api/screenshot?url=${encodeURIComponent(u)}&t=${Date.now()}`;
+    setScreenshotUrl(apiSrc);
+  };
+
+  useEffect(() => {
+    setFrameLoaded(false);
+    setScreenshotUrl('');
+    if (!url) return;
+    const t = setTimeout(() => {
+      if (!frameLoaded) fetchScreenshot(url);
+    }, 2000);
+    return () => clearTimeout(t);
+  }, [url]);
+
+  const blockedHosts = ['google.com', 'facebook.com', 'linkedin.com', '3mountainsplumbing.com']
+  const isBlocked = blockedHosts.some(host => url.includes(host))
+
+  useEffect(() => {
+    if (isBlocked && url) fetchScreenshot(url);
+  }, [isBlocked, url]);
+
   if (!url) {
     return (
       <div style={{ padding: 16 }}>
@@ -43,22 +75,38 @@ const Content = () => {
     )
   }
 
-  const blockedHosts = ['google.com', 'facebook.com', 'linkedin.com']
-  const isBlocked = blockedHosts.some(host => url.includes(host))
-
   return (
     <>
-      {isBlocked ? (
-        <div className="w-full h-screen flex flex-col items-center justify-center bg-gray-100 text-center px-6">
-          <p className="text-xl font-medium mb-4">This site doesn't allow being embedded in a frame.</p>
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 underline text-lg"
-          >
-            Click here to open it in a new tab
-          </a>
+      {isBlocked || screenshotUrl ? (
+        <div className="w-full h-screen relative" style={{ backgroundColor: '#ffffff' }}>
+          {screenshotUrl ? (
+            <div className="absolute inset-0">
+              <img
+                src={screenshotUrl}
+                alt="Website preview screenshot"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+                onLoad={() => console.log('[screenshot-img] loaded')}
+                onError={(e) => {
+                  console.warn('[screenshot-img] failed to load, clearing url');
+                  try { URL.revokeObjectURL(screenshotUrl); } catch {}
+                  setScreenshotUrl('');
+                }}
+                draggable={false}
+              />
+            </div>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-black">Generating preview…</div>
+          )}
+          <div className="absolute inset-x-0 bottom-0 p-4 text-center">
+            <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline text-sm">
+              Open live site in a new tab
+            </a>
+          </div>
         </div>
       ) : (
         <iframe
@@ -69,10 +117,24 @@ const Content = () => {
           allowFullScreen
           loading="eager"
           title="Website Preview"
+          onLoad={() => setFrameLoaded(true)}
         />
       )}
-      <DemoPopUp/>
-      <AgentButton/>
+      {trialEnded && <DemoPopUp onClose={() => setTrialEnded(false)} />}
+      <AgentButton onTrialEnded={() => setTrialEnded(true)} />
+      <div
+        onClick={resetTrial}
+        style={{
+          position: 'absolute',
+          bottom: 40,
+          left: 40,
+          width: 16,
+          height: 16,
+          borderRadius: '50%',
+          backgroundColor: 'black',
+          cursor: 'pointer',
+        }}
+      />
     </>
   )
 }

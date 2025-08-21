@@ -47,7 +47,7 @@ export default function ContactPopup({ isOpen, onClose }) {
   
       if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", phone: "", industry: "Technology", company: "", website: "" });
+        setFormData({ name: "", email: "", phone: "", industry: "", company: "", website: "" });
         setTimeout(() => {
           onClose();
         }, 2000);

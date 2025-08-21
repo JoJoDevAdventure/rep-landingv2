@@ -4,12 +4,85 @@ import { Conversation } from "@elevenlabs/client";
 import { useEffect, useRef, useState } from 'react';
 import Orb from './Orb';
 
-const AgentButton = () => {
+const DEFAULT_LEFT = 20;
+
+const setCookie = (name, value, days = 30) => {
+  const d = new Date();
+  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
+};
+const getCookie = (name) => {
+  if (typeof document === 'undefined') return null;
+  const nameEQ = name + '=';
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+  }
+  return null;
+};
+
+const AgentButton = ({ onTrialEnded }) => {
   const [isOnCall, setIsOnCall] = useState(false);
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [remainingSecs, setRemainingSecs] = useState(60);
   const messageBoxRef = useRef(null);
   const audioRef = useRef(null);
+  const timerRef = useRef(null);
+
+  const containerRef = useRef(null);
+  const [dragging, setDragging] = useState(false);
+  const [leftPx, setLeftPx] = useState(DEFAULT_LEFT);
+  const dragStartRef = useRef({ startX: 0, startLeft: DEFAULT_LEFT, moved: false });
+
+  const TRIAL_COOKIE = 'ai_trial_expired';
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('agent_btn_left');
+      if (saved !== null) setLeftPx(parseInt(saved, 10));
+    } catch {}
+  }, []);
+
+  const getMaxLeft = () => {
+    if (!containerRef.current) return (typeof window !== 'undefined' ? window.innerWidth : 0) - 220; // fallback
+    const width = containerRef.current.offsetWidth || 200;
+    return Math.max(0, (window.innerWidth || 0) - width - 20);
+  };
+  const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+  const saveLeft = (v) => {
+    try { localStorage.setItem('agent_btn_left', String(v)); } catch {}
+  };
+
+  const onPointerDown = (e) => {
+    // Allow dragging from anywhere on the widget background
+    if (e.target.closest('button')) return; // don't start drag from buttons
+    setDragging(true);
+    dragStartRef.current = { startX: e.clientX ?? (e.touches?.[0]?.clientX || 0), startLeft: leftPx, moved: false };
+    try { containerRef.current.setPointerCapture?.(e.pointerId); } catch {}
+  };
+  const onPointerMove = (e) => {
+    if (!dragging) return;
+    const x = e.clientX ?? (e.touches?.[0]?.clientX || 0);
+    const dx = x - dragStartRef.current.startX;
+    if (Math.abs(dx) > 2) dragStartRef.current.moved = true;
+    const next = clamp(dragStartRef.current.startLeft + dx, 0, getMaxLeft());
+    setLeftPx(next);
+  };
+  const onPointerUp = () => {
+    if (!dragging) return;
+    setDragging(false);
+    saveLeft(clamp(leftPx, 0, getMaxLeft()));
+  };
+
+  useEffect(() => {
+    const expired = getCookie(TRIAL_COOKIE) === '1';
+    if (expired) {
+      setRemainingSecs(0);
+    }
+  }, []);
 
   useEffect(() => {
     if (messageBoxRef.current) {
@@ -22,6 +95,44 @@ const AgentButton = () => {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
+  }, [isOnCall]);
+
+  useEffect(() => {
+    if (!isOnCall) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
+    }
+    if (getCookie(TRIAL_COOKIE) === '1' || remainingSecs <= 0) {
+      return;
+    }
+    // Start 1-minute countdown
+    if (!timerRef.current) {
+      timerRef.current = setInterval(() => {
+        setRemainingSecs((prev) => {
+          if (prev <= 1) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+            setCookie(TRIAL_COOKIE, '1');
+            // auto end the call and notify parent
+            endCall();
+            if (typeof onTrialEnded === 'function') {
+              try { onTrialEnded(); } catch (e) { console.error('onTrialEnded error', e); }
+            }
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
   }, [isOnCall]);
 
   const startCall = async () => {
@@ -86,6 +197,10 @@ const AgentButton = () => {
   };
 
   const endCall = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
     if (conversation) {
       conversation.endSession();
       setConversation(null);
@@ -94,16 +209,39 @@ const AgentButton = () => {
     setMessages([]);
   };
 
+  const fmt = (s) => {
+    const m = String(Math.floor(s / 60)).padStart(2, '0');
+    const ss = String(s % 60).padStart(2, '0');
+    return `${m}:${ss}`;
+  };
+
   return (
     <div
+      ref={containerRef}
       className={[
-        'absolute bottom-5 left-5 z-50 bg-white rounded-2xl shadow-xl overflow-hidden',
+        'fixed z-50 bg-white rounded-2xl shadow-xl overflow-hidden',
         'transition-all duration-500 ease-out',
         isOnCall ? 'w-[300px] h-[500px]' : 'h-[64px] w-[200px]',
-        'cursor-pointer'
+        'cursor-pointer',
       ].join(' ')}
+      style={{ left: leftPx, bottom: 20 }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onTouchStart={onPointerDown}
+      onTouchMove={onPointerMove}
+      onTouchEnd={onPointerUp}
       onClick={() => {
-        if (!isOnCall) startCall();
+        if (dragging || dragStartRef.current.moved) { dragStartRef.current.moved = false; return; }
+        if (!isOnCall) {
+          if (remainingSecs <= 0 || getCookie(TRIAL_COOKIE) === '1') {
+            if (typeof onTrialEnded === 'function') {
+              try { onTrialEnded(); } catch (e) { console.error('onTrialEnded error', e); }
+            }
+            return;
+          }
+          startCall();
+        }
       }}
       aria-expanded={isOnCall}
     >
@@ -151,6 +289,14 @@ const AgentButton = () => {
               );
             })}
           </div>
+        </div>
+
+        <div className="absolute -bottom-6 left-3">
+          {isOnCall && (
+            <div className="rounded-full px-3 py-1 text-xs font-semibold bg-gray-800 text-white shadow-md select-none">
+              {fmt(remainingSecs || 0)}
+            </div>
+          )}
         </div>
 
         {/* Footer actions */}

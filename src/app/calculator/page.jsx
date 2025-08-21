@@ -36,7 +36,7 @@ export default function CalculatorPage() {
   // Store all percentages as DECIMALS internally (e.g. 0.25 for 25%)
   const [inputs, setInputs] = useState({
     v: 1000,  // Website Visitors / month
-    e: 0.10,  // fixed 10%
+    e: 0.25,  // fixed 25%
     c: 0.20,  // fixed 20%
     m: 0.30,
     s: 0.25,  // fixed 25%
@@ -135,7 +135,7 @@ export default function CalculatorPage() {
             <div className="mt-6">
               <h3 className="text-sm font-semibold text-gray-700 mb-2">Fixed Assumptions</h3>
               <div className="flex flex-wrap gap-2 text-sm">
-                <span className="px-3 py-1 bg-gray-100 rounded-full">Engage with Widget: 10%</span>
+                <span className="px-3 py-1 bg-gray-100 rounded-full">Engage with Widget: 25%</span>
                 <span className="px-3 py-1 bg-gray-100 rounded-full">Call: 20%</span>
                 <span className="px-3 py-1 bg-gray-100 rounded-full">Call-to-Sale: 25%</span>
                 <span className="px-3 py-1 bg-gray-100 rounded-full">Answered → Appointment: 30%</span>

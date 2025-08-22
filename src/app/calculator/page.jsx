@@ -93,7 +93,7 @@ export default function CalculatorPage() {
       <NavBar />
       <div className="mx-auto max-w-6xl px-4 py-10 pt-28">
         <header className="mb-6">
-          <h1 className="text-3xl font-bold tracking-tight">ReplicAIDE — Zero Missed Calls ROI Calculator</h1>
+          <h1 className="text-3xl font-bold tracking-tight">ReplicAIDE Agent ROI Calculator</h1>
         </header>
 
         {/* Top split: sliders (left) and big numbers (right) */}
@@ -214,7 +214,6 @@ export default function CalculatorPage() {
           <h4 className="font-semibold mb-2">NOTES</h4>
           <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
             <li>Paradigm: Website → Engage → Call Requests → (Zero Missed Calls with ReplicAIDE) → Booked Appointments → Closed Deals → Revenue.</li>
-            <li>Edit only yellow cells. Percent inputs can be decimals (e.g., 10% = 0.10) or suffixed with %.</li>
             <li>Baseline uses the provided missed-call percentage. ReplicAIDE assumes 0% missed calls via AI routing.</li>
             <li>ROI is calculated from closed deals using Appointment-to-Sale Conversion.</li>
           </ul>

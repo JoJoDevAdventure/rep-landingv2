@@ -68,25 +68,8 @@ const Hero = ({onClickDemo}) => {
           className="w-full md:w-[65%]"
         >
           <h1 className="md:h1 font-klik font-regular text-left text-3xl md:text-5xl lg:text-6xl leading-normal">
-          Captivating relationships<br /> <span className="mt-4"> through meaningful</span> <br />
-            <motion.span
-              className="text-p1 text-light"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
-            >
-              {["A", "I", " ", "c", "o", "n", "v", "e", "r", "s", "a", "t", "i", "o", "n", "s"].map((letter, index) => (
-                <motion.span
-                  key={index}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.05, delay: 1 + index * 0.1 }}
-                  className="inline-block"
-                >
-                  {letter === " " ? <span>&nbsp;</span> : letter}
-                </motion.span>
-              ))}
-            </motion.span>
+            Never Miss a Call Again<br />
+            <span className="mt-4">Get in the <span className="text-p1">Zero</span>  Missed <br/> Calls Zone</span>
           </h1>
         </motion.div>
 
@@ -102,10 +85,7 @@ const Hero = ({onClickDemo}) => {
             transition={{ duration: 1, delay: 1 }}
             className="mt-4 text-sm md:text-xl text-gray-700"
           >
-            Fewer hours spent tedious tasks, <br />
-            Same
-            <span className="text-p1"> humanity</span> in the
-            process.
+            Turn cold website traffic into booked appointments and closed deals with ReplicAIDE.
           </motion.p>
           <div className="flex flex-row gap-4 w-full m-0">
             <motion.button
@@ -121,10 +101,10 @@ const Hero = ({onClickDemo}) => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.4 }}
-              onClick={() => setOpen(true)}
+              onClick={() => window.location.href = '/calculator'}
               className="bg-transparent text-s1 px-2 md:px-6 py-3 rounded-lg w-full border hover:bg-p1/20 border-p1 transition-all duration-300 md:w-auto text-[12px] md:text-[18px]"
             >
-              Learn more
+              Calculate My ROI →
             </motion.button>
           </div>
         </motion.div>

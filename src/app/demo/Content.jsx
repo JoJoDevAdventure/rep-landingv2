@@ -8,7 +8,8 @@ import DemoPopUp from './DemoPopUp';
 const Content = () => {
   const [trialEnded, setTrialEnded] = useState(false)
   const [screenshotUrl, setScreenshotUrl] = useState('');
-  const [frameLoaded, setFrameLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const searchParams = useSearchParams()
   const raw = searchParams.get('w') || ''
 
@@ -44,28 +45,62 @@ const Content = () => {
   }
 
   const fetchScreenshot = async (u) => {
-    // Point the <img> directly at the API so the browser streams/decodes it natively.
-    // Add a cache buster to avoid stale images.
-    const apiSrc = `/api/screenshot?url=${encodeURIComponent(u)}&t=${Date.now()}`;
-    setScreenshotUrl(apiSrc);
+    setLoading(true);
+    setError('');
+    try {
+      // Cache buster to avoid stale images
+      const width = typeof window !== 'undefined' ? window.innerWidth : 1440;
+      const height = typeof window !== 'undefined' ? window.innerHeight : 900;
+      const apiSrc = `/api/screenshot?url=${encodeURIComponent(u)}&width=${width}&height=${height}&t=${Date.now()}`;
+      console.log('[screenshot] fetching', apiSrc);
+      const res = await fetch(apiSrc, { method: 'GET' });
+      if (!res.ok) {
+        const text = await res.text().catch(() => '');
+        console.error('[screenshot] non-OK status', res.status, text.slice(0, 200));
+        setError(`Preview failed with status ${res.status}`);
+        setLoading(false);
+        return;
+      }
+      const blob = await res.blob();
+      console.log('[screenshot] blob type:', blob.type, 'size:', blob.size);
+      if (!blob || blob.size === 0) {
+        setError('Preview returned empty image');
+        setLoading(false);
+        return;
+      }
+      const objectUrl = URL.createObjectURL(blob);
+      // Revoke any previous object URL to avoid memory leaks
+      if (screenshotUrl && screenshotUrl.startsWith('blob:')) {
+        try { URL.revokeObjectURL(screenshotUrl); } catch {}
+      }
+      setScreenshotUrl(objectUrl);
+    } catch (e) {
+      console.error('[screenshot] fetch error', e);
+      setError('Could not load preview');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    setFrameLoaded(false);
+    // cleanup previous blob URL if any
+    if (screenshotUrl && screenshotUrl.startsWith('blob:')) {
+      try { URL.revokeObjectURL(screenshotUrl); } catch {}
+    }
     setScreenshotUrl('');
+    setError('');
     if (!url) return;
-    const t = setTimeout(() => {
-      if (!frameLoaded) fetchScreenshot(url);
-    }, 2000);
-    return () => clearTimeout(t);
+    fetchScreenshot(url);
   }, [url]);
 
-  const blockedHosts = ['google.com', 'facebook.com', 'linkedin.com', '3mountainsplumbing.com']
-  const isBlocked = blockedHosts.some(host => url.includes(host))
-
+  // Cleanup blob URL on unmount (must be inside the component)
   useEffect(() => {
-    if (isBlocked && url) fetchScreenshot(url);
-  }, [isBlocked, url]);
+    return () => {
+      if (screenshotUrl && screenshotUrl.startsWith('blob:')) {
+        try { URL.revokeObjectURL(screenshotUrl); } catch {}
+      }
+    };
+  }, [screenshotUrl]);
 
   if (!url) {
     return (
@@ -77,49 +112,37 @@ const Content = () => {
 
   return (
     <>
-      {isBlocked || screenshotUrl ? (
-        <div className="w-full h-screen relative" style={{ backgroundColor: '#ffffff' }}>
-          {screenshotUrl ? (
-            <div className="absolute inset-0">
-              <img
-                src={screenshotUrl}
-                alt="Website preview screenshot"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                }}
-                onLoad={() => console.log('[screenshot-img] loaded')}
-                onError={(e) => {
-                  console.warn('[screenshot-img] failed to load, clearing url');
-                  try { URL.revokeObjectURL(screenshotUrl); } catch {}
-                  setScreenshotUrl('');
-                }}
-                draggable={false}
-              />
-            </div>
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-black">Generating preview…</div>
-          )}
-          <div className="absolute inset-x-0 bottom-0 p-4 text-center">
-            <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline text-sm">
-              Open live site in a new tab
-            </a>
+      <div className="w-full h-screen relative" style={{ backgroundColor: '#ffffff' }}>
+        {screenshotUrl ? (
+          <div className="absolute inset-0">
+            <img
+              src={screenshotUrl}
+              alt="Website preview screenshot"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+              }}
+              onLoad={() => console.log('[screenshot-img] loaded')}
+              onError={(e) => {
+                console.warn('[screenshot-img] decode error');
+                setError('Image failed to decode');
+              }}
+              draggable={false}
+            />
           </div>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-black">
+            {loading ? 'Generating preview…' : (error || 'Preview unavailable')}
+          </div>
+        )}
+        <div className="absolute inset-x-0 bottom-0 p-4 text-center">
+          <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline text-sm">
+            Open live site in a new tab
+          </a>
         </div>
-      ) : (
-        <iframe
-          src={url}
-          style={{ width: '100vw', height: '100vh', border: '0' }}
-          allow="autoplay; clipboard-write; microphone; camera; fullscreen; display-capture"
-          referrerPolicy="no-referrer"
-          allowFullScreen
-          loading="eager"
-          title="Website Preview"
-          onLoad={() => setFrameLoaded(true)}
-        />
-      )}
+      </div>
       {trialEnded && <DemoPopUp onClose={() => setTrialEnded(false)} />}
       <AgentButton onTrialEnded={() => setTrialEnded(true)} />
       <div

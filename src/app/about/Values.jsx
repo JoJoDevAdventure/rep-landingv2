@@ -150,7 +150,7 @@ const Values = () => {
           transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
           className="text-p1"
         >
-          Core Values
+          Partnerships
         </motion.p>
         <motion.h1
           className="h3 mb-0 text-s1"
@@ -158,42 +158,17 @@ const Values = () => {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
         >
-          Our ABC's
+          Microsoft for Startups Founders Hub
         </motion.h1>
       </div>
 
-      {/* Infinite Auto-Scrolling Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-        className="overflow-hidden"
+        className="flex justify-center items-center py-10"
       >
-        <motion.div
-          className="flex space-x-4"
-          style={{ display: "inline-flex" }}
-          animate={controls}
-        >
-          {/* Duplicate the items to create a seamless looping effect */}
-          {[...coreValues, ...coreValues].map((value, index) => (
-            <motion.div
-              key={index}
-              className="relative min-w-[300px] md:min-w-[350px] py-10 border-2 border-p1 rounded-3xl bg-p1/20 flex flex-col align-center justify-center group"
-            >
-              {/* Title and Description */}
-              <h2 className="h4 mb-2 text-center relative z-10">
-                {value.title}
-              </h2>
-              <p className="body-2 text-center relative z-10">
-                {value.description}
-              </p>
-
-              {/* Glow Effects */}
-              <span className="val_glow-before absolute -inset-px rounded-3xl pointer-events-none" />
-              <span className="val_glow-after absolute -inset-px rounded-3xl pointer-events-none" />
-            </motion.div>
-          ))}
-        </motion.div>
+        <img src="/Microsoft-Partner.png" alt="Microsoft Logo" className="h-24 w-auto" />
       </motion.div>
     </section>
   );

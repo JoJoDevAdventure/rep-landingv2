@@ -76,8 +76,7 @@ const page = () => {
           Turn cold website traffic into booked appointments and closed deals with ReplicAIDE.
         </p>
         <a
-          href="#"
-          onClick={(e) => { e.preventDefault(); setPopupOpen(true); }}
+          href="/calculator"
           className="inline-flex items-center justify-center rounded-xl border border-black px-5 py-3 font-semibold hover:bg-black hover:text-white transition"
         >
           Calculate My ROI →

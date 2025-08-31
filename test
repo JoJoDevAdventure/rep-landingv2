@@ -1,0 +1,6 @@
+now we'll capture analytics informations, if this popup shows,
+has_finished_minutes: true
+selected_options (the clicked button)
+name: from url
+website: from url
+duration_on_page

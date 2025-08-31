@@ -39,10 +39,41 @@ const Content = () => {
     }
   }, [decoded])
 
-  const resetTrial = () => {
-    document.cookie = 'trial_expired=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-    setTrialEnded(false)
+  const setCookie = (name, value, days = 30) => {
+  const d = new Date();
+  d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
+};
+const getCookie = (name) => {
+  if (typeof document === 'undefined') return null;
+  const nameEQ = name + '=';
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
   }
+  return null;
+};
+
+const resetTrial = () => {
+  
+  const TRIAL_COOKIE = 'ai_trial_expired';
+  if (typeof document === 'undefined') return;
+  const cookies = document.cookie.split(';');
+  for (const c of cookies) {
+    const eqPos = c.indexOf('=');
+    const name = eqPos > -1 ? c.substr(0, eqPos) : c;
+    document.cookie = name.trim() + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+  }
+
+  // Explicitly remove the trial cookie too
+  document.cookie = TRIAL_COOKIE + '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
+
+  console.log('[cookies] all cleared, including trial cookie');
+  setTrialEnded(false);
+};
+``
 
   const fetchScreenshot = async (u) => {
     setLoading(true);

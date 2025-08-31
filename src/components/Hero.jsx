@@ -5,9 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const images = [
-  { src: "/stat1.gif", width: 1400, height: 800 },
   { src: "/image2.gif", width: 400, height: 400 },
-  { src: "/stat2.gif", width: 1000, height: 350 },
   { src: "/image4.gif", width: 800, height: 664 },
 ];
 

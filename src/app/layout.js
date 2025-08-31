@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata = {
@@ -29,6 +30,10 @@ export default function RootLayout({ children }) {
       >
         {children}
         <Analytics />
+        <Script
+          src="https://script.supademo.com/script.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

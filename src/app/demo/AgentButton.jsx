@@ -11,6 +11,7 @@ const setCookie = (name, value, days = 30) => {
   d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
   document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
 };
+
 const getCookie = (name) => {
   if (typeof document === 'undefined') return null;
   const nameEQ = name + '=';
@@ -21,6 +22,11 @@ const getCookie = (name) => {
     if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
   }
   return null;
+};
+
+const clearCookie = (name) => {
+  if (typeof document === 'undefined') return;
+  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
 };
 
 const AgentButton = ({ onTrialEnded }) => {
@@ -51,6 +57,7 @@ const AgentButton = ({ onTrialEnded }) => {
     const width = containerRef.current.offsetWidth || 200;
     return Math.max(0, (window.innerWidth || 0) - width - 20);
   };
+
   const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
   const saveLeft = (v) => {
     try { localStorage.setItem('agent_btn_left', String(v)); } catch {}
@@ -71,6 +78,7 @@ const AgentButton = ({ onTrialEnded }) => {
     const next = clamp(dragStartRef.current.startLeft + dx, 0, getMaxLeft());
     setLeftPx(next);
   };
+  
   const onPointerUp = () => {
     if (!dragging) return;
     setDragging(false);
@@ -80,6 +88,7 @@ const AgentButton = ({ onTrialEnded }) => {
   useEffect(() => {
     const expired = getCookie(TRIAL_COOKIE) === '1';
     if (expired) {
+      console.log('[trial] cookie expired detected');
       setRemainingSecs(0);
     }
   }, []);
@@ -135,6 +144,11 @@ const AgentButton = ({ onTrialEnded }) => {
     };
   }, [isOnCall]);
 
+  const handleIntrest = () => {
+    endCall();
+    alert("USER SHOWED INTREST");
+  };
+
   const startCall = async () => {
     if (isOnCall) return;
 
@@ -142,10 +156,23 @@ const AgentButton = ({ onTrialEnded }) => {
       audioRef.current.play().catch(() => {});
     }
 
+    // Parse name from URL (?name=...) and build greeting
+    let userName = '';
     try {
-      const agentId = 'agent_01k054mh33f6eb0zkgp0889aq0';
+      const sp = new URLSearchParams(window.location.search);
+      userName = (sp.get('name') || '').trim();
+    } catch {}
+    const greeting = `Hello${userName ? ` ${userName}` : ''} I am AIDE, Would you like to know how I can help convert your website's visitors to engaged leads?`;
+
+    try {
+      const agentId = 'agent_0401k3vf742fevr9vsappzkmdtw9';
       const conv = await Conversation.startSession({
         agentId,
+        overrides: {
+          agent: {
+            firstMessage: greeting,
+          }
+        },
         onConnect: (...args) => {
           console.log('onConnect', ...args);
         },
@@ -182,8 +209,11 @@ const AgentButton = ({ onTrialEnded }) => {
         onCanSendFeedbackChange: (...args) => {
           console.log('onCanSendFeedbackChange', ...args);
         },
-        onUnhandledClientToolCall: (...args) => {
-          console.log('onUnhandledClientToolCall', ...args);
+        onUnhandledClientToolCall: (toolCall) => {
+          console.log('onUnhandledClientToolCall', toolCall);
+          if (toolCall?.tool_name === "user_shows_intrest") {
+            handleIntrest();
+          }
         },
         onVadScore: (...args) => {
           console.log('onVadScore', ...args);
@@ -255,9 +285,13 @@ const AgentButton = ({ onTrialEnded }) => {
             forceHoverState={false}
           />
         </div>
+        <div className="flex  flex-row items-end gap-3">
+
         <span className="font-extrabold text-base md:text-lg whitespace-nowrap select-none">
-          {isOnCall ? 'AI Agent' : 'Call AI Agent'}
+          {isOnCall ? 'AI Agent' : 'Call'}
         </span>
+        <img className="mb-2 h-8" src="/aide.png"/>
+        </div>
       </div>
 
       {/* Body: only visible when on call */}

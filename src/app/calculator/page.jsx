@@ -460,11 +460,6 @@ export default function CalculatorPage() {
                   onChange={(n) => setStaff((p) => ({ ...p, hoursPerWeek: n }))}
                   valueRender={(n) => `${fmtInt.format(n)} Hours/Week`}
                 />
-
-                <div>
-                  <div className="text-xs font-semibold text-gray-700 mb-2">PLAN</div>
-                  <div className="text-sm">Start Plan: $1 / minute</div>
-                </div>
               </div>
             </section>
 

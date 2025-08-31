@@ -57,7 +57,7 @@ const Hero = ({onClickDemo}) => {
   });
 
   return (
-    <section className="relative w-full md:h-[95vh] flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-22 md:pt-12">
+    <section className="relative w-full md:h-[95vh] flex flex-col items-center justify-center text-center bg-gradient-to-r from-blue-100 to-orange-100 pt-32 ">
       <div className="w-full flex flex-col md:flex-row justify-between align-top px-6 md:px-16 lg:px-40">
         <motion.div 
           initial={{ opacity: 0, x: -50, y: -50 }}

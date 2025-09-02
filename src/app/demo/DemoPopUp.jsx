@@ -8,7 +8,7 @@ export default function DemoPopUp({ onClose, ranOutOfMinutes }) {
     if (typeof window !== 'undefined' && window.Supademo) {
       // Parse name from URL search params or fallback to pathname
       const searchParams = new URLSearchParams(window.location.search);
-      let nameFromUrl = searchParams.get('name') || '';
+      let nameFromUrl = searchParams.get('n') || '';
       if (!nameFromUrl) {
         try {
           const pathParts = window.location.pathname.split('/').filter(Boolean);
@@ -42,7 +42,7 @@ export default function DemoPopUp({ onClose, ranOutOfMinutes }) {
 
           {!ranOutOfMinutes && (
             <div className="mb-4 text-center animate-bounce text-sm text-p1 font-semibold">
-              🤖 AI Agent detected your interest {{nameFromUrl}}!
+              🤖 AI Agent detected your interest!
             </div>
           )}
           <h3 className="text-xl font-semibold text-gray-800">
@@ -72,7 +72,7 @@ export default function DemoPopUp({ onClose, ranOutOfMinutes }) {
           </button>
           <button
             className="w-full px-4 py-2 rounded-lg border border-p1 text-p1 font-semibold hover:bg-p1 hover:text-white transition"
-            onClick={() => window.location.href = "https://agents."}
+            onClick={() => window.location.href = "https://agents.replicaide.com/auth" }
           >
             🚀 Unlock AIDE with Your Free Trial
           </button>

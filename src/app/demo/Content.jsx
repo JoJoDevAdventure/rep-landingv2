@@ -6,7 +6,9 @@ import AgentButton from './AgentButton';
 import DemoPopUp from './DemoPopUp';
 
 const Content = () => {
-  const [trialEnded, setTrialEnded] = useState(false)
+  // Track popup visibility and reason for showing popup
+  const [showDemoPopup, setShowDemoPopup] = useState(false);
+  const [ranOutOfMinutes, setRanOutOfMinutes] = useState(false);
   const [screenshotUrl, setScreenshotUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -168,14 +170,23 @@ const resetTrial = () => {
             {loading ? 'Generating preview…' : (error || 'Preview unavailable')}
           </div>
         )}
-        <div className="absolute inset-x-0 bottom-0 p-4 text-center">
-          <a href={url} target="_blank" rel="noopener noreferrer" className="text-blue-400 underline text-sm">
-            Open live site in a new tab
-          </a>
-        </div>
       </div>
-      {trialEnded && <DemoPopUp onClose={() => setTrialEnded(false)} />}
-      <AgentButton onTrialEnded={() => setTrialEnded(true)} />
+      {showDemoPopup && (
+        <DemoPopUp
+          onClose={() => setShowDemoPopup(false)}
+          ranOutOfMinutes={ranOutOfMinutes}
+        />
+      )}
+      <AgentButton
+        onTrialEnded={() => {
+          setRanOutOfMinutes(true);
+          setShowDemoPopup(true);
+        }}
+        onIntrestShown={() => {
+          setRanOutOfMinutes(false);
+          setShowDemoPopup(true);
+        }}
+      />
       <div
         onClick={resetTrial}
         style={{

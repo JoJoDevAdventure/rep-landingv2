@@ -29,7 +29,7 @@ const clearCookie = (name) => {
   document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
 };
 
-const AgentButton = ({ onTrialEnded }) => {
+const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
   const [isOnCall, setIsOnCall] = useState(false);
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -146,7 +146,9 @@ const AgentButton = ({ onTrialEnded }) => {
 
   const handleIntrest = () => {
     endCall();
-    alert("USER SHOWED INTREST");
+    if (typeof onIntrestShown === 'function') {
+      try { onIntrestShown(); } catch (e) { console.error('onIntrestShown error', e); }
+    }
   };
 
   const startCall = async () => {
@@ -227,6 +229,9 @@ const AgentButton = ({ onTrialEnded }) => {
   };
 
   const endCall = () => {
+
+    conversation.endSession();
+    
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;

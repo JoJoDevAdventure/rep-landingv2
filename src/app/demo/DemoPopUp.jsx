@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default function DemoPopUp({ onClose }) {
+export default function DemoPopUp({ onClose, ranOutOfMinutes }) {
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Supademo) {
       // Parse name from URL search params or fallback to pathname
@@ -35,7 +35,9 @@ export default function DemoPopUp({ onClose }) {
       <div className="relative z-10 w-full max-w-md rounded-2xl bg-white shadow-xl border p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-semibold text-gray-800">
-            You’ve Reached Your Trial Limit — Unlock What’s Next
+            {ranOutOfMinutes
+              ? "You’ve Reached Your Trial Limit — Unlock What’s Next"
+              : "See AIDE in action on your website."}
           </h3>
           <button
             type="button"

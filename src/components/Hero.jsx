@@ -66,8 +66,8 @@ const Hero = ({onClickDemo}) => {
           className="w-full md:w-[65%]"
         >
           <h1 className="md:h1 font-klik font-regular text-left text-3xl md:text-5xl lg:text-6xl leading-normal">
-            Never Miss a Call Again<br />
-            <span className="mt-4">Get in the <span className="text-p1">Zero</span>  Missed <br/> Calls Zone</span>
+            <span className="text-p1">Nobody </span>
+             Fills Out Forms.
           </h1>
         </motion.div>
 
@@ -75,15 +75,15 @@ const Hero = ({onClickDemo}) => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
-          className="flex flex-col text-left justify-start gap-4 mt-2 md:mt-8 w-full md:w-auto align-top"
+          className="flex flex-col text-left justify-start items-start gap-4 mt-2 w-full md:w-auto align-top"
         >
           <motion.p
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0 }}  
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className="mt-4 text-sm md:text-xl text-gray-700"
+            className="text-sm md:text-xl text-gray-700"
           >
-            Turn cold website traffic into booked appointments and closed deals with ReplicAIDE.
+            AIDE turns cold website clicks into live conversations that book appointments automatically, 24/7.
           </motion.p>
           <div className="flex flex-row gap-4 w-full m-0">
             <motion.button

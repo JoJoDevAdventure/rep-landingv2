@@ -1,6 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function DemoPopUp({ onClose, ranOutOfMinutes }) {
+
+  const [nameFromUrl, setNameFromUrl] = useState("");
+
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Supademo) {
       // Parse name from URL search params or fallback to pathname
@@ -12,6 +15,7 @@ export default function DemoPopUp({ onClose, ranOutOfMinutes }) {
           const idx = pathParts.indexOf('isepathname');
           if (idx > -1 && pathParts[idx + 1]) {
             nameFromUrl = decodeURIComponent(pathParts[idx + 1]);
+            setNameFromUrl(nameFromUrl)
           }
         } catch (e) {
           console.warn('[Supademo] Failed to parse name from pathname', e);
@@ -33,12 +37,20 @@ export default function DemoPopUp({ onClose, ranOutOfMinutes }) {
         onClick={onClose}
       />
       <div className="relative z-10 w-full max-w-md rounded-2xl bg-white shadow-xl border p-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-start justify-between mb-4">
+          <div className='flex flex-col items-start'>
+
+          {!ranOutOfMinutes && (
+            <div className="mb-4 text-center animate-bounce text-sm text-p1 font-semibold">
+              🤖 AI Agent detected your interest {{nameFromUrl}}!
+            </div>
+          )}
           <h3 className="text-xl font-semibold text-gray-800">
             {ranOutOfMinutes
               ? "You’ve Reached Your Trial Limit — Unlock What’s Next"
               : "See AIDE in action on your website."}
           </h3>
+          </div>
           <button
             type="button"
             className="rounded-full p-2 hover:bg-gray-100"

@@ -14,7 +14,7 @@ export async function GET(req) {
   const apiKey = process.env.URLBOX_API_KEY;
   const apiSecret = process.env.URLBOX_API_SECRET;
 
-  const apiUrl = `https://api.urlbox.com/v1/${apiKey}/png?width=${width}&height=${height}&url=${encodeURIComponent(url)}`;
+  const apiUrl = `https://api.urlbox.com/v1/${apiKey}/png?width=${width}&height=${height}&url=${encodeURIComponent(url)}&delay=1000&wait_until=requestsfinished`;
   const signedUrl = `${apiUrl}&user=${apiKey}&token=${apiSecret}`;
 
   try {

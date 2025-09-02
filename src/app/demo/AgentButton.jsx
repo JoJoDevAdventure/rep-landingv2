@@ -145,7 +145,10 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
   }, [isOnCall]);
 
   const handleIntrest = () => {
-    endCall();
+    if (conversation) {
+      conversation.endSession();
+      setConversation(null);
+    }
     if (typeof onIntrestShown === 'function') {
       try { onIntrestShown(); } catch (e) { console.error('onIntrestShown error', e); }
     }
@@ -229,9 +232,6 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
   };
 
   const endCall = () => {
-
-    conversation.endSession();
-    
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;

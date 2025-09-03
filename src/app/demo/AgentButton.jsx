@@ -165,7 +165,7 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
     let userName = '';
     try {
       const sp = new URLSearchParams(window.location.search);
-      userName = (sp.get('name') || '').trim();
+      userName = (sp.get('n') || '').trim();
     } catch {}
     const greeting = `Hello${userName ? ` ${userName}` : ''} I am AIDE, Would you like to know how I can help convert your website's visitors to engaged leads?`;
 

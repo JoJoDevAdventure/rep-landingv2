@@ -228,10 +228,14 @@ export default function ContactPopup({ isOpen, onClose }) {
               />
               <button
                 type="button"
-                className="w-full p-3 rounded-lg font-semibold text-white animate-orange-gradient"
+                className={`w-full p-3 rounded-lg font-semibold transition duration-200 ${
+                  isOnCall
+                    ? "bg-white text-primary border border-primary"
+                    : "text-white animate-orange-gradient"
+                }`}
                 onClick={activateAgent}
               >
-                Fill with AI
+                {isOnCall ? "Fill manually" : "Fill with AI"}
               </button>
               <button
                 type="submit"

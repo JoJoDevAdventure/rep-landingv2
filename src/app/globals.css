@@ -428,4 +428,17 @@
   }
 
   /* END of Custom Input */
+  /* START of Animated Gradient */
+  @keyframes orange-gradient-move {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-orange-gradient {
+    background: linear-gradient(270deg, #FF8C42, #FF511C, #FF7043, #FF3D00);
+    background-size: 600% 600%;
+    animation: orange-gradient-move 6s ease infinite;
+  }
+  /* END of Animated Gradient */
 }

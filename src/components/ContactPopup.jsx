@@ -1,5 +1,6 @@
+import { Conversation } from "@11labs/client";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const industries = ["Technology", "Finance", "Healthcare", "Retail", "Education", "Other"];
 
@@ -14,18 +15,22 @@ export default function ContactPopup({ isOpen, onClose }) {
   });
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isOnCall, setIsOnCall] = useState(false);
+  const conversationRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     setLoading(true);
     setStatus(null);
-  
+
+    if (loading) return;
+
     console.log("Form Data:", formData);
-  
+
     try {
       const response = await fetch("/api/contact/add", {
         method: "POST",
@@ -40,11 +45,11 @@ export default function ContactPopup({ isOpen, onClose }) {
           from: "landing page",
         }),
       });
-  
+
       const data = await response.json();
-  
+
       console.log("Mailchimp Response:", data);
-  
+
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", phone: "", industry: "", company: "", website: "" });
@@ -59,6 +64,99 @@ export default function ContactPopup({ isOpen, onClose }) {
       console.error("Fetch Error:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const isFormComplete = (d) => {
+    const req = ["name", "email", "phone", "industry", "company", "website"];
+    return req.every((k) => (d?.[k] || "").toString().trim().length > 0);
+  };
+
+  const activateAgent = async () => {
+    try {
+      const agentId = "agent_2801k4jv50ewezk9yfnsfngp56mk"; // Provided agent ID
+      const conv = await Conversation.startSession({
+        agentId,
+        onConnect: ({ conversationId }) => {
+          console.log("Connected to conversation:", conversationId);
+          setIsOnCall(true);
+        },
+        onDebug: (props) => {
+          console.debug("[Agent Debug]", props);
+          try {
+            const isToolResponse =
+              props &&
+              (props.type === "agent_tool_response" || props?.data?.type === "agent_tool_response");
+            if (isToolResponse) {
+              console.log("[TOOL]", props);
+            }
+          } catch (e) {
+            // ignore
+          }
+        },
+        onDisconnect: () => {
+          console.log("Disconnected from conversation");
+          setIsOnCall(false);
+          try {
+            if (isFormComplete(formData) && !loading && status !== "success") {
+              console.log("All fields present after call — auto-submitting form.");
+              // Call submit without a real event
+              handleSubmit({ preventDefault: () => {} });
+            } else {
+              console.log("Form not complete or already submitted; skipping auto-submit.");
+            }
+          } catch (e) {
+            console.warn("Auto-submit failed:", e);
+          }
+        },
+        onError: (message, context) => {
+          console.error("Agent Error:", message, context);
+        },
+        onMessage: (props) => {
+          // Intentionally not rendering transcripts; only log minimal event for debugging
+          console.log("Message Received (not rendered):", {
+            source: props?.source,
+            length: props?.message?.length,
+          });
+        },
+        onAudio: (base64Audio) => {
+          console.log("Audio chunk received, length:", base64Audio?.length || 0);
+        },
+        onModeChange: ({ mode }) => {
+          console.log("Mode changed:", mode);
+        },
+        onStatusChange: ({ status }) => {
+          console.log("Status changed:", status);
+        },
+        onCanSendFeedbackChange: ({ canSendFeedback }) => {
+          console.log("CanSendFeedback changed:", canSendFeedback);
+        },
+        onUnhandledClientToolCall: (params) => {
+          try {
+            console.log("Unhandled client tool call:", params);
+            const tool = params?.tool_name || params?.name;
+            const p = params?.parameters || params?.args || {};
+
+            if (tool === "fill_form") {
+              const next = {
+                name: typeof p.full_name === "string" ? p.full_name : formData.name,
+                email: typeof p.email === "string" ? p.email : formData.email,
+                phone: typeof p.phone === "string" ? p.phone : formData.phone,
+                industry: typeof p.industry === "string" && p.industry.trim() ? p.industry : formData.industry,
+                company: typeof p.company === "string" ? p.company : formData.company,
+                website: typeof p.website === "string" ? p.website : formData.website,
+              };
+              setFormData((prev) => ({ ...prev, ...next }));
+              console.log("[Fill Form] Applied parameters to form:", next);
+            }
+          } catch (err) {
+            console.warn("Failed to process client tool call:", err);
+          }
+        },
+      });
+      conversationRef.current = conv;
+    } catch (err) {
+      console.error("Failed to activate agent:", err);
     }
   };
 
@@ -128,6 +226,13 @@ export default function ContactPopup({ isOpen, onClose }) {
                 onChange={handleChange}
                 value={formData.website}
               />
+              <button
+                type="button"
+                className="w-full p-3 rounded-lg font-semibold text-white animate-orange-gradient"
+                onClick={activateAgent}
+              >
+                Fill with AI
+              </button>
               <button
                 type="submit"
                 className="w-full p-3 bg-p1 text-white rounded-lg font-semibold hover:bg-p1/70 transition duration-200"

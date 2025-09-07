@@ -1,6 +1,6 @@
 import { Conversation } from "@11labs/client";
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const industries = ["Technology", "Finance", "Healthcare", "Retail", "Education", "Other"];
 
@@ -17,6 +17,21 @@ export default function ContactPopup({ isOpen, onClose }) {
   const [loading, setLoading] = useState(false);
   const [isOnCall, setIsOnCall] = useState(false);
   const conversationRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      // Reset form and hide messages whenever popup opens
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        industry: "Technology",
+        company: "",
+        website: "",
+      });
+      setStatus(null);
+    }
+  }, [isOpen]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

@@ -8,8 +8,10 @@ import { useState } from "react";
 const NavBar = ({ onClickDemo }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleClose = () => setIsOpen(false);
+
   return (
-    <header className="w-full bg-white/90 px-6 py-4 md:py-6 fixed top-0 left-0 right-0 z-50">
+    <header className="w-full bg-white/90 px-6 py-4 md:py-6 fixed top-0 left-0 right-0 z-40">
       <div
         className={`md:hidden absolute bg-black/50 top-0 h-screen w-screen left-0 transition-all duration-500 ${
           isOpen ? "opacity-100" : "opacity-0"
@@ -72,31 +74,35 @@ const NavBar = ({ onClickDemo }) => {
           <X size={30} />
         </button>
         <nav className="flex flex-col space-y-4">
-          <Link href="/" className="hover:text-p1">
+          <Link href="/" onClick={handleClose} className="hover:text-p1">
             Home
           </Link>
-          <Link href="/why-replicaide" className="hover:text-p1">
+          <Link href="/why-replicaide" onClick={handleClose} className="hover:text-p1">
             Why ReplicAIDE
           </Link>
-          <Link href="/about" className="hover:text-p1">
+          <Link href="/about" onClick={handleClose} className="hover:text-p1">
             About us
           </Link>
-          <Link href="/calculator" className="hover:text-p1">
+          <Link href="/calculator" onClick={handleClose} className="hover:text-p1">
             ROI Calculator
           </Link>
         </nav>
         <div className="mt-6 flex flex-col space-y-3">
           <button
-            onClick={onClickDemo}
+            onClick={() => {
+              onClickDemo();
+              handleClose();
+            }}
             className="bg-p1 text-white px-4 py-2 rounded-lg"
           >
             Get a demo
           </button>
           <button
-            onClick={() =>
-              (window.location.href =
-                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0")
-            }
+            onClick={() => {
+              window.location.href =
+                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0";
+              handleClose();
+            }}
             className="border border-p1 text-p1 px-4 py-2 rounded-lg"
           >
             Contact

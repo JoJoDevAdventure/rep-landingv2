@@ -63,19 +63,20 @@ const Hero = ({onClickDemo}) => {
           initial={{ opacity: 0, x: -50, y: -50 }}
           animate={{ opacity: 1, x: 0, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="w-full md:w-[65%]"
+          className="w-full md:w-[65%] flex flex-col justify-start items-start align-top gap-3"
         >
           <h1 className="md:h1 font-klik font-regular text-left text-3xl md:text-5xl lg:text-6xl leading-normal">
             <span className="text-p1">Nobody </span>
              Fills Out Forms.
           </h1>
+          <p className="text-left">AIDE turns cold website clicks into live conversations that book appointments automatically, 24/7.</p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: "easeOut", delay: 0.5 }}
-          className="flex flex-col text-left justify-start items-start gap-4 mt-2 w-full md:w-auto align-top"
+          className="flex flex-col text-left justify-start items-start gap-4 mt-2 md:w-2/3 align-top"
         >
           <motion.p
             initial={{ opacity: 0 }}  
@@ -83,7 +84,7 @@ const Hero = ({onClickDemo}) => {
             transition={{ duration: 1, delay: 1 }}
             className="text-sm md:text-xl text-gray-700"
           >
-            AIDE turns cold website clicks into live conversations that book appointments automatically, 24/7.
+            Forms are where leads go to die. Nobody fills them out. Nobody checks them fast enough. Nobody wants to wait. AIDE replaces forms with instant, humanlike conversations that answer questions, build trust, and book appointments.
           </motion.p>
           <div className="flex flex-row gap-4 w-full m-0">
             <motion.button

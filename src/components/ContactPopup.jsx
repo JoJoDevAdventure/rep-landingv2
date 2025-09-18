@@ -9,7 +9,7 @@ export default function ContactPopup({ isOpen, onClose }) {
     name: "",
     email: "",
     phone: "",
-    industry: "Technology",
+    industry: "",
     company: "",
     website: "",
   });
@@ -18,6 +18,19 @@ export default function ContactPopup({ isOpen, onClose }) {
   const [isOnCall, setIsOnCall] = useState(false);
   const conversationRef = useRef(null);
 
+  const endConversationIfActive = async () => {
+    try {
+      const conv = conversationRef.current;
+      if (conv && typeof conv.endSession === "function") {
+        await conv.endSession();
+        setIsOnCall(false);
+        console.log("[AI] Session ended via endSession().");
+      }
+    } catch (e) {
+      console.warn("[AI] Failed to end session:", e);
+    }
+  };
+
   useEffect(() => {
     if (isOpen) {
       // Reset form and hide messages whenever popup opens
@@ -25,7 +38,7 @@ export default function ContactPopup({ isOpen, onClose }) {
         name: "",
         email: "",
         phone: "",
-        industry: "Technology",
+        industry: "",
         company: "",
         website: "",
       });
@@ -39,6 +52,10 @@ export default function ContactPopup({ isOpen, onClose }) {
 
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
+
+    // End the AI call if one is active before submitting
+    await endConversationIfActive();
+
     setLoading(true);
     setStatus(null);
 
@@ -153,16 +170,18 @@ export default function ContactPopup({ isOpen, onClose }) {
             const p = params?.parameters || params?.args || {};
 
             if (tool === "fill_form") {
-              const next = {
-                name: typeof p.full_name === "string" ? p.full_name : formData.name,
-                email: typeof p.email === "string" ? p.email : formData.email,
-                phone: typeof p.phone === "string" ? p.phone : formData.phone,
-                industry: typeof p.industry === "string" && p.industry.trim() ? p.industry : formData.industry,
-                company: typeof p.company === "string" ? p.company : formData.company,
-                website: typeof p.website === "string" ? p.website : formData.website,
-              };
-              setFormData((prev) => ({ ...prev, ...next }));
-              console.log("[Fill Form] Applied parameters to form:", next);
+              const next = {};
+              if (typeof p.full_name === "string" && p.full_name.trim()) next.name = p.full_name;
+              if (typeof p.email === "string" && p.email.trim()) next.email = p.email;
+              if (typeof p.phone === "string" && p.phone.trim()) next.phone = p.phone;
+              if (typeof p.industry === "string" && p.industry.trim()) next.industry = p.industry;
+              if (typeof p.company === "string" && p.company.trim()) next.company = p.company;
+              if (typeof p.website === "string" && p.website.trim()) next.website = p.website;
+
+              if (Object.keys(next).length > 0) {
+                setFormData((prev) => ({ ...prev, ...next }));
+                console.log("[Fill Form] Applied parameters to form:", next);
+              }
             }
           } catch (err) {
             console.warn("Failed to process client tool call:", err);
@@ -188,59 +207,71 @@ export default function ContactPopup({ isOpen, onClose }) {
           <div className="w-full">
             <h2 className="text-2xl font-semibold font-klik text-gray-900 mb-6">Join Our Network</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Full Name"
-                required
-                className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                onChange={handleChange}
-                value={formData.name}
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                required
-                className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                onChange={handleChange}
-                value={formData.email}
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone Number"
-                className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                onChange={handleChange}
-                value={formData.phone}
-              />
-              <input
-                type="text"
-                name="industry"
-                placeholder="Industry"
-                required
-                className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                onChange={handleChange}
-                value={formData.industry}
-              />
-              <input
-                type="text"
-                name="company"
-                placeholder="Company"
-                required
-                className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                onChange={handleChange}
-                value={formData.company}
-              />
-              <input
-                type="text"
-                name="website"
-                placeholder="Website"
-                required
-                className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                onChange={handleChange}
-                value={formData.website}
-              />
+              {(!isOnCall || (formData.name || "").trim()) && (
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  required
+                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
+                  onChange={handleChange}
+                  value={formData.name}
+                />
+              )}
+              {(!isOnCall || (formData.email || "").trim()) && (
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  required
+                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
+                  onChange={handleChange}
+                  value={formData.email}
+                />
+              )}
+              {(!isOnCall || (formData.phone || "").trim()) && (
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone Number"
+                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
+                  onChange={handleChange}
+                  value={formData.phone}
+                />
+              )}
+              {(!isOnCall || (formData.industry || "").trim()) && (
+                <input
+                  type="text"
+                  name="industry"
+                  placeholder="Industry"
+                  required
+                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
+                  onChange={handleChange}
+                  value={formData.industry}
+                />
+              )}
+              {(!isOnCall || (formData.company || "").trim()) && (
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="Company"
+                  required
+                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
+                  onChange={handleChange}
+                  value={formData.company}
+                />
+              )}
+              {(!isOnCall || (formData.website || "").trim()) && (
+                <input
+                  type="text"
+                  name="website"
+                  placeholder="Website"
+                  required
+                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
+                  onChange={handleChange}
+                  value={formData.website}
+                />
+              )}
               <button
                 type="button"
                 className={`w-full p-3 rounded-lg font-semibold transition duration-200 ${
@@ -248,7 +279,13 @@ export default function ContactPopup({ isOpen, onClose }) {
                     ? "bg-white text-primary border border-primary"
                     : "text-white animate-orange-gradient"
                 }`}
-                onClick={activateAgent}
+                onClick={async () => {
+                  if (isOnCall) {
+                    await endConversationIfActive();
+                  } else {
+                    await activateAgent();
+                  }
+                }}
               >
                 {isOnCall ? "Fill manually" : "Fill with AI"}
               </button>
@@ -270,7 +307,10 @@ export default function ContactPopup({ isOpen, onClose }) {
           </div>
 
           {/* Close Button */}
-          <button onClick={onClose} className="absolute top-4 right-4 text-gray-600 text-lg">
+          <button onClick={async () => {
+            await endConversationIfActive();
+            onClose();
+          }} className="absolute top-4 right-4 text-gray-600 text-lg">
             ✕
           </button>
         </motion.div>

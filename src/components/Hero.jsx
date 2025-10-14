@@ -38,7 +38,7 @@ const Hero = ({onClickDemo}) => {
     window.location.href = site ? `/demo?w=${encodeURIComponent(site)}` : "/demo";
   };
   const goToBooking = () => {
-    window.location.href = "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0";
+    window.location.href = "https://we.replicaide.com/widget/booking/GkFQmiD1udFMUc90XEUE";
   };
 
   const controls = useAnimation();

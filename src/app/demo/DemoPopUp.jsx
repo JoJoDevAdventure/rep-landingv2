@@ -78,7 +78,7 @@ export default function DemoPopUp({ onClose, ranOutOfMinutes }) {
           </button>
           <button
             className="w-full px-4 py-2 rounded-lg border text-gray-700 hover:bg-gray-50"
-            onClick={() => window.location.href = "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0"}
+            onClick={() => window.location.href = "https://we.replicaide.com/widget/booking/GkFQmiD1udFMUc90XEUE"}
           >
             📅 Schedule a Call with Our Team
           </button>

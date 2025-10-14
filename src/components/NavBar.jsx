@@ -50,7 +50,7 @@ const NavBar = ({ onClickDemo }) => {
           <button
             onClick={() =>
               (window.location.href =
-                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0")
+                "https://we.replicaide.com/widget/booking/GkFQmiD1udFMUc90XEUE")
             }
             className="border border-p1 text-p1 px-4 py-2 rounded-lg"
           >
@@ -100,7 +100,7 @@ const NavBar = ({ onClickDemo }) => {
           <button
             onClick={() => {
               window.location.href =
-                "https://we.replicaide.com/widget/booking/s76WHydPGOptB9Yw5RS0";
+                "https://we.replicaide.com/widget/booking/GkFQmiD1udFMUc90XEUE";
               handleClose();
             }}
             className="border border-p1 text-p1 px-4 py-2 rounded-lg"

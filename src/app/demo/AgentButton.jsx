@@ -4,8 +4,6 @@ import { Conversation } from "@elevenlabs/client";
 import { useEffect, useRef, useState } from 'react';
 import Orb from './Orb';
 
-const DEFAULT_LEFT = 20;
-
 const setCookie = (name, value, days = 30) => {
   const d = new Date();
   d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
@@ -34,56 +32,19 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
   const [remainingSecs, setRemainingSecs] = useState(60);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const messageBoxRef = useRef(null);
   const audioRef = useRef(null);
   const timerRef = useRef(null);
 
   const containerRef = useRef(null);
-  const [dragging, setDragging] = useState(false);
-  const [leftPx, setLeftPx] = useState(DEFAULT_LEFT);
-  const dragStartRef = useRef({ startX: 0, startLeft: DEFAULT_LEFT, moved: false });
 
   const TRIAL_COOKIE = 'ai_trial_expired';
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('agent_btn_left');
-      if (saved !== null) setLeftPx(parseInt(saved, 10));
-    } catch {}
+    // Trigger animation after mount
+    setTimeout(() => setHasAnimated(true), 100);
   }, []);
-
-  const getMaxLeft = () => {
-    if (!containerRef.current) return (typeof window !== 'undefined' ? window.innerWidth : 0) - 220; // fallback
-    const width = containerRef.current.offsetWidth || 200;
-    return Math.max(0, (window.innerWidth || 0) - width - 20);
-  };
-
-  const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
-  const saveLeft = (v) => {
-    try { localStorage.setItem('agent_btn_left', String(v)); } catch {}
-  };
-
-  const onPointerDown = (e) => {
-    // Allow dragging from anywhere on the widget background
-    if (e.target.closest('button')) return; // don't start drag from buttons
-    setDragging(true);
-    dragStartRef.current = { startX: e.clientX ?? (e.touches?.[0]?.clientX || 0), startLeft: leftPx, moved: false };
-    try { containerRef.current.setPointerCapture?.(e.pointerId); } catch {}
-  };
-  const onPointerMove = (e) => {
-    if (!dragging) return;
-    const x = e.clientX ?? (e.touches?.[0]?.clientX || 0);
-    const dx = x - dragStartRef.current.startX;
-    if (Math.abs(dx) > 2) dragStartRef.current.moved = true;
-    const next = clamp(dragStartRef.current.startLeft + dx, 0, getMaxLeft());
-    setLeftPx(next);
-  };
-  
-  const onPointerUp = () => {
-    if (!dragging) return;
-    setDragging(false);
-    saveLeft(clamp(leftPx, 0, getMaxLeft()));
-  };
 
   useEffect(() => {
     const expired = getCookie(TRIAL_COOKIE) === '1';
@@ -254,20 +215,18 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
     <div
       ref={containerRef}
       className={[
-        'fixed z-50 bg-white rounded-2xl shadow-xl overflow-hidden',
+        'fixed z-50 p-[2px] rounded-2xl animate-pink-yellow-orange',
         'transition-all duration-500 ease-out',
         isOnCall ? 'w-[300px] h-[500px]' : 'h-[64px] w-[200px]',
         'cursor-pointer',
+        hasAnimated ? '' : 'animate-pop-in',
       ].join(' ')}
-      style={{ left: leftPx, bottom: 20 }}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onTouchStart={onPointerDown}
-      onTouchMove={onPointerMove}
-      onTouchEnd={onPointerUp}
+      style={{
+        left: '50%',
+        transform: 'translateX(-50%)',
+        bottom: 20
+      }}
       onClick={() => {
-        if (dragging || dragStartRef.current.moved) { dragStartRef.current.moved = false; return; }
         if (!isOnCall) {
           if (remainingSecs <= 0 || getCookie(TRIAL_COOKIE) === '1') {
             if (typeof onTrialEnded === 'function') {
@@ -280,6 +239,7 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
       }}
       aria-expanded={isOnCall}
     >
+      <div className="w-full h-full bg-white rounded-2xl shadow-xl overflow-hidden">
       {/* Header: label */}
       <div className={['flex items-center gap-3 px-4', isOnCall ? 'pt-4 pb-3' : 'py-3'].join(' ')}>
         <div className={isOnCall ? 'h-[40px] w-[40px] flex items-center' : 'h-[40px] w-[40px] flex items-center'}>
@@ -354,6 +314,7 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
       </div>
 
       <audio ref={audioRef} src="/ringtone.mp3" loop />
+      </div>
     </div>
   );
 };

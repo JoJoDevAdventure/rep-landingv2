@@ -149,6 +149,7 @@ const resetTrial = () => {
         {screenshotUrl ? (
           <div className="absolute inset-0">
             <img
+            className='opacity'
               src={screenshotUrl}
               alt="Website preview screenshot"
               style={{
@@ -185,19 +186,6 @@ const resetTrial = () => {
         onIntrestShown={() => {
           setRanOutOfMinutes(false);
           setShowDemoPopup(true);
-        }}
-      />
-      <div
-        onClick={resetTrial}
-        style={{
-          position: 'absolute',
-          bottom: 40,
-          left: 40,
-          width: 16,
-          height: 16,
-          borderRadius: '50%',
-          backgroundColor: 'black',
-          cursor: 'pointer',
         }}
       />
     </>

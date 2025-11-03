@@ -4,14 +4,26 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import ContactPopup from "./ContactPopup";
 
 const NavBar = ({ onClickDemo }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isPopupOpen, setPopupOpen] = useState(false);
 
   const handleClose = () => setIsOpen(false);
 
+  const handleDemoClick = () => {
+    if (onClickDemo) {
+      onClickDemo();
+    } else {
+      setPopupOpen(true);
+    }
+  };
+
   return (
-    <header className="w-full bg-white/90 px-6 py-4 md:py-6 fixed top-0 left-0 right-0 z-40">
+    <>
+      <ContactPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
+      <header className="w-full bg-white/90 px-6 py-4 md:py-6 fixed top-0 left-0 right-0 z-40">
       <div
         className={`md:hidden absolute bg-black/50 top-0 h-screen w-screen left-0 transition-all duration-500 ${
           isOpen ? "opacity-100" : "opacity-0"
@@ -42,7 +54,7 @@ const NavBar = ({ onClickDemo }) => {
         {/* CTA Buttons */}
         <div className="hidden md:flex space-x-4">
           <button
-            onClick={onClickDemo}
+            onClick={handleDemoClick}
             className="bg-p1 text-white px-4 py-2 rounded-lg"
           >
             Get a demo
@@ -90,7 +102,7 @@ const NavBar = ({ onClickDemo }) => {
         <div className="mt-6 flex flex-col space-y-3">
           <button
             onClick={() => {
-              onClickDemo();
+              handleDemoClick();
               handleClose();
             }}
             className="bg-p1 text-white px-4 py-2 rounded-lg"
@@ -110,6 +122,7 @@ const NavBar = ({ onClickDemo }) => {
         </div>
       </div>
     </header>
+    </>
   );
 };
 

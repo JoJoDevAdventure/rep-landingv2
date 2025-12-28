@@ -84,9 +84,14 @@ export default function ContactPopup({ isOpen, onClose }) {
 
       if (response.ok) {
         setStatus("success");
-        setFormData({ name: "", email: "", phone: "", industry: "", company: "", website: "" });
+
+        // Redirect to demo page with website and name parameters
         setTimeout(() => {
-          onClose();
+          const site = (formData.website || "").trim().replace(/\s+/g, "").replace(/^https?:\/\//i, "");
+          const params = new URLSearchParams();
+          if (site) params.append('w', site);
+          if (formData.name) params.append('name', formData.name);
+          window.location.href = params.toString() ? `/demo?${params.toString()}` : "/demo";
         }, 2000);
       } else {
         setStatus(`Error: ${data.title || "Unexpected error."}`);
@@ -320,7 +325,7 @@ export default function ContactPopup({ isOpen, onClose }) {
 
                   <label className="flex flex-col items-start">
                     <span className="text-sm font-semibold text-gray-700 mb-2">
-                      Website <span className="text-red-500">*</span>
+                      Website URL <span className="text-red-500">*</span>
                     </span>
                     <input
                       type="text"

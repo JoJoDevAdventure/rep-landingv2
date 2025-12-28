@@ -155,9 +155,12 @@ const FinalCTA = () => {
 
       setIsSubmitted(true);
 
-      // Redirect to demo page with website parameter
+      // Redirect to demo page with website and name parameters
       setTimeout(() => {
-        window.location.href = site ? `/demo?w=${encodeURIComponent(site)}` : "/demo";
+        const params = new URLSearchParams();
+        if (site) params.append('w', site);
+        if (form.name) params.append('name', form.name);
+        window.location.href = params.toString() ? `/demo?${params.toString()}` : "/demo";
       }, 2000);
     } catch (err) {
       console.error("contact/add failed", err);
@@ -314,7 +317,7 @@ const FinalCTA = () => {
 
                   <label className="flex flex-col items-start">
                     <span className="text-sm font-semibold text-gray-700 mb-2">
-                      Website <span className="text-red-500">*</span>
+                      Website URL <span className="text-red-500">*</span>
                     </span>
                     <input
                       type="text"

@@ -55,18 +55,9 @@ const NavBar = ({ onClickDemo }) => {
         <div className="hidden md:flex space-x-4">
           <button
             onClick={handleDemoClick}
-            className="bg-p1 text-white px-4 py-2 rounded-lg"
+            className="bg-p1 text-white px-4 py-2 rounded-lg hover:bg-orange-500 transition-all duration-300"
           >
             Get a demo
-          </button>
-          <button
-            onClick={() =>
-              (window.location.href =
-                "https://we.replicaide.com/widget/booking/GkFQmiD1udFMUc90XEUE")
-            }
-            className="border border-p1 text-p1 px-4 py-2 rounded-lg"
-          >
-            Contact
           </button>
         </div>
 
@@ -108,16 +99,6 @@ const NavBar = ({ onClickDemo }) => {
             className="bg-p1 text-white px-4 py-2 rounded-lg"
           >
             Get a demo
-          </button>
-          <button
-            onClick={() => {
-              window.location.href =
-                "https://we.replicaide.com/widget/booking/GkFQmiD1udFMUc90XEUE";
-              handleClose();
-            }}
-            className="border border-p1 text-p1 px-4 py-2 rounded-lg"
-          >
-            Contact
           </button>
         </div>
       </div>

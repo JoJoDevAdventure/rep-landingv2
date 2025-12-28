@@ -9,21 +9,11 @@ import { useState } from "react";
 const NavBar = dynamic(() => import("@/components/NavBar"), { ssr: false });
 const Hero = dynamic(() => import("@/components/Hero"), { ssr: false });
 const Partners = dynamic(() => import("@/components/Partners"), { ssr: false });
-const Aides = dynamic(() => import("@/components/Aides"), { ssr: false });
-const AIFuture = dynamic(() => import("@/components/AIFuture"), { ssr: false });
-const IndustriesSection = dynamic(() => import("@/components/Industries"), {
-  ssr: false,
-});
-const IndustriesSectionMobile = dynamic(
-  () => import("@/components/IndustriesMobile"),
-  { ssr: false }
-);
-const UnityAide = dynamic(() => import("@/components/UnityAide"), {
-  ssr: false,
-});
-const PerfectFit = dynamic(() => import("@/components/PerfectFit"), {
-  ssr: false,
-});
+const ProblemStatement = dynamic(() => import("@/components/ProblemStatement"), { ssr: false });
+const HowItWorks = dynamic(() => import("@/components/HowItWorks"), { ssr: false });
+const IndustryTabs = dynamic(() => import("@/components/IndustryTabs"), { ssr: false });
+const SocialProof = dynamic(() => import("@/components/SocialProof"), { ssr: false });
+const FinalCTA = dynamic(() => import("@/components/FinalCTA"), { ssr: false });
 const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
 
 const Home = () => {
@@ -53,18 +43,11 @@ const Home = () => {
       <NavBar onClickDemo={() => setPopupOpen(true)} />
       <Hero onClickDemo={() => setPopupOpen(true)} />
       <Partners onClickDemo={() => setPopupOpen(true)} />
-      <Aides onClickDemo={() => setPopupOpen(true)} />
-      <div>
-        <div className="md:hidden">
-          <IndustriesSectionMobile onClickDemo={() => setPopupOpen(true)} />
-        </div>
-        <div className="hidden md:block">
-          <IndustriesSection onClickDemo={() => setPopupOpen(true)} />
-        </div>
-      </div>
-      <AIFuture onClickDemo={() => setPopupOpen(true)} />
-      <UnityAide onClickDemo={() => setPopupOpen(true)} />
-      <PerfectFit onClickDemo={() => setPopupOpen(true)} />
+      <ProblemStatement />
+      <HowItWorks />
+      <IndustryTabs />
+      <SocialProof />
+      <FinalCTA />
       <Footer />
     </main>
   );

@@ -41,9 +41,9 @@ const Partners = () => {
         whileInView="visible"
         viewport={{ once: false, amount: 0.9 }}
         variants={fadeUpVariants}
-        className="font-klik text-lg md:text-2xl mb-8 md:mb-16 text-gray-500"
+        className="font-klik text-base md:text-2xl mb-8 md:mb-16 text-gray-600 px-6 md:px-0 leading-relaxed"
       >
-        Trusted by the biggest companies in the world
+        Trusted by the most <span className="text-p1 font-semibold">forward looking</span> companies in the world
       </motion.h2>
 
       {/* Scrollable container with manual & auto scroll */}

@@ -196,123 +196,175 @@ export default function ContactPopup({ isOpen, onClose }) {
 
   return (
     isOpen && (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-50 px-4">
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-50 px-4 py-4 overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
-          className="bg-white p-8 py-12 rounded-lg shadow-xl max-w-xl w-full flex flex-col md:flex-row items-center md:items-center gap-8 relative"
+          className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full relative p-6 md:p-10 my-auto max-h-[calc(100vh-2rem)] overflow-y-auto"
         >
-          {/* Form Section */}
-          <div className="w-full">
-            <h2 className="text-2xl font-semibold font-klik text-gray-900 mb-6">Join Our Network</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {(!isOnCall || (formData.name || "").trim()) && (
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  required
-                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                  onChange={handleChange}
-                  value={formData.name}
-                />
-              )}
-              {(!isOnCall || (formData.email || "").trim()) && (
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  required
-                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                  onChange={handleChange}
-                  value={formData.email}
-                />
-              )}
-              {(!isOnCall || (formData.phone || "").trim()) && (
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone Number"
-                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                  onChange={handleChange}
-                  value={formData.phone}
-                />
-              )}
-              {(!isOnCall || (formData.industry || "").trim()) && (
-                <input
-                  type="text"
-                  name="industry"
-                  placeholder="Industry"
-                  required
-                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                  onChange={handleChange}
-                  value={formData.industry}
-                />
-              )}
-              {(!isOnCall || (formData.company || "").trim()) && (
-                <input
-                  type="text"
-                  name="company"
-                  placeholder="Company"
-                  required
-                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                  onChange={handleChange}
-                  value={formData.company}
-                />
-              )}
-              {(!isOnCall || (formData.website || "").trim()) && (
-                <input
-                  type="text"
-                  name="website"
-                  placeholder="Website"
-                  required
-                  className="w-full p-3 border rounded-lg text-gray-700 focus:ring-2 focus:ring-blue-400"
-                  onChange={handleChange}
-                  value={formData.website}
-                />
-              )}
-              <button
-                type="button"
-                className={`w-full p-3 rounded-lg font-semibold transition duration-200 ${
-                  isOnCall
-                    ? "bg-white text-primary border border-primary"
-                    : "text-white animate-orange-gradient"
-                }`}
-                onClick={async () => {
-                  if (isOnCall) {
-                    await endConversationIfActive();
-                  } else {
-                    await activateAgent();
-                  }
-                }}
-              >
-                {isOnCall ? "Fill manually" : "Fill with AI"}
-              </button>
-              <button
-                type="submit"
-                className="w-full p-3 bg-p1 text-white rounded-lg font-semibold hover:bg-p1/70 transition duration-200"
-                disabled={loading}
-              >
-                {loading ? "Submitting..." : "Submit"}
-              </button>
-            </form>
-
-            {status === "success" && (
-              <p className="text-green-600 mt-3 text-center">Success! You've been added.</p>
-            )}
-            {status && status !== "success" && (
-              <p className="text-red-600 mt-3 text-center">{status}</p>
-            )}
-          </div>
-
           {/* Close Button */}
-          <button onClick={async () => {
-            await endConversationIfActive();
-            onClose();
-          }} className="absolute top-4 right-4 text-gray-600 text-lg">
+          <button
+            onClick={async () => {
+              await endConversationIfActive();
+              onClose();
+            }}
+            className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl font-bold transition-colors"
+          >
             ✕
           </button>
+
+          {status === "success" ? (
+            <div className="text-center py-12">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5, type: "spring" }}
+                className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+              >
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </motion.div>
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                Thank You!
+              </h3>
+              <p className="text-lg text-gray-700">
+                You've been added to our network.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="text-left mb-8 space-y-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                  See ReplicAIDE live on your own website.
+                </h2>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <label className="flex flex-col items-start">
+                    <span className="text-sm font-semibold text-gray-700 mb-2">
+                      Name <span className="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-p1 focus:border-transparent transition"
+                      placeholder="Full name"
+                    />
+                  </label>
+
+                  <label className="flex flex-col items-start">
+                    <span className="text-sm font-semibold text-gray-700 mb-2">
+                      Email <span className="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-p1 focus:border-transparent transition"
+                      placeholder="you@example.com"
+                    />
+                  </label>
+
+                  <label className="flex flex-col items-start">
+                    <span className="text-sm font-semibold text-gray-700 mb-2">
+                      Phone Number <span className="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="tel"
+                      name="phone"
+                      required
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-p1 focus:border-transparent transition"
+                      placeholder="+1 555 000 0000"
+                    />
+                  </label>
+
+                  <label className="flex flex-col items-start">
+                    <span className="text-sm font-semibold text-gray-700 mb-2">
+                      Industry <span className="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      name="industry"
+                      required
+                      value={formData.industry}
+                      onChange={handleChange}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-p1 focus:border-transparent transition"
+                      placeholder="e.g., Dental, HVAC, Real Estate"
+                    />
+                  </label>
+
+                  <label className="flex flex-col items-start">
+                    <span className="text-sm font-semibold text-gray-700 mb-2">
+                      Company <span className="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      name="company"
+                      required
+                      value={formData.company}
+                      onChange={handleChange}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-p1 focus:border-transparent transition"
+                      placeholder="Your company name"
+                    />
+                  </label>
+
+                  <label className="flex flex-col items-start">
+                    <span className="text-sm font-semibold text-gray-700 mb-2">
+                      Website <span className="text-red-500">*</span>
+                    </span>
+                    <input
+                      type="text"
+                      name="website"
+                      required
+                      value={formData.website}
+                      onChange={handleChange}
+                      className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-p1 focus:border-transparent transition"
+                      placeholder="yourdomain.com"
+                    />
+                  </label>
+                </div>
+
+                <div className="flex flex-col items-center justify-center pt-4 space-y-4">
+                  {!isFormComplete(formData) && (
+                    <button
+                      type="button"
+                      className={`w-full md:w-auto px-8 md:px-12 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 ${
+                        isOnCall
+                          ? "bg-white text-p1 border-2 border-p1 hover:bg-p1/10"
+                          : "bg-gradient-to-r from-blue-500 to-purple-600 text-white animate-pulse"
+                      }`}
+                      onClick={async () => {
+                        if (isOnCall) {
+                          await endConversationIfActive();
+                        } else {
+                          await activateAgent();
+                        }
+                      }}
+                    >
+                      {isOnCall ? "Fill Manually" : "Fill with AI Voice"}
+                    </button>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full md:w-auto bg-gradient-to-r from-p1 to-orange-600 text-white px-8 md:px-12 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  >
+                    {loading ? "Submitting..." : "Submit for Custom Demo"}
+                  </button>
+                </div>
+              </form>
+            </>
+          )}
         </motion.div>
       </div>
     )

@@ -90,7 +90,7 @@ export default function ContactPopup({ isOpen, onClose }) {
           const site = (formData.website || "").trim().replace(/\s+/g, "").replace(/^https?:\/\//i, "");
           const params = new URLSearchParams();
           if (site) params.append('w', site);
-          if (formData.name) params.append('name', formData.name);
+          if (formData.name) params.append('n', formData.name);
           window.location.href = params.toString() ? `/demo?${params.toString()}` : "/demo";
         }, 2000);
       } else {

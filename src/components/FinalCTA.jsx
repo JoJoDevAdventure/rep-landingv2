@@ -159,7 +159,7 @@ const FinalCTA = () => {
       setTimeout(() => {
         const params = new URLSearchParams();
         if (site) params.append('w', site);
-        if (form.name) params.append('name', form.name);
+        if (form.name) params.append('n', form.name);
         window.location.href = params.toString() ? `/demo?${params.toString()}` : "/demo";
       }, 2000);
     } catch (err) {

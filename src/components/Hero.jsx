@@ -70,7 +70,7 @@ const Hero = ({onClickDemo}) => {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-orange-100 pt-24 md:pt-12 pb-16 md:pb-0">
+    <section className="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-orange-100 pt-32 md:pt-28 lg:pt-24 pb-16 md:pb-0">
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 

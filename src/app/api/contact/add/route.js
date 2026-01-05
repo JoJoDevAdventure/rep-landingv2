@@ -3,6 +3,13 @@ export const runtime = "edge";
 const WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/HNAsnPF6KycYLXrcFjjR/webhook-trigger/IzQcTVfDXVXZ2TEa3pDp";
 
 function pickContactFields(src = {}) {
+  // Build custom demo link
+  const params = new URLSearchParams();
+  const site = (src.website || "").trim().replace(/\s+/g, "").replace(/^https?:\/\//i, "");
+  if (site) params.append('w', site);
+  if (src.name) params.append('n', src.name);
+  const customDemoLink = params.toString() ? `https://replicaide.com/demo?${params.toString()}` : "";
+
   return {
     name: src.name ?? "",
     email: src.email ?? "",
@@ -11,6 +18,7 @@ function pickContactFields(src = {}) {
     company: src.company ?? "",
     website: src.website ?? "",
     source: src.from ?? "",
+    "custom demo link": customDemoLink,
   };
 }
 

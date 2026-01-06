@@ -18,7 +18,7 @@ function pickContactFields(src = {}) {
     company: src.company ?? "",
     website: src.website ?? "",
     source: src.from ?? "",
-    "custom demo link": customDemoLink,
+    "custom_demo_link": customDemoLink,
   };
 }
 

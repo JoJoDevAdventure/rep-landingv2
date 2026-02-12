@@ -10,6 +10,7 @@ const NavBar = dynamic(() => import("@/components/NavBar"), { ssr: false });
 const Hero = dynamic(() => import("@/components/Hero"), { ssr: false });
 const Partners = dynamic(() => import("@/components/Partners"), { ssr: false });
 const ProblemStatement = dynamic(() => import("@/components/ProblemStatement"), { ssr: false });
+const IndustryDemos = dynamic(() => import("@/components/IndustryDemos"), { ssr: false });
 const HowItWorks = dynamic(() => import("@/components/HowItWorks"), { ssr: false });
 const IndustryTabs = dynamic(() => import("@/components/IndustryTabs"), { ssr: false });
 const SocialProof = dynamic(() => import("@/components/SocialProof"), { ssr: false });
@@ -44,6 +45,7 @@ const Home = () => {
       <Hero onClickDemo={() => setPopupOpen(true)} />
       <Partners onClickDemo={() => setPopupOpen(true)} />
       <ProblemStatement />
+      <IndustryDemos />
       <HowItWorks />
       <IndustryTabs />
       <SocialProof />

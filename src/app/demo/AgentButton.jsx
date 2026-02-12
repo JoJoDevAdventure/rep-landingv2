@@ -27,11 +27,11 @@ const clearCookie = (name) => {
   document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
 };
 
-const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
+const AgentButton = ({ onTrialEnded }) => {
   const [isOnCall, setIsOnCall] = useState(false);
   const [conversation, setConversation] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [remainingSecs, setRemainingSecs] = useState(60);
+  const [remainingSecs, setRemainingSecs] = useState(180);
   const [hasAnimated, setHasAnimated] = useState(false);
   const messageBoxRef = useRef(null);
   const audioRef = useRef(null);
@@ -105,16 +105,6 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
     };
   }, [isOnCall]);
 
-  const handleIntrest = () => {
-    if (conversation) {
-      conversation.endSession();
-      setConversation(null);
-    }
-    if (typeof onIntrestShown === 'function') {
-      try { onIntrestShown(); } catch (e) { console.error('onIntrestShown error', e); }
-    }
-  };
-
   const startCall = async () => {
     if (isOnCall) return;
 
@@ -177,9 +167,6 @@ const AgentButton = ({ onTrialEnded, onIntrestShown }) => {
         },
         onUnhandledClientToolCall: (toolCall) => {
           console.log('onUnhandledClientToolCall', toolCall);
-          if (toolCall?.tool_name === "user_shows_intrest") {
-            handleIntrest();
-          }
         },
         onVadScore: (...args) => {
           console.log('onVadScore', ...args);

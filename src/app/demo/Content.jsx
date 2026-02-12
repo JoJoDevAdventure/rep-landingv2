@@ -8,7 +8,6 @@ import DemoPopUp from './DemoPopUp';
 const Content = () => {
   // Track popup visibility and reason for showing popup
   const [showDemoPopup, setShowDemoPopup] = useState(false);
-  const [ranOutOfMinutes, setRanOutOfMinutes] = useState(false);
   const [screenshotUrl, setScreenshotUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -175,16 +174,10 @@ const resetTrial = () => {
       {showDemoPopup && (
         <DemoPopUp
           onClose={() => setShowDemoPopup(false)}
-          ranOutOfMinutes={ranOutOfMinutes}
         />
       )}
       <AgentButton
         onTrialEnded={() => {
-          setRanOutOfMinutes(true);
-          setShowDemoPopup(true);
-        }}
-        onIntrestShown={() => {
-          setRanOutOfMinutes(false);
           setShowDemoPopup(true);
         }}
       />

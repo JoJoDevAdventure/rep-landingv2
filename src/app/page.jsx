@@ -3,7 +3,7 @@
 import ContactPopup from "@/components/ContactPopup";
 import dynamic from "next/dynamic";
 import Script from "next/script";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Dynamically import components with `ssr: false` to disable server-side rendering
 const NavBar = dynamic(() => import("@/components/NavBar"), { ssr: false });
@@ -19,6 +19,29 @@ const Footer = dynamic(() => import("@/components/Footer"), { ssr: false });
 
 const Home = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
+
+  // Handle hash anchor scroll after dynamic components mount
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const check = () => {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return true;
+        }
+        return false;
+      };
+      // Retry until the element exists (dynamic imports)
+      if (!check()) {
+        const interval = setInterval(() => {
+          if (check()) clearInterval(interval);
+        }, 200);
+        // Stop trying after 5s
+        setTimeout(() => clearInterval(interval), 5000);
+      }
+    }
+  }, []);
 
   return (
     <main className="overflow-hidden">

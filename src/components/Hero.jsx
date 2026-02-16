@@ -40,7 +40,7 @@ const Hero = ({onClickDemo}) => {
   };
 
   const scrollToFinalCTA = () => {
-    const ctaSection = document.getElementById('final-cta');
+    const ctaSection = document.getElementById('live');
     if (ctaSection) {
       ctaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }

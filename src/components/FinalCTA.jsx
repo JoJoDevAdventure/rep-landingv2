@@ -169,7 +169,7 @@ const FinalCTA = () => {
   };
 
   return (
-    <section id="final-cta" className="relative w-full py-16 md:py-24 bg-gradient-to-br from-p1 via-orange-500 to-yellow-500">
+    <section id="live" className="relative w-full py-16 md:py-24 bg-gradient-to-br from-p1 via-orange-500 to-yellow-500">
       <div className="max-w-5xl mx-auto px-6 md:px-16 lg:px-24">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

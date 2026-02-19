@@ -11,8 +11,7 @@ const IndustryDemos = () => {
       industry: "Automotive Dealership",
       title: "Convert Shoppers Into Showroom Visits",
       description: "See our AI agent assist car buyers with vehicle inventory questions, financing options, trade-in estimates, and test drive appointments—turning website visitors into qualified leads.",
-      videoSrc: "/dealership.mp4",
-      thumbnail: "/dealership-thumbnail.png",
+      videoSrc: "/demo-1.mp4",
       tag: "Auto Sales"
     },
     {
@@ -20,8 +19,7 @@ const IndustryDemos = () => {
       industry: "Real Estate",
       title: "Qualify Leads & Book Tours Instantly",
       description: "Watch how our AI agent engages property seekers, answers questions about listings, qualifies buyer intent, and schedules property viewings—all while capturing valuable lead data.",
-      videoSrc: "/demo-video.mp4",
-      thumbnail: "/realestate-thumbnail.png",
+      videoSrc: "/demo-2.mp4",
       tag: "Property Management"
     },
     {
@@ -29,8 +27,7 @@ const IndustryDemos = () => {
       industry: "Restaurantes",
       title: "Reservas y Pedidos en Español",
       description: "Mira cómo nuestro agente de IA multilingüe ayuda a los clientes con reservas, menús especiales, y pedidos para llevar—todo en español con fluidez natural.",
-      videoSrc: "/dealership.mp4",
-      thumbnail: "/restaurant.png",
+      videoSrc: "/demo-3.mp4",
       tag: "Hospitalidad"
     }
   ];
@@ -134,7 +131,6 @@ const DemoCard = ({ demo, index }) => {
             ref={videoRef}
             loop
             muted
-            poster={demo.thumbnail}
             className="w-full h-full object-cover"
           >
             <source src={demo.videoSrc} type="video/mp4" />
